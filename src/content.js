@@ -60,47 +60,10 @@ Today, I help organizations secure their cloud and AI environments through consu
 // ─── TESTIMONIALS ────────────────────────────────
 // To add a new one: copy any block below, paste it at the end,
 // and change the text. That's it.
-export const testimonials = [
-  {
-    name: "Marcus Rivera",
-    role: "Senior DevOps Engineer",
-    text: "The mentorship completely changed my understanding of cloud security. Within 3 months, I went from basic AWS knowledge to confidently implementing multi-cloud security architectures. Absolutely worth every minute.",
-  },
-  {
-    name: "Aisha Patel",
-    role: "Cloud Security Analyst",
-    text: "The hands-on labs are incredible. Instead of abstract theory, every session uses real-world scenarios. I passed my Azure Security Engineer certification after just 8 weeks of mentorship.",
-  },
-  {
-    name: "Jordan Kim",
-    role: "IT Manager → Cloud Security",
-    text: "I was stuck in traditional IT and didn't know how to break into cloud security. The structured curriculum and career guidance gave me the roadmap I needed. Now I'm leading our cloud security team.",
-  },
-  {
-    name: "Samantha O'Brien",
-    role: "Startup CTO",
-    text: "Brought SubtleTech in to review our cloud infrastructure before our Series A. They found critical misconfigurations we'd missed for months and helped us build a security posture that impressed our investors.",
-  },
-];
+export const testimonials = [];
 
 // ─── CASE STUDIES (Consulting page) ──────────────
-export const caseStudies = [
-  {
-    title: "FinTech Startup — Multi-Cloud Hardening",
-    result: "92% reduction in critical findings",
-    desc: "Assessed and remediated security posture across AWS and Azure before Series B due diligence. Implemented IAM governance and automated compliance monitoring.",
-  },
-  {
-    title: "Healthcare SaaS — HIPAA Cloud Compliance",
-    result: "Full HIPAA compliance in 8 weeks",
-    desc: "Designed and deployed HIPAA-compliant architecture on AWS including encryption, access controls, audit logging, and incident response procedures.",
-  },
-  {
-    title: "Enterprise — AI Security Program",
-    result: "Zero AI-related incidents post-engagement",
-    desc: "Built an AI security governance framework covering model inventory, risk assessment, and secure deployment pipelines for a Fortune 500 company's ML operations.",
-  },
-];
+export const caseStudies = [];
 
 // ─── BLOG POSTS ──────────────────────────────────
 // To add a new post: copy any block below, paste it at the TOP

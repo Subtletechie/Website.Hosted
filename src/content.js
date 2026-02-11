@@ -27,14 +27,18 @@ export const stats = [
 // ─── ABOUT PAGE ──────────────────────────────────
 export const about = {
   headline:
-    "Hi, I'm the cloud security engineer who believes security doesn't have to be intimidating.",
+    "Hi, I'm the cloud security engineer who believes security doesn't have to be complex."
 
   // Use \n\n for paragraph breaks
-  bio: `I started my career in IT support — troubleshooting tickets and resetting passwords. But I kept getting pulled toward the security side of things: why are we configured this way? What happens if someone gets in? How do we actually protect this stuff?
+  bio: `I started my career in IT support, troubleshooting tickets and resetting passwords. But I kept getting pulled toward the security side: why are we configured this way? What happens if someone gets in? How do we actually protect this stuff?
 
-That curiosity led me deep into cloud security, where I discovered my two passions: solving complex multi-cloud security challenges and making those solutions understandable for everyone. I believe the biggest security risk isn't sophisticated attacks — it's the gap between what teams know and what they need to know.
+That curiosity led me deep into cloud security, where I discovered my two passions: solving complex multi-cloud security challenges and making those solutions understandable for everyone. The biggest security risk isn't sophisticated attacks; it's the gap between what teams know and what they need to know.
 
-Today, I help organizations secure their cloud and AI environments through consulting, and I help individuals break into cloud security through education and mentorship. Whether I'm working with a Fortune 500's security team or mentoring someone making their first career pivot, I bring the same philosophy: security should be practical, understandable, and empowering.`,
+Today, I help organizations secure their cloud and AI environments through consulting, and I help individuals break into cloud & cyber security through education and mentorship. Whether I'm working with a Fortune 500's security team or mentoring someone making their first career pivot, I bring the same philosophy: security should be practical, understandable, and empowering.
+I believe that people and processes are the major factors in security, you could have state-of-the-art tools, but if your people are not well informed on best practices, or your processes are not streamlined,d your tools will not be enough to keep you secured.
+This is why when I consult with clients, I do not focus just on the technical piece; I make sure to review their processes and help the people understand security better.
+
+That's why our mantra is Secure Thinking, Subtle Execution.
 
   expertise: [
     "Multi-Cloud Security (AWS, Azure, GCP)",

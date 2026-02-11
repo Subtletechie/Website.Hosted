@@ -201,7 +201,7 @@ export const socials = [
     name: "Discord",
     desc: "Join SubtleNation — our cloud security community.",
     cta: "Join Community",
-    url: "#",
+    url: "https://discord.gg/wvYBGujv",
     color: "#5865F2",
   },
   {
@@ -209,7 +209,7 @@ export const socials = [
     name: "Twitter / X",
     desc: "Quick takes on cloud security news and threads.",
     cta: "Follow @subtletechie",
-    url: "#",
+    url: "https://x.com/subtletechie",
     color: "#1DA1F2",
   },
   {
@@ -217,33 +217,34 @@ export const socials = [
     name: "LinkedIn",
     desc: "Long-form posts about cloud security strategy and career advice.",
     cta: "Connect",
-    url: "#",
+    url: "https://www.linkedin.com/in/francismaduka",
     color: "#0A66C2",
   },
   {
-    type: "github",
-    name: "GitHub",
-    desc: "Open source security tools and IaC templates.",
-    cta: "View Repos",
-    url: "#",
-    color: "#f0f0f0",
+    type: "instagram",
+    name: "Instagram",
+    desc: "Behind-the-scenes of cloud security life, tips, and quick visual guides.",
+    cta: "Follow Me",
+    url: "https://www.instagram.com/subtletechie/",
+    color: "#E4405F",
+  },
+  {
+    type: "tiktok",
+    name: "TikTok",
+    desc: "Bite-sized cloud security tips, career advice, and tech breakdowns.",
+    cta: "Follow Me",
+    url: "https://www.tiktok.com/@thesubtletechie?_r=1&_t=ZP-93pySVXRk4N",
+    color: "#00F2EA",
   },
   {
     type: "youtube",
     name: "YouTube",
     desc: "In-depth tutorials and cloud security walkthroughs.",
     cta: "Subscribe",
-    url: "#",
+    url: "https://www.youtube.com/@subtle-techie",
     color: "#FF0000",
   },
-  {
-    type: "newsletter",
-    name: "Newsletter",
-    desc: "Bi-weekly cloud security insights delivered to your inbox.",
-    cta: "Subscribe Below ↓",
-    url: "#",
-    color: "#2563EB",
-  },
+  
 ];
 
 // ─── SITE SETTINGS ───────────────────────────────

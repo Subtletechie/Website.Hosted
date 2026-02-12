@@ -39,9 +39,9 @@ const SocialIcon = ({ type }) => {
     discord: <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" fill="currentColor"/>,
     twitter: <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"/>,
     linkedin: <><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z" fill="currentColor"/></>,
-    github: <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" fill="currentColor"/>,
     youtube: <><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="currentColor"/><polygon points="9.545,15.568 15.818,12 9.545,8.432" fill="#0B1120"/></>,
-    newsletter: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" strokeWidth="1.5"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    instagram: <><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" fill="currentColor"/></>,
+    tiktok: <><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="currentColor"/></>,
   };
   return <svg width="24" height="24" viewBox="0 0 24 24">{paths[type]}</svg>;
 };
@@ -91,6 +91,22 @@ const Input = ({ label, type = "text", placeholder, textarea, value, onChange, r
       : <input type={type} placeholder={placeholder} value={value} onChange={onChange} style={{ width: "100%", padding: "12px 16px", borderRadius: 10, border: `1px solid ${C.border}`, background: "rgba(255,255,255,0.04)", color: C.white, fontSize: 15, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
     }
   </div>
+);
+
+// ─── BLOG CARD (reusable for home + blog page) ───
+const BlogCard = ({ p, showAllTags }) => (
+  <Card style={{ padding: 0, overflow: "hidden" }}>
+    {p.image && <div style={{ width: "100%", height: 180, overflow: "hidden" }}><img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></div>}
+    <div style={{ padding: p.image ? "20px 32px 32px" : 32 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>{(showAllTags ? p.tags : p.tags.slice(0, 2)).map(t => <Badge key={t}>{t}</Badge>)}</div>
+      <h3 style={{ color: C.white, fontSize: 18, fontWeight: 700, margin: "0 0 10px", lineHeight: 1.4 }}>{p.title}</h3>
+      <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px" }}>{p.excerpt}</p>
+      <div style={{ display: "flex", justifyContent: "space-between", color: C.muted, fontSize: 13 }}>
+        <span>{p.date}</span>
+        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {p.read} read</span>
+      </div>
+    </div>
+  </Card>
 );
 
 // ─── HOME PAGE ───────────────────────────────────
@@ -145,15 +161,7 @@ const HomePage = ({ navigate }) => (
       <STitle badge="INSIGHTS" title="From the Blog" subtitle="Practical cloud security knowledge you can apply today." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
         {blogPosts.filter(p => p.published).slice(0, 3).map(p => (
-          <Card key={p.id}>
-            <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>{p.tags.slice(0, 2).map(t => <Badge key={t}>{t}</Badge>)}</div>
-            <h3 style={{ color: C.white, fontSize: 18, fontWeight: 700, margin: "0 0 12px", lineHeight: 1.4 }}>{p.title}</h3>
-            <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px" }}>{p.excerpt}</p>
-            <div style={{ display: "flex", justifyContent: "space-between", color: C.muted, fontSize: 13 }}>
-              <span>{p.date}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {p.read} read</span>
-            </div>
-          </Card>
+          <BlogCard key={p.id} p={p} />
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: 40 }}><Btn variant="outline" onClick={() => navigate("Blog")}>View All Posts <Icons.Arrow /></Btn></div>
@@ -264,7 +272,7 @@ const EducationPage = ({ navigate }) => (
         ))}
       </div>
     </Sec>
-    <Sec style={{ paddingTop: 20 }}>
+    {testimonials.length > 0 && <Sec style={{ paddingTop: 20 }}>
       <STitle badge="TESTIMONIALS" title="What Students Say" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
         {testimonials.map((t, i) => (
@@ -275,7 +283,7 @@ const EducationPage = ({ navigate }) => (
           </Card>
         ))}
       </div>
-    </Sec>
+    </Sec>}
     <Sec style={{ paddingTop: 20 }}>
       <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))", border: "1px solid rgba(16,185,129,0.2)" }}>
         <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Start Learning?</h2>
@@ -321,12 +329,7 @@ const BlogPage = () => {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
           {paged.map(p => (
-            <Card key={p.id}>
-              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>{p.tags.map(t => <Badge key={t}>{t}</Badge>)}</div>
-              <h3 style={{ color: C.white, fontSize: 18, fontWeight: 700, margin: "0 0 10px", lineHeight: 1.4 }}>{p.title}</h3>
-              <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px" }}>{p.excerpt}</p>
-              <div style={{ display: "flex", justifyContent: "space-between", color: C.muted, fontSize: 13 }}><span>{p.date}</span><span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {p.read} read</span></div>
-            </Card>
+            <BlogCard key={p.id} p={p} showAllTags />
           ))}
         </div>
         {paged.length === 0 && <div style={{ textAlign: "center", padding: 60, color: C.muted }}><p style={{ fontSize: 18 }}>No articles match your search.</p></div>}
@@ -373,9 +376,7 @@ const AboutPage = () => (
 // ─── CONNECT PAGE ────────────────────────────────
 const ConnectPage = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [nlEmail, setNlEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const [nlSent, setNlSent] = useState(false);
 
   return (
     <>
@@ -400,18 +401,6 @@ const ConnectPage = () => {
             </Card>
           ))}
         </div>
-      </Sec>
-      <Sec style={{ paddingTop: 20 }}>
-        <Card hover={false} style={{ maxWidth: 600, margin: "0 auto", textAlign: "center", padding: 48, background: "linear-gradient(135deg, rgba(37,99,235,0.1), rgba(37,99,235,0.03))", border: "1px solid rgba(37,99,235,0.25)" }}>
-          <Icons.Mail />
-          <h2 style={{ color: C.white, fontSize: 24, fontWeight: 800, margin: "16px 0 8px" }}>Subscribe to the Newsletter</h2>
-          <p style={{ color: C.muted, fontSize: 15, marginBottom: 24 }}>Bi-weekly cloud security insights, no spam.</p>
-          {nlSent ? <div style={{ color: C.green, fontSize: 16, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}><Icons.Check /> You're subscribed!</div> :
-            <div style={{ display: "flex", gap: 10, maxWidth: 420, margin: "0 auto" }}>
-              <input type="email" value={nlEmail} onChange={e => setNlEmail(e.target.value)} placeholder="you@email.com" style={{ flex: 1, padding: "12px 16px", borderRadius: 10, border: `1px solid ${C.border}`, background: "rgba(255,255,255,0.04)", color: C.white, fontSize: 15, fontFamily: "inherit", outline: "none" }} />
-              <Btn onClick={() => { if (nlEmail.includes("@")) setNlSent(true); }}>Subscribe</Btn>
-            </div>}
-        </Card>
       </Sec>
       <Sec style={{ paddingTop: 20 }}>
         <STitle badge="INQUIRY" title="Send a Message" subtitle="For consulting, mentorship, or anything else." />
@@ -517,7 +506,7 @@ export default function App() {
             <div>
               <h4 style={{ color: C.white, fontSize: 14, fontWeight: 700, marginBottom: 16, textTransform: "uppercase", letterSpacing: 0.5 }}>Follow</h4>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                {["youtube", "twitter", "linkedin", "github", "discord"].map(s => <div key={s} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: C.muted }}><SocialIcon type={s} /></div>)}
+                {["youtube", "twitter", "linkedin", "instagram", "tiktok", "discord"].map(s => <div key={s} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: C.muted }}><SocialIcon type={s} /></div>)}
               </div>
             </div>
           </div>

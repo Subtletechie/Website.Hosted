@@ -94,6 +94,10 @@ export const caseStudies = [
 // in GitHub, then set the image field to "/thumbnails/your-image.png"
 // If you don't have a thumbnail, just leave image as "" and
 // the card will show without one.
+//
+// FULL CONTENT: Use the "content" field for the full blog post.
+// Use \n\n for paragraph breaks. If content is empty "",
+// the post will show "Full article coming soon."
 export const blogPosts = [
   {
     id: "b9",
@@ -105,6 +109,25 @@ export const blogPosts = [
     read: "4 min",
     tags: ["Cloud Security", "Career"],
     published: true,
+    content: `ICS (Industrial Control System) security is a goldmine niche for any cybersecurity professional.
+
+Industrial control systems are high stakes. They are what keep civilization running. We're talking about your dams, power control systems, oil and gas pipeline systems, industrial automation systems, and more.
+
+This also means the security of these systems is high stakes, so much so that they have very specialized frameworks and standards like NIST SP 800-82, IEC 62443, NERC CIP, ISA/IEC 62443, and MITRE ATT&CK for ICS.
+
+A cybersecurity professional with ICS specialization out-earns their regular IT, cybersecurity, or cloud security counterpart by 15–30%. You might wonder why. Is it not all cybersecurity at the end of the day? Well, keep reading, and you'll understand the WHY.
+
+You see, ICS roles aren't higher paid because they're trendier. It's because these are very high-stakes systems, and security mistakes can shut down entire cities.
+
+However, that's not the only reason. Fewer qualified people create a massive talent gap. There's also the safety and physical impact side of things — sometimes you have to travel to the actual site of these systems to do your job. On top of that, regulatory pressure is quite high, with some next-level oversight involved.
+
+Nonetheless, I still feel it's a really good area of specialization for any cybersecurity professional who is up for it.
+
+But wait — if ICS-focused cybersecurity professionals are so valuable, then how about an ICS-focused cloud security professional?
+
+Are there even any ICS systems running in the cloud?
+
+Let's find out in another post.`,
   },
   {
     id: "b1",
@@ -116,6 +139,7 @@ export const blogPosts = [
     read: "6 min",
     tags: ["Cloud Security", "AWS", "Azure"],
     published: true,
+    content: "",
   },
   {
     id: "b2",
@@ -127,6 +151,7 @@ export const blogPosts = [
     read: "8 min",
     tags: ["RBAC", "Cloud Security"],
     published: true,
+    content: "",
   },
   {
     id: "b3",
@@ -138,6 +163,7 @@ export const blogPosts = [
     read: "10 min",
     tags: ["AI Security", "Cloud Security"],
     published: true,
+    content: "",
   },
   {
     id: "b4",
@@ -149,6 +175,7 @@ export const blogPosts = [
     read: "7 min",
     tags: ["Azure", "AWS", "Cloud Security"],
     published: true,
+    content: "",
   },
   {
     id: "b5",
@@ -160,6 +187,7 @@ export const blogPosts = [
     read: "5 min",
     tags: ["Career"],
     published: true,
+    content: "",
   },
   {
     id: "b6",
@@ -171,6 +199,7 @@ export const blogPosts = [
     read: "9 min",
     tags: ["GCP", "RBAC"],
     published: true,
+    content: "",
   },
   {
     id: "b7",
@@ -182,6 +211,7 @@ export const blogPosts = [
     read: "11 min",
     tags: ["AI Security"],
     published: true,
+    content: "",
   },
   {
     id: "b8",
@@ -193,6 +223,7 @@ export const blogPosts = [
     read: "8 min",
     tags: ["Cloud Security", "AWS", "Azure", "GCP"],
     published: true,
+    content: "",
   },
 ];
 

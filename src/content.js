@@ -151,7 +151,7 @@ You see, multi-cloud strategy isn’t adopted because it’s trendy. It’s adop
 
 However, that’s not the only reason multi-cloud security is critical. Each cloud platform has different IAM logic, different default configurations, and different security services. A policy that works perfectly in one environment may not translate cleanly into another. That gap creates blind spots. On top of that, regulatory expectations don’t decrease just because your architecture becomes more complex. If anything, oversight becomes tighter.
 
-Nonetheless, I still feel multi-cloud security is one of the most important focus areas for any cloud security professional who wants to stay relevant long term.",
+Nonetheless, I still feel multi-cloud security is one of the most important focus areas for any cloud security professional who wants to stay relevant long term.`,
   },
   {
     id: "b2",

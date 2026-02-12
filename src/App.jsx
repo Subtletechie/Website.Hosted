@@ -24,6 +24,7 @@ const Icons = {
   Lock: () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
   Check: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>,
   Arrow: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>,
+  ArrowLeft: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
   Search: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
   Menu: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
   X: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
@@ -60,13 +61,14 @@ const Btn = ({ children, variant = "primary", onClick, style, type }) => {
   return <button type={type || "button"} style={{ ...s, ...style }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={onClick}>{children}</button>;
 };
 
-const Card = ({ children, style, hover = true }) => {
+const Card = ({ children, style, hover = true, onClick }) => {
   const [h, setH] = useState(false);
   return (
-    <div onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={{
+    <div onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={{
       background: h && hover ? C.bgHover : C.bgCard, border: `1px solid ${h && hover ? "rgba(37,99,235,0.3)" : C.border}`,
       borderRadius: 16, padding: 32, transition: "all 0.3s", transform: h && hover ? "translateY(-4px)" : "none",
-      boxShadow: h && hover ? "0 12px 40px rgba(0,0,0,0.3)" : "0 4px 16px rgba(0,0,0,0.15)", ...style
+      boxShadow: h && hover ? "0 12px 40px rgba(0,0,0,0.3)" : "0 4px 16px rgba(0,0,0,0.15)",
+      cursor: onClick ? "pointer" : "default", ...style
     }}>{children}</div>
   );
 };
@@ -94,14 +96,14 @@ const Input = ({ label, type = "text", placeholder, textarea, value, onChange, r
 );
 
 // ─── BLOG CARD (reusable for home + blog page) ───
-const BlogCard = ({ p, showAllTags }) => (
-  <Card style={{ padding: 0, overflow: "hidden" }}>
+const BlogCard = ({ p, showAllTags, onClick }) => (
+  <Card style={{ padding: 0, overflow: "hidden" }} onClick={onClick}>
     {p.image && <div style={{ width: "100%", height: 180, overflow: "hidden" }}><img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></div>}
     <div style={{ padding: p.image ? "20px 32px 32px" : 32 }}>
       <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>{(showAllTags ? p.tags : p.tags.slice(0, 2)).map(t => <Badge key={t}>{t}</Badge>)}</div>
       <h3 style={{ color: C.white, fontSize: 18, fontWeight: 700, margin: "0 0 10px", lineHeight: 1.4 }}>{p.title}</h3>
       <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px" }}>{p.excerpt}</p>
-      <div style={{ display: "flex", justifyContent: "space-between", color: C.muted, fontSize: 13 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: C.muted, fontSize: 13 }}>
         <span>{p.date}</span>
         <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {p.read} read</span>
       </div>
@@ -109,8 +111,54 @@ const BlogCard = ({ p, showAllTags }) => (
   </Card>
 );
 
+// ─── BLOG POST VIEW ──────────────────────────────
+const BlogPostView = ({ post, onBack }) => (
+  <>
+    <div style={{ paddingTop: 120, maxWidth: 800, margin: "0 auto", paddingLeft: 24, paddingRight: 24 }}>
+      <button onClick={onBack} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", color: C.accent, fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", padding: "8px 0", marginBottom: 32 }}>
+        <Icons.ArrowLeft /> Back to Blog
+      </button>
+
+      {post.image && (
+        <div style={{ width: "100%", borderRadius: 16, overflow: "hidden", marginBottom: 32 }}>
+          <img src={post.image} alt={post.title} style={{ width: "100%", height: "auto", display: "block" }} />
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
+        {post.tags.map(t => <Badge key={t}>{t}</Badge>)}
+      </div>
+
+      <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: C.white, margin: "0 0 16px", lineHeight: 1.2 }}>{post.title}</h1>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 20, color: C.muted, fontSize: 14, marginBottom: 48, paddingBottom: 32, borderBottom: `1px solid ${C.border}` }}>
+        <span>{post.date}</span>
+        <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {post.read} read</span>
+      </div>
+
+      <div style={{ color: C.muted, fontSize: 17, lineHeight: 2 }}>
+        {post.content
+          ? post.content.split("\n\n").map((para, i) => (
+              <p key={i} style={{ marginBottom: 24, color: "#CBD5E1" }}>{para}</p>
+            ))
+          : <div style={{ textAlign: "center", padding: "60px 0" }}>
+              <p style={{ fontSize: 20, color: C.white, fontWeight: 600, marginBottom: 12 }}>Full article coming soon.</p>
+              <p style={{ color: C.muted }}>Check back later for the complete post.</p>
+            </div>
+        }
+      </div>
+
+      <div style={{ borderTop: `1px solid ${C.border}`, marginTop: 48, paddingTop: 32, paddingBottom: 60 }}>
+        <button onClick={onBack} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", color: C.accent, fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", padding: "8px 0" }}>
+          <Icons.ArrowLeft /> Back to Blog
+        </button>
+      </div>
+    </div>
+  </>
+);
+
 // ─── HOME PAGE ───────────────────────────────────
-const HomePage = ({ navigate }) => (
+const HomePage = ({ navigate, openPost }) => (
   <>
     <div style={{ minHeight: "90vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(37,99,235,0.12) 0%, transparent 70%)" }} />
@@ -161,7 +209,7 @@ const HomePage = ({ navigate }) => (
       <STitle badge="INSIGHTS" title="From the Blog" subtitle="Practical cloud security knowledge you can apply today." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
         {blogPosts.filter(p => p.published).slice(0, 3).map(p => (
-          <BlogCard key={p.id} p={p} />
+          <BlogCard key={p.id} p={p} onClick={() => openPost(p)} />
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: 40 }}><Btn variant="outline" onClick={() => navigate("Blog")}>View All Posts <Icons.Arrow /></Btn></div>
@@ -295,7 +343,7 @@ const EducationPage = ({ navigate }) => (
 );
 
 // ─── BLOG PAGE ───────────────────────────────────
-const BlogPage = () => {
+const BlogPage = ({ openPost }) => {
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState(null);
   const [page, setPage] = useState(1);
@@ -329,7 +377,7 @@ const BlogPage = () => {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
           {paged.map(p => (
-            <BlogCard key={p.id} p={p} showAllTags />
+            <BlogCard key={p.id} p={p} showAllTags onClick={() => openPost(p)} />
           ))}
         </div>
         {paged.length === 0 && <div style={{ textAlign: "center", padding: 60, color: C.muted }}><p style={{ fontSize: 18 }}>No articles match your search.</p></div>}
@@ -431,6 +479,7 @@ export default function App() {
   const [page, setPage] = useState("Home");
   const [mob, setMob] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activePost, setActivePost] = useState(null);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 20);
@@ -438,7 +487,9 @@ export default function App() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  const navigate = (p) => { setPage(p); setMob(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const navigate = (p) => { setPage(p); setMob(false); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const openPost = (post) => { setActivePost(post); setPage("Blog"); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const closePost = () => { setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.white }}>
@@ -474,13 +525,17 @@ export default function App() {
       `}</style>
 
       {/* PAGES */}
-      <div key={page} style={{ animation: "fadeIn 0.4s ease" }}>
-        {page === "Home" && <HomePage navigate={navigate} />}
-        {page === "Consulting" && <ConsultingPage navigate={navigate} />}
-        {page === "Education" && <EducationPage navigate={navigate} />}
-        {page === "Blog" && <BlogPage />}
-        {page === "About" && <AboutPage />}
-        {page === "Connect" && <ConnectPage />}
+      <div key={activePost ? activePost.id : page} style={{ animation: "fadeIn 0.4s ease" }}>
+        {activePost ? <BlogPostView post={activePost} onBack={closePost} /> :
+          <>
+            {page === "Home" && <HomePage navigate={navigate} openPost={openPost} />}
+            {page === "Consulting" && <ConsultingPage navigate={navigate} />}
+            {page === "Education" && <EducationPage navigate={navigate} />}
+            {page === "Blog" && <BlogPage openPost={openPost} />}
+            {page === "About" && <AboutPage />}
+            {page === "Connect" && <ConnectPage />}
+          </>
+        }
       </div>
 
       {/* FOOTER */}

@@ -910,7 +910,7 @@ export default function App() {
           <>
             {page === "Home" && <HomePage navigate={navigate} openPost={openPost} />}
             {page === "Consulting" && <ConsultingPage navigate={navigate} />}
-            {page === "Education" && <EducationPage navigate={navigate} />}
+            {page === "Education" && <EducationPage content={{ testimonials }} navigate={navigate} />}
             {page === "Blog" && <BlogPage openPost={openPost} />}
             {page === "About" && <AboutPage />}
             {page === "Connect" && <ConnectPage />}

@@ -324,7 +324,7 @@ const EducationPage = ({ content: ct, navigate }) => {
         "Live training sessions",
         "Resume review",
         "Interview prep",
-        "Hands Labs",
+        "Hands on Labs",
         "Course resources & materials",
         "Final Capstone project(real-world security implementation focused"
       ],

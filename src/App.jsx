@@ -287,7 +287,7 @@ const ConsultingPage = ({ navigate }) => (
       <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.03))", border: "1px solid rgba(37,99,235,0.2)" }}>
         <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Secure Your Cloud?</h2>
         <p style={{ color: C.muted, fontSize: 17, maxWidth: 500, margin: "0 auto 32px" }}>Let's discuss your security challenges and build a strategy that fits.</p>
-        <Btn onClick={() => navigate("Connect")}>Get In Touch <Icons.Arrow /></Btn>
+        <Btn onClick={() => setEnrollCourse(course)}>Get In Touch <Icons.Arrow /></Btn>
       </Card>
     </Sec>
   </>
@@ -295,7 +295,7 @@ const ConsultingPage = ({ navigate }) => (
 
 // ─── EDUCATION PAGE ──────────────────────────────
 const EducationPage = ({ content: ct, navigate }) => {
-  const courses = [
+  const [enrollCourse, setEnrollCourse] = useState(null);
     {
       id: "c1",
       badge: "FUNDAMENTALS",
@@ -324,7 +324,7 @@ const EducationPage = ({ content: ct, navigate }) => {
         "Live training sessions",
         "Resume review",
         "Interview prep",
-        "Hands on Labs",
+        "Hands-on Labs",
         "Course resources & materials",
         "Final Capstone project(real-world security implementation focused"
       ],
@@ -424,8 +424,7 @@ const EducationPage = ({ content: ct, navigate }) => {
             }}
           >
             Hands-on training designed to take you from where you are to where
-            you want to be — taught by an Ethical Hacking Consultant with
-            real-world experience.
+            you want to be with real-world experience.
           </p>
         </div>
       </div>
@@ -715,11 +714,12 @@ const EducationPage = ({ content: ct, navigate }) => {
             Whether you're just starting out or ready to level up, there's a
             path for you.
           </p>
-          <Btn onClick={() => navigate("Connect")}>
+          <Btn <Btn onClick={() => setEnrollCourse(course)}>>
             Get In Touch <Icons.Arrow />
           </Btn>
         </Card>
       </Sec>
+   {enrollCourse && <EnrollmentForm course={enrollCourse} onClose={() => setEnrollCourse(null)} />}
     </>
   );
 };
@@ -995,11 +995,11 @@ const EnrollmentForm = ({ course, onClose }) => {
     };
 
     try {
-      await window.emailjs.send(
-        "YOUR_SERVICE_ID",    // 👈 replace with your EmailJS Service ID
-        "YOUR_TEMPLATE_ID",   // 👈 replace with your EmailJS Template ID
+      await window. emailjs.send(
+        "service_fgwi0qv",    // 👈 replace with your EmailJS Service ID
+       "template_xcsa9ib",   // 👈 replace with your EmailJS Template ID
         templateParams,
-        "YOUR_PUBLIC_KEY"     // 👈 replace with your EmailJS Public Key
+        "swg7Xlz_WGzyoBXL"    // 👈 replace with your EmailJS Public Key
       );
       setSubmitted(true);
     } catch (err) {

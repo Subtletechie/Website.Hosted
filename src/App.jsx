@@ -294,7 +294,7 @@ const ConsultingPage = ({ navigate }) => (
 );
 
 // ─── EDUCATION PAGE ──────────────────────────────
-const EducationPage// ─── EDUCATION PAGE ─────────────────────────────────────────────────────────
+
 //
 // INSTRUCTIONS:
 // In your App.jsx, find the entire EducationPage component (starts with

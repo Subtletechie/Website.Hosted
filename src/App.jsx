@@ -303,7 +303,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       label: null,
       title: "Cloud Security Fundamentals",
       desc:
-        "A fast-track, live training program for professionals who want to build a real foundation in cloud security — not just pass an exam. Taught by an Ethical Hacking Consultant with hands-on, real-world experience across AWS, Azure, and GCP.",
+        "A fast-track, live training program for professionals who want to build a real foundation in cloud security,  not just pass an exam.  With hands-on, real-world experience across AWS & Azure, .",
       duration: "4 weeks · 2x per week",
       includes: ["Live training sessions", "Course resources & materials"],
       outcomes: [],
@@ -318,13 +318,15 @@ const EducationPage = ({ content: ct, navigate }) => {
       label: "Most Comprehensive",
       title: "Azure Cloud Security",
       desc:
-        "A deep-dive 12-week live program covering Azure security architecture, identity, compliance, and threat protection — built for professionals who want to stand out in the job market with real-world skills.",
+        "A deep dive 12-week live program covering Azure security architecture, identity, compliance, and threat protection — built for professionals who want to stand out in the job market with real-world skills.",
       duration: "12 weeks",
       includes: [
         "Live training sessions",
         "Resume review",
         "Interview prep",
+        "Hands Labs"
         "Course resources & materials",
+        "Final Capstone project(real-world security implementation focused"
       ],
       outcomes: [],
       price: "$2,300",
@@ -338,13 +340,14 @@ const EducationPage = ({ content: ct, navigate }) => {
       label: null,
       title: "Mentorship — 1-on-1",
       desc:
-        "Personalized weekly sessions with an Ethical Hacking Consultant who tailors every session to your goals, your gaps, and your career trajectory. This isn't a course — it's a direct line to someone who's done it.",
+        "Personalized weekly sessions with a mentor who tailors every session to your goals, your gaps, and your career trajectory. This isn't a course,  it's a direct line to someone who's done it.",
       duration: "Weekly sessions",
       includes: [
         "Deep dive 1-on-1 sessions",
         "Resume review",
         "Interview prep",
         "Resources & materials",
+        "Capstone project tailored to your chosen niche(real-world security implementation focused)
       ],
       outcomes: [],
       price: "$599 / mo",
@@ -358,7 +361,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       label: null,
       title: "Mentorship — Group",
       desc:
-        "All the benefits of the mentorship program in a collaborative group setting. Learn alongside peers, share real-world challenges, and get expert guidance — at a more accessible price point.",
+        "All the benefits of the mentorship program in a collaborative group setting. Learn alongside peers, share real-world challenges, and get expert guidance .",
       duration: "Weekly sessions",
       includes: [
         "Group deep dive sessions",

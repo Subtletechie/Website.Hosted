@@ -602,7 +602,7 @@ const courses = [
                   {course.price}
                 </div>
                 <Btn
-                  onClick={() => navigate("Connect")}
+                  onClick={() => setEnrollCourse(course)}
                   style={
                     course.label === "Most Comprehensive"
                       ? {}

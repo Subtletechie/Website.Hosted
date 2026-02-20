@@ -574,3 +574,222 @@ export default function App() {
     </div>
   );
 }
+// ─── ENROLLMENT FORM WITH EMAILJS ────────────────
+// Paste this into App.jsx alongside your other components
+// Replace YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, YOUR_PUBLIC_KEY
+// with your real values from emailjs.com
+
+const EnrollmentForm = ({ course, onClose }) => {
+  const isMentorship = course.id === "c3" || course.id === "c4";
+  const [form, setForm] = useState({
+    name: "", email: "", linkedin: "",
+    experience: "", goal: "", start: "", question: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const valid = form.name && form.email && form.experience && form.goal;
+
+  const handleSubmit = async () => {
+    if (!valid) return;
+    setSending(true);
+    setError("");
+
+    const templateParams = {
+      course_name: course.title,
+      course_price: `$${course.price.toLocaleString()} · ${course.priceNote}`,
+      type: isMentorship ? "Mentorship Application" : "Course Enrollment",
+      name: form.name,
+      email: form.email,
+      linkedin: form.linkedin || "Not provided",
+      experience: form.experience,
+      goal: form.goal,
+      start: form.start || "Not specified",
+      question: form.question || "None",
+      to_email: "subtletechie@outlook.com",
+    };
+
+    try {
+      await window.emailjs.send(
+        "YOUR_SERVICE_ID",    // 👈 replace with your EmailJS Service ID
+        "YOUR_TEMPLATE_ID",   // 👈 replace with your EmailJS Template ID
+        templateParams,
+        "YOUR_PUBLIC_KEY"     // 👈 replace with your EmailJS Public Key
+      );
+      setSubmitted(true);
+    } catch (err) {
+      setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const fieldStyle = {
+    width: "100%", padding: "10px 14px", borderRadius: 10,
+    border: `1px solid rgba(148,163,184,0.12)`,
+    background: "rgba(255,255,255,0.04)", color: "#F1F5F9",
+    fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box",
+  };
+
+  const labelStyle = {
+    display: "block", color: "#94A3B8", fontSize: 11,
+    fontWeight: 700, marginBottom: 6,
+    textTransform: "uppercase", letterSpacing: 0.5,
+  };
+
+  return (
+    <div
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 200,
+        background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+      }}
+    >
+      <div style={{
+        background: "#111B2E", border: `1px solid rgba(37,99,235,0.25)`,
+        borderRadius: 20, padding: 40, width: "100%", maxWidth: 560,
+        position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+        maxHeight: "90vh", overflowY: "auto",
+      }}>
+        {/* Close button */}
+        <button onClick={onClose} style={{
+          position: "absolute", top: 20, right: 20,
+          background: "rgba(255,255,255,0.06)", border: "none",
+          borderRadius: 8, width: 32, height: 32, cursor: "pointer",
+          color: "#94A3B8", fontSize: 18, display: "flex",
+          alignItems: "center", justifyContent: "center",
+        }}>✕</button>
+
+        {submitted ? (
+          // ── Success state ──
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
+            <h3 style={{ color: "#F1F5F9", fontSize: 24, fontWeight: 800, margin: "0 0 12px" }}>
+              {isMentorship ? "Application Received!" : "Enrollment Request Received!"}
+            </h3>
+            <p style={{ color: "#94A3B8", fontSize: 15, lineHeight: 1.7, maxWidth: 380, margin: "0 auto 24px" }}>
+              {isMentorship
+                ? "Thanks for applying! I'll review your application and reach out within 24–48 hours to set up a quick intro call."
+                : "Thanks! I'll confirm your spot and send next steps to your email within 24–48 hours."}
+            </p>
+            <div style={{ background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", borderRadius: 12, padding: 16, marginBottom: 28 }}>
+              <p style={{ color: "#94A3B8", fontSize: 13, margin: 0 }}>
+                📧 Confirmation coming to <strong style={{ color: "#F1F5F9" }}>{form.email}</strong>
+              </p>
+            </div>
+            <Btn onClick={onClose}>Back to Courses</Btn>
+          </div>
+        ) : (
+          <>
+            {/* ── Header ── */}
+            <div style={{ marginBottom: 28 }}>
+              <span style={{
+                display: "inline-block", padding: "4px 12px", borderRadius: 20,
+                fontSize: 11, fontWeight: 700, letterSpacing: 0.5,
+                textTransform: "uppercase", background: "rgba(37,99,235,0.15)",
+                color: "#3B82F6", marginBottom: 12,
+              }}>
+                {isMentorship ? "Mentorship Application" : "Course Enrollment"}
+              </span>
+              <h2 style={{ color: "#F1F5F9", fontSize: 22, fontWeight: 800, margin: "0 0 6px" }}>
+                {course.title}
+              </h2>
+              <p style={{ color: "#94A3B8", fontSize: 14, margin: 0 }}>
+                ${course.price.toLocaleString()} · {course.sessions}
+              </p>
+            </div>
+
+            {/* ── Name + Email row ── */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Full Name <span style={{ color: "#F87171" }}>*</span></label>
+                <input value={form.name} onChange={set("name")} placeholder="Jane Smith" style={fieldStyle} />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Email <span style={{ color: "#F87171" }}>*</span></label>
+                <input type="email" value={form.email} onChange={set("email")} placeholder="you@email.com" style={fieldStyle} />
+              </div>
+            </div>
+
+            {/* ── LinkedIn (mentorship only) ── */}
+            {isMentorship && (
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>LinkedIn Profile URL</label>
+                <input value={form.linkedin} onChange={set("linkedin")} placeholder="linkedin.com/in/yourname" style={fieldStyle} />
+              </div>
+            )}
+
+            {/* ── Experience ── */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>Current Experience Level <span style={{ color: "#F87171" }}>*</span></label>
+              <select value={form.experience} onChange={set("experience")}
+                style={{ ...fieldStyle, background: "#111B2E", color: form.experience ? "#F1F5F9" : "#94A3B8" }}>
+                <option value="" disabled>Select your level...</option>
+                <option value="No cybersecurity experience yet">No cybersecurity experience yet</option>
+                <option value="Beginner (0–1 years)">Beginner (0–1 years)</option>
+                <option value="Intermediate (1–3 years)">Intermediate (1–3 years)</option>
+                <option value="Advanced (3+ years)">Advanced (3+ years)</option>
+              </select>
+            </div>
+
+            {/* ── Goal ── */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>What's your main goal? <span style={{ color: "#F87171" }}>*</span></label>
+              <textarea rows={3} value={form.goal} onChange={set("goal")}
+                placeholder={isMentorship ? "e.g. Break into cloud security, get promoted..." : "e.g. Understand Azure security for my current role..."}
+                style={{ ...fieldStyle, resize: "vertical" }} />
+            </div>
+
+            {/* ── Start timeframe ── */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>When are you looking to start?</label>
+              <select value={form.start} onChange={set("start")}
+                style={{ ...fieldStyle, background: "#111B2E", color: form.start ? "#F1F5F9" : "#94A3B8" }}>
+                <option value="" disabled>Select a timeframe...</option>
+                <option value="As soon as possible">As soon as possible</option>
+                <option value="Within 2 weeks">Within 2 weeks</option>
+                <option value="Within a month">Within a month</option>
+                <option value="Flexible">I'm flexible</option>
+              </select>
+            </div>
+
+            {/* ── Questions ── */}
+            <div style={{ marginBottom: 28 }}>
+              <label style={labelStyle}>Any questions before you enroll?</label>
+              <textarea rows={2} value={form.question} onChange={set("question")}
+                placeholder="Anything you'd like to know first..."
+                style={{ ...fieldStyle, resize: "vertical" }} />
+            </div>
+
+            {/* ── Error message ── */}
+            {error && (
+              <div style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.3)", borderRadius: 10, padding: "10px 14px", marginBottom: 16, color: "#F87171", fontSize: 13 }}>
+                {error}
+              </div>
+            )}
+
+            {/* ── Submit ── */}
+            <Btn
+              onClick={handleSubmit}
+              style={{
+                width: "100%", justifyContent: "center",
+                opacity: valid && !sending ? 1 : 0.5,
+                cursor: valid && !sending ? "pointer" : "not-allowed",
+              }}
+            >
+              {sending ? "Sending..." : isMentorship ? "Submit Application" : "Request Enrollment"}
+              {!sending && <Icons.Arrow />}
+            </Btn>
+            <p style={{ color: "#475569", fontSize: 12, textAlign: "center", marginTop: 12, marginBottom: 0 }}>
+              No payment required yet — I'll confirm your spot first.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};

@@ -294,15 +294,6 @@ const ConsultingPage = ({ navigate }) => (
 );
 
 // ─── EDUCATION PAGE ──────────────────────────────
-
-//
-// INSTRUCTIONS:
-// In your App.jsx, find the entire EducationPage component (starts with
-// "const EducationPage=..." and ends before "const BlogPage=...")
-// and REPLACE it with this entire block below.
-//
-// ─────────────────────────────────────────────────────────────────────────────
-
 const EducationPage = ({ content: ct, navigate }) => {
   const courses = [
     {

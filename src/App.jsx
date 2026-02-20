@@ -294,8 +294,8 @@ const ConsultingPage = ({ navigate }) => (
 );
 
 // ─── EDUCATION PAGE ──────────────────────────────
-const EducationPage = ({ content: ct, navigate }) => {
-  const [enrollCourse, setEnrollCourse] = useState(null);
+const [enrollCourse, setEnrollCourse] = useState(null);
+const courses = [
     {
       id: "c1",
       badge: "FUNDAMENTALS",

@@ -294,54 +294,443 @@ const ConsultingPage = ({ navigate }) => (
 );
 
 // ─── EDUCATION PAGE ──────────────────────────────
-const EducationPage = ({ navigate }) => (
-  <>
-    <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative" }}>
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)" }} />
-      <div style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}>
-        <Badge>EDUCATION</Badge>
-        <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: "20px 0 0", lineHeight: 1.1 }}>Level Up Your Cloud<br /><span style={{ color: "#10B981" }}>&amp; AI Security Skills</span></h1>
-        <p style={{ color: C.muted, fontSize: 18, lineHeight: 1.7, marginTop: 20 }}>Hands-on training designed to take you from where you are to where you want to be.</p>
-      </div>
-    </div>
-    <Sec>
-      <STitle badge="1-ON-1 MENTORSHIP" title="Personalized Cloud Security Mentorship" />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
-        {[{ t: "Structured Curriculum", d: "24-week learning path from fundamentals to advanced multi-cloud security with hands-on labs." }, { t: "Real-World Projects", d: "Build a portfolio of 15+ security projects using real cloud environments." }, { t: "Career Support", d: "Resume reviews, interview prep, LinkedIn optimization, and direct introductions." }, { t: "Flexible Scheduling", d: "Weekly 1-hour sessions plus async support via Discord between sessions." }].map((s, i) => (
-          <Card key={i}><h4 style={{ color: C.white, fontSize: 17, fontWeight: 700, margin: "0 0 10px" }}>{s.t}</h4><p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: 0 }}>{s.d}</p></Card>
-        ))}
-      </div>
-    </Sec>
-    <Sec style={{ paddingTop: 20 }}>
-      <STitle badge="WORKSHOPS" title="Workshops & Training" />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-        {[{ t: "Cloud Security Fundamentals", dur: "4 weeks", lv: "Beginner", d: "Shared responsibility model, network security, encryption, identity basics across AWS/Azure/GCP" }, { t: "RBAC & IAM Masterclass", dur: "3 weeks", lv: "Intermediate", d: "Least privilege design, role engineering, cross-cloud federation, PAM strategies" }, { t: "AI Security Essentials", dur: "3 weeks", lv: "Intermediate", d: "ML pipeline threats, prompt injection, model security, AI governance frameworks" }, { t: "Multi-Cloud Architecture", dur: "6 weeks", lv: "Advanced", d: "Designing secure architectures across AWS, Azure, and GCP. Zero trust and compliance" }].map((s, i) => (
-          <Card key={i}><div style={{ display: "flex", gap: 8, marginBottom: 14 }}><Badge>{s.lv}</Badge><Badge>{s.dur}</Badge></div><h4 style={{ color: C.white, fontSize: 18, fontWeight: 700, margin: "0 0 10px" }}>{s.t}</h4><p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: 0 }}>{s.d}</p></Card>
-        ))}
-      </div>
-    </Sec>
-    {testimonials.length > 0 && <Sec style={{ paddingTop: 20 }}>
-      <STitle badge="TESTIMONIALS" title="What Students Say" />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-        {testimonials.map((t, i) => (
-          <Card key={i}>
-            <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>{[1, 2, 3, 4, 5].map(j => <Icons.Star key={j} />)}</div>
-            <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.8, margin: "0 0 16px", fontStyle: "italic" }}>"{t.text}"</p>
-            <div><div style={{ color: C.white, fontSize: 15, fontWeight: 700 }}>{t.name}</div><div style={{ color: C.muted, fontSize: 13, marginTop: 2 }}>{t.role}</div></div>
-          </Card>
-        ))}
-      </div>
-    </Sec>}
-    <Sec style={{ paddingTop: 20 }}>
-      <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))", border: "1px solid rgba(16,185,129,0.2)" }}>
-        <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Start Learning?</h2>
-        <p style={{ color: C.muted, fontSize: 17, maxWidth: 500, margin: "0 auto 32px" }}>Whether you're just starting out or ready to level up, there's a path for you.</p>
-        <Btn onClick={() => navigate("Connect")}>Apply for Mentorship <Icons.Arrow /></Btn>
-      </Card>
-    </Sec>
-  </>
-);
+const EducationPage// ─── EDUCATION PAGE ─────────────────────────────────────────────────────────
+//
+// INSTRUCTIONS:
+// In your App.jsx, find the entire EducationPage component (starts with
+// "const EducationPage=..." and ends before "const BlogPage=...")
+// and REPLACE it with this entire block below.
+//
+// ─────────────────────────────────────────────────────────────────────────────
 
+const EducationPage = ({ content: ct, navigate }) => {
+  const courses = [
+    {
+      id: "c1",
+      badge: "FUNDAMENTALS",
+      badgeColor: "#10B981",
+      label: null,
+      title: "Cloud Security Fundamentals",
+      desc:
+        "A fast-track, live training program for professionals who want to build a real foundation in cloud security — not just pass an exam. Taught by an Ethical Hacking Consultant with hands-on, real-world experience across AWS, Azure, and GCP.",
+      duration: "4 weeks · 2x per week",
+      includes: ["Live training sessions", "Course resources & materials"],
+      outcomes: [],
+      price: "$499",
+      commitment: null,
+      cta: "Enroll Now",
+    },
+    {
+      id: "c2",
+      badge: "MOST COMPREHENSIVE",
+      badgeColor: "#2563EB",
+      label: "Most Comprehensive",
+      title: "Azure Cloud Security",
+      desc:
+        "A deep-dive 12-week live program covering Azure security architecture, identity, compliance, and threat protection — built for professionals who want to stand out in the job market with real-world skills.",
+      duration: "12 weeks",
+      includes: [
+        "Live training sessions",
+        "Resume review",
+        "Interview prep",
+        "Course resources & materials",
+      ],
+      outcomes: [],
+      price: "$2,300",
+      commitment: null,
+      cta: "Enroll Now",
+    },
+    {
+      id: "c3",
+      badge: "1-ON-1 MENTORSHIP",
+      badgeColor: "#10B981",
+      label: null,
+      title: "Mentorship — 1-on-1",
+      desc:
+        "Personalized weekly sessions with an Ethical Hacking Consultant who tailors every session to your goals, your gaps, and your career trajectory. This isn't a course — it's a direct line to someone who's done it.",
+      duration: "Weekly sessions",
+      includes: [
+        "Deep dive 1-on-1 sessions",
+        "Resume review",
+        "Interview prep",
+        "Resources & materials",
+      ],
+      outcomes: [],
+      price: "$599 / mo",
+      commitment: "3-month minimum commitment",
+      cta: "Apply Now",
+    },
+    {
+      id: "c4",
+      badge: "GROUP MENTORSHIP",
+      badgeColor: "#10B981",
+      label: null,
+      title: "Mentorship — Group",
+      desc:
+        "All the benefits of the mentorship program in a collaborative group setting. Learn alongside peers, share real-world challenges, and get expert guidance — at a more accessible price point.",
+      duration: "Weekly sessions",
+      includes: [
+        "Group deep dive sessions",
+        "Resume review",
+        "Resources & materials",
+      ],
+      outcomes: [],
+      price: "$299 / mo",
+      commitment: "3-month minimum commitment",
+      cta: "Apply Now",
+    },
+  ];
+
+  const testimonials = ct.testimonials || [];
+
+  return (
+    <>
+      {/* ── Hero ── */}
+      <div
+        style={{
+          minHeight: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}
+        >
+          <Badge>EDUCATION</Badge>
+          <h1
+            style={{
+              fontSize: "clamp(32px,5vw,56px)",
+              fontWeight: 800,
+              color: C.white,
+              margin: "20px 0 0",
+              lineHeight: 1.1,
+            }}
+          >
+            Level Up Your Cloud
+            <br />
+            <span style={{ color: "#10B981" }}>&amp; AI Security Skills</span>
+          </h1>
+          <p
+            style={{
+              color: C.muted,
+              fontSize: 18,
+              lineHeight: 1.7,
+              marginTop: 20,
+            }}
+          >
+            Hands-on training designed to take you from where you are to where
+            you want to be — taught by an Ethical Hacking Consultant with
+            real-world experience.
+          </p>
+        </div>
+      </div>
+
+      {/* ── Course Cards ── */}
+      <Sec>
+        <STitle badge="PROGRAMS" title="Choose Your Path" />
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+            gap: 24,
+          }}
+        >
+          {courses.map((course) => (
+            <Card
+              key={course.id}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: 28,
+                position: "relative",
+                ...(course.label === "Most Comprehensive"
+                  ? {
+                      border: "1px solid rgba(37,99,235,0.5)",
+                      background:
+                        "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))",
+                    }
+                  : {}),
+              }}
+            >
+              {/* Top label ribbon */}
+              {course.label && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -1,
+                    right: 20,
+                    background: "#2563EB",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    padding: "4px 12px",
+                    borderRadius: "0 0 8px 8px",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {course.label}
+                </div>
+              )}
+
+              <div>
+                {/* Badge + title */}
+                <div style={{ marginBottom: 12 }}>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: course.badgeColor,
+                      opacity: 0.9,
+                    }}
+                  >
+                    {course.badge}
+                  </span>
+                </div>
+                <h3
+                  style={{
+                    color: C.white,
+                    fontSize: 20,
+                    fontWeight: 700,
+                    margin: "0 0 10px",
+                  }}
+                >
+                  {course.title}
+                </h3>
+                <p
+                  style={{
+                    color: C.muted,
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    margin: "0 0 18px",
+                  }}
+                >
+                  {course.desc}
+                </p>
+
+                {/* Duration */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginBottom: 14,
+                  }}
+                >
+                  <span style={{ color: course.badgeColor, fontSize: 14 }}>
+                    ⏱
+                  </span>
+                  <span
+                    style={{
+                      color: C.muted,
+                      fontSize: 13,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {course.duration}
+                  </span>
+                </div>
+
+                {/* Includes */}
+                <div style={{ marginBottom: 16 }}>
+                  <div
+                    style={{
+                      color: C.white,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      marginBottom: 8,
+                      opacity: 0.6,
+                    }}
+                  >
+                    Includes
+                  </div>
+                  {course.includes.map((item, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                        marginBottom: 6,
+                      }}
+                    >
+                      <span style={{ color: course.badgeColor, fontSize: 13 }}>
+                        ✓
+                      </span>
+                      <span style={{ color: C.muted, fontSize: 13 }}>
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Commitment note */}
+                {course.commitment && (
+                  <div
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: 8,
+                      padding: "8px 12px",
+                      marginBottom: 16,
+                      fontSize: 12,
+                      color: C.muted,
+                      fontStyle: "italic",
+                    }}
+                  >
+                    📅 {course.commitment}
+                  </div>
+                )}
+              </div>
+
+              {/* Price + CTA */}
+              <div style={{ marginTop: 8 }}>
+                <div
+                  style={{
+                    color: C.white,
+                    fontSize: 22,
+                    fontWeight: 800,
+                    marginBottom: 14,
+                  }}
+                >
+                  {course.price}
+                </div>
+                <Btn
+                  onClick={() => navigate("Connect")}
+                  style={
+                    course.label === "Most Comprehensive"
+                      ? {}
+                      : {
+                          background: "rgba(16,185,129,0.15)",
+                          border: "1px solid rgba(16,185,129,0.4)",
+                          color: "#10B981",
+                        }
+                  }
+                >
+                  {course.cta} <Icons.Arrow />
+                </Btn>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </Sec>
+
+      {/* ── Testimonials (only if populated) ── */}
+      {testimonials.length > 0 && (
+        <Sec style={{ paddingTop: 20 }}>
+          <STitle badge="TESTIMONIALS" title="What Students Say" />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 24,
+            }}
+          >
+            {testimonials.map((t, i) => (
+              <Card key={i}>
+                <div
+                  style={{ display: "flex", gap: 2, marginBottom: 14 }}
+                >
+                  {[1, 2, 3, 4, 5].map((j) => (
+                    <Icons.Star key={j} />
+                  ))}
+                </div>
+                <p
+                  style={{
+                    color: C.muted,
+                    fontSize: 14,
+                    lineHeight: 1.8,
+                    margin: "0 0 16px",
+                    fontStyle: "italic",
+                  }}
+                >
+                  "{t.text}"
+                </p>
+                <div>
+                  <div
+                    style={{
+                      color: C.white,
+                      fontSize: 15,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {t.name}
+                  </div>
+                  <div
+                    style={{
+                      color: C.muted,
+                      fontSize: 13,
+                      marginTop: 2,
+                    }}
+                  >
+                    {t.role}
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </Sec>
+      )}
+
+      {/* ── CTA ── */}
+      <Sec style={{ paddingTop: 20 }}>
+        <Card
+          hover={false}
+          style={{
+            textAlign: "center",
+            padding: "60px 40px",
+            background:
+              "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))",
+            border: "1px solid rgba(16,185,129,0.2)",
+          }}
+        >
+          <h2
+            style={{
+              color: C.white,
+              fontSize: 32,
+              fontWeight: 800,
+              margin: "0 0 16px",
+            }}
+          >
+            Ready to Start Learning?
+          </h2>
+          <p
+            style={{
+              color: C.muted,
+              fontSize: 17,
+              maxWidth: 500,
+              margin: "0 auto 32px",
+            }}
+          >
+            Whether you're just starting out or ready to level up, there's a
+            path for you.
+          </p>
+          <Btn onClick={() => navigate("Connect")}>
+            Get In Touch <Icons.Arrow />
+          </Btn>
+        </Card>
+      </Sec>
+    </>
+  );
+};
+
+// ─── END OF EDUCATION PAGE ────────────────────────────────────────────────────
 // ─── BLOG PAGE ───────────────────────────────────
 const BlogPage = ({ openPost }) => {
   const [search, setSearch] = useState("");

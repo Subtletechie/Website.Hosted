@@ -347,7 +347,7 @@ const EducationPage = ({ content: ct, navigate }) => {
         "Resume review",
         "Interview prep",
         "Resources & materials",
-        "Capstone project tailored to your chosen niche(real-world security implementation focused)
+        "Capstone project tailored to your chosen niche(real-world security implementation focused)",
       ],
       outcomes: [],
       price: "$599 / mo",

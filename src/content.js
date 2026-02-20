@@ -298,4 +298,127 @@ export const siteSettings = {
   siteName: "SubtleTech",
   tagline: "Cloud Security · AI Security · Education",
   copyright: "© 2026 SubtleTech Consulting. All rights reserved.",
-};
+};// ─── COURSES ─────────────────────────────────────
+// Paste this at the bottom of content.js, above siteSettings
+
+export const courses = [
+  {
+    id: "c1",
+    title: "Cloud Security Fundamentals",
+    level: "Beginner–Intermediate",
+    levelColor: "#10B981",
+    duration: "4 Weeks · 2x per week",
+    sessions: "8 live sessions",
+    price: 599,
+    priceNote: "one-time · 8 live sessions",
+    description:
+      "A focused 4-week live program covering the core concepts, tools, and practices you need to confidently secure cloud environments.",
+    outcomes: [
+      "Core cloud security concepts and frameworks",
+      "Identify and mitigate common cloud threats",
+      "Hands-on exercises in every live session",
+      "Direct access to your instructor throughout",
+      "Course resources & reference materials",
+    ],
+    featured: false,
+    featuredLabel: "",
+    commitment: "",
+    cta: "Enroll Now",
+  },
+  {
+    id: "c2",
+    title: "Azure Cloud Security",
+    level: "Advanced",
+    levelColor: "#F87171",
+    duration: "12 Weeks · Deep Dive",
+    sessions: "Full program",
+    price: 2499,
+    priceNote: "one-time · full program",
+    description:
+      "An intensive 12-week deep dive into securing Microsoft Azure environments — built for professionals who want to master Azure security and land their next role.",
+    outcomes: [
+      "Deep-dive Azure security architecture & services",
+      "Identity, access management & compliance in Azure",
+      "Threat detection, incident response & monitoring",
+      "Hands-on labs in real Azure environments",
+      "1-on-1 resume review for Azure security roles",
+      "Interview prep with mock Q&A & expert feedback",
+      "Exclusive course resources & study materials",
+    ],
+    featured: true,
+    featuredLabel: "⭐ Most Comprehensive",
+    commitment: "",
+    cta: "Enroll Now",
+  },
+  {
+    id: "c3",
+    title: "Cybersecurity Mentorship — Personal",
+    level: "1-on-1 Mentorship",
+    levelColor: "#C084FC",
+    duration: "Weekly Sessions · Live",
+    sessions: "3-month minimum",
+    price: 699,
+    priceNote: "per month · 3-month min",
+    description:
+      "Personalized, private mentorship built around your goals. Get direct guidance from an Ethical Hacking Consultant with real-world experience.",
+    outcomes: [
+      "Weekly 1-on-1 deep dive sessions",
+      "Personalized cybersecurity career roadmap",
+      "Resume review tailored to your target roles",
+      "Interview prep & mock interview sessions",
+      "Curated resources, tools & study materials",
+      "Direct messaging support between sessions",
+    ],
+    featured: false,
+    featuredLabel: "",
+    commitment: "3-month minimum commitment required",
+    cta: "Apply Now",
+  },
+  {
+    id: "c4",
+    title: "Cybersecurity Mentorship — Group",
+    level: "Group Mentorship",
+    levelColor: "#C084FC",
+    duration: "Weekly Sessions · Live",
+    sessions: "3-month minimum",
+    price: 399,
+    priceNote: "per month · 3-month min",
+    description:
+      "All the structure of 1-on-1 mentorship in a collaborative group setting. Learn alongside peers while still getting personalized career support.",
+    outcomes: [
+      "Weekly group deep dive sessions",
+      "Peer learning & accountability community",
+      "Resume review & career direction guidance",
+      "Interview prep & group mock sessions",
+      "Curated resources, tools & study materials",
+      "Collaborative problem-solving & networking",
+    ],
+    featured: false,
+    featuredLabel: "",
+    commitment: "3-month minimum commitment required",
+    cta: "Apply Now",
+  },
+];
+
+
+// ─── EMAILJS SETUP ────────────────────────────────
+// To make the enrollment form email you at subtletechie@outlook.com:
+//
+// 1. Go to https://www.emailjs.com and create a FREE account
+// 2. Add an Email Service → connect your Outlook account
+// 3. Create an Email Template with these variables:
+//    {{course_name}}, {{name}}, {{email}}, {{linkedin}},
+//    {{experience}}, {{goal}}, {{start}}, {{question}}
+// 4. Copy your Service ID, Template ID, and Public Key
+// 5. Replace the placeholders below in your App.jsx EnrollmentForm:
+//
+//    emailjs.send(
+//      "YOUR_SERVICE_ID",      // e.g. "service_abc123"
+//      "YOUR_TEMPLATE_ID",     // e.g. "template_xyz456"
+//      templateParams,
+//      "YOUR_PUBLIC_KEY"       // e.g. "user_abc123xyz"
+//    )
+//
+// 6. Add this script to your index.html <head>:
+//    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+

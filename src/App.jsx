@@ -374,9 +374,6 @@ const courses = [
       cta: "Apply Now",
     },
   ];
-
-  const testimonials = ct.testimonials || [];
-
   return (
     <>
       {/* ── Hero ── */}
@@ -625,7 +622,7 @@ const courses = [
       </Sec>
 
       {/* ── Testimonials (only if populated) ── */}
-      {testimonials.length > 0 && (
+      {(ct.testimonials || []).length > 0 && (
         <Sec style={{ paddingTop: 20 }}>
           <STitle badge="TESTIMONIALS" title="What Students Say" />
           <div
@@ -635,7 +632,7 @@ const courses = [
               gap: 24,
             }}
           >
-            {testimonials.map((t, i) => (
+          {(ct.testimonials || []).map((t, i) => (
               <Card key={i}>
                 <div
                   style={{ display: "flex", gap: 2, marginBottom: 14 }}
@@ -714,7 +711,7 @@ const courses = [
             Whether you're just starting out or ready to level up, there's a
             path for you.
           </p>
-          <Btn <Btn onClick={() => setEnrollCourse(course)}>>
+          <Btn onClick={() => setEnrollCourse(course)}>
             Get In Touch <Icons.Arrow />
           </Btn>
         </Card>

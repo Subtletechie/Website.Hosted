@@ -980,7 +980,7 @@ const EnrollmentForm = ({ course, onClose }) => {
 
     const templateParams = {
       course_name: course.title,
-      course_price: `$${course.price.toLocaleString()} · ${course.priceNote}`,
+      course_price: `${course.price}`,
       type: isMentorship ? "Mentorship Application" : "Course Enrollment",
       name: form.name,
       email: form.email,

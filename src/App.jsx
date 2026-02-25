@@ -995,7 +995,7 @@ const EnrollmentForm = ({ course, onClose }) => {
     try {
       await window. emailjs.send(
         "service_fgwi0qv",    // 👈 replace with your EmailJS Service ID
-       ""cnu3qi3",",   // 👈 replace with your EmailJS Template ID
+       "cnu3qi3",   // 👈 replace with your EmailJS Template ID
         templateParams,
         "swg7Xlz_WGzyoBXL"    // 👈 replace with your EmailJS Public Key
       );

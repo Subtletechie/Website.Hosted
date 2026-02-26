@@ -644,7 +644,7 @@ const EnrollmentForm = ({ course, onClose }) => {
         "service_fgwi0qv",
         "template_dylm96k",
         templateParams,
-        "swg7Xlz_WGzyoBXL"
+        "swg7Xlz_WGzyoBXL7"
       );
       setSubmitted(true);
     } catch (err) {

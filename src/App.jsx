@@ -95,7 +95,7 @@ const Input = ({ label, type = "text", placeholder, textarea, value, onChange, r
   </div>
 );
 
-// ─── BLOG CARD (reusable for home + blog page) ───
+// ─── BLOG CARD ───────────────────────────────────
 const BlogCard = ({ p, showAllTags, onClick }) => (
   <Card style={{ padding: 0, overflow: "hidden" }} onClick={onClick}>
     {p.image && <div style={{ width: "100%", height: 180, overflow: "hidden" }}><img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></div>}
@@ -118,24 +118,19 @@ const BlogPostView = ({ post, onBack }) => (
       <button onClick={onBack} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", color: C.accent, fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", padding: "8px 0", marginBottom: 32 }}>
         <Icons.ArrowLeft /> Back to Blog
       </button>
-
       {post.image && (
         <div style={{ width: "100%", borderRadius: 16, overflow: "hidden", marginBottom: 32 }}>
           <img src={post.image} alt={post.title} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
       )}
-
       <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
         {post.tags.map(t => <Badge key={t}>{t}</Badge>)}
       </div>
-
       <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: C.white, margin: "0 0 16px", lineHeight: 1.2 }}>{post.title}</h1>
-
       <div style={{ display: "flex", alignItems: "center", gap: 20, color: C.muted, fontSize: 14, marginBottom: 48, paddingBottom: 32, borderBottom: `1px solid ${C.border}` }}>
         <span>{post.date}</span>
         <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Icons.Clock /> {post.read} read</span>
       </div>
-
       <div style={{ color: C.muted, fontSize: 17, lineHeight: 2 }}>
         {post.content
           ? post.content.split("\n\n").map((para, i) => (
@@ -147,7 +142,6 @@ const BlogPostView = ({ post, onBack }) => (
             </div>
         }
       </div>
-
       <div style={{ borderTop: `1px solid ${C.border}`, marginTop: 48, paddingTop: 32, paddingBottom: 60 }}>
         <button onClick={onBack} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", color: C.accent, fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", padding: "8px 0" }}>
           <Icons.ArrowLeft /> Back to Blog
@@ -176,7 +170,6 @@ const HomePage = ({ navigate, openPost }) => (
         </div>
       </div>
     </div>
-
     <Sec>
       <STitle badge="WHAT I DO" title="Security That Scales With You" subtitle="From startup to enterprise, I help teams build cloud security that actually works — not just checkboxes on an audit." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
@@ -193,7 +186,6 @@ const HomePage = ({ navigate, openPost }) => (
         ))}
       </div>
     </Sec>
-
     <Sec style={{ paddingTop: 20 }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24, textAlign: "center" }}>
         {stats.map((s, i) => (
@@ -204,7 +196,6 @@ const HomePage = ({ navigate, openPost }) => (
         ))}
       </div>
     </Sec>
-
     <Sec>
       <STitle badge="INSIGHTS" title="From the Blog" subtitle="Practical cloud security knowledge you can apply today." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
@@ -287,7 +278,7 @@ const ConsultingPage = ({ navigate }) => (
       <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.03))", border: "1px solid rgba(37,99,235,0.2)" }}>
         <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Secure Your Cloud?</h2>
         <p style={{ color: C.muted, fontSize: 17, maxWidth: 500, margin: "0 auto 32px" }}>Let's discuss your security challenges and build a strategy that fits.</p>
-        <Btn onClick={() => setEnrollCourse(course)}>Get In Touch <Icons.Arrow /></Btn>
+        <Btn onClick={() => navigate("Connect")}>Get In Touch <Icons.Arrow /></Btn>
       </Card>
     </Sec>
   </>
@@ -303,8 +294,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       badgeColor: "#10B981",
       label: null,
       title: "Cloud Security Fundamentals",
-      desc:
-        "A fast-track, live training program for professionals who want to build a real foundation in cloud security,  not just pass an exam.  With hands-on, real-world experience across AWS & Azure, .",
+      desc: "A fast-track, live training program for professionals who want to build a real foundation in cloud security, not just pass an exam. With hands-on, real-world experience across AWS & Azure.",
       duration: "4 weeks · 2x per week",
       includes: ["Live training sessions", "Course resources & materials"],
       outcomes: [],
@@ -318,8 +308,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       badgeColor: "#2563EB",
       label: "Most Comprehensive",
       title: "Azure Cloud Security",
-      desc:
-        "A deep dive 12-week live program covering Azure security architecture, identity, compliance, and threat protection — built for professionals who want to stand out in the job market with real-world skills.",
+      desc: "A deep dive 12-week live program covering Azure security architecture, identity, compliance, and threat protection — built for professionals who want to stand out in the job market with real-world skills.",
       duration: "12 weeks",
       includes: [
         "Live training sessions",
@@ -327,7 +316,7 @@ const EducationPage = ({ content: ct, navigate }) => {
         "Interview prep",
         "Hands-on Labs",
         "Course resources & materials",
-        "Final Capstone project(real-world security implementation focused"
+        "Final Capstone project (real-world security implementation)",
       ],
       outcomes: [],
       price: "$2,300",
@@ -340,15 +329,14 @@ const EducationPage = ({ content: ct, navigate }) => {
       badgeColor: "#10B981",
       label: null,
       title: "Mentorship — 1-on-1",
-      desc:
-        "Personalized weekly sessions with a mentor who tailors every session to your goals, your gaps, and your career trajectory. This isn't a course,  it's a direct line to someone who's done it.",
+      desc: "Personalized weekly sessions with a mentor who tailors every session to your goals, your gaps, and your career trajectory. This isn't a course, it's a direct line to someone who's done it.",
       duration: "Weekly sessions",
       includes: [
         "Deep dive 1-on-1 sessions",
         "Resume review",
         "Interview prep",
         "Resources & materials",
-        "Capstone project tailored to your chosen niche(real-world security implementation focused)",
+        "Capstone project tailored to your chosen niche",
       ],
       outcomes: [],
       price: "$599 / mo",
@@ -361,8 +349,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       badgeColor: "#10B981",
       label: null,
       title: "Mentorship — Group",
-      desc:
-        "All the benefits of the mentorship program in a collaborative group setting. Learn alongside peers, share real-world challenges, and get expert guidance .",
+      desc: "All the benefits of the mentorship program in a collaborative group setting. Learn alongside peers, share real-world challenges, and get expert guidance.",
       duration: "Weekly sessions",
       includes: [
         "Group deep dive sessions",
@@ -375,54 +362,20 @@ const EducationPage = ({ content: ct, navigate }) => {
       cta: "Apply Now",
     },
   ];
+
   return (
     <>
       {/* ── Hero ── */}
-      <div
-        style={{
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}
-        >
+      <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)" }} />
+        <div style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}>
           <Badge>EDUCATION</Badge>
-          <h1
-            style={{
-              fontSize: "clamp(32px,5vw,56px)",
-              fontWeight: 800,
-              color: C.white,
-              margin: "20px 0 0",
-              lineHeight: 1.1,
-            }}
-          >
-            Level Up Your Cloud
-            <br />
+          <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: "20px 0 0", lineHeight: 1.1 }}>
+            Level Up Your Cloud<br />
             <span style={{ color: "#10B981" }}>&amp; AI Security Skills</span>
           </h1>
-          <p
-            style={{
-              color: C.muted,
-              fontSize: 18,
-              lineHeight: 1.7,
-              marginTop: 20,
-            }}
-          >
-            Hands-on training designed to take you from where you are to where
-            you want to be with real-world experience.
+          <p style={{ color: C.muted, fontSize: 18, lineHeight: 1.7, marginTop: 20 }}>
+            Hands-on training designed to take you from where you are to where you want to be with real-world experience.
           </p>
         </div>
       </div>
@@ -430,189 +383,56 @@ const EducationPage = ({ content: ct, navigate }) => {
       {/* ── Course Cards ── */}
       <Sec>
         <STitle badge="PROGRAMS" title="Choose Your Path" />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-            gap: 24,
-          }}
-        >
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 24 }}>
           {courses.map((course) => (
             <Card
               key={course.id}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                padding: 28,
-                position: "relative",
-                ...(course.label === "Most Comprehensive"
-                  ? {
-                      border: "1px solid rgba(37,99,235,0.5)",
-                      background:
-                        "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))",
-                    }
-                  : {}),
+                display: "flex", flexDirection: "column", justifyContent: "space-between",
+                padding: 28, position: "relative",
+                ...(course.label === "Most Comprehensive" ? {
+                  border: "1px solid rgba(37,99,235,0.5)",
+                  background: "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))",
+                } : {}),
               }}
             >
-              {/* Top label ribbon */}
               {course.label && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -1,
-                    right: 20,
-                    background: "#2563EB",
-                    color: "#fff",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    padding: "4px 12px",
-                    borderRadius: "0 0 8px 8px",
-                    letterSpacing: "0.05em",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <div style={{ position: "absolute", top: -1, right: 20, background: "#2563EB", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: "0 0 8px 8px", letterSpacing: "0.05em", textTransform: "uppercase" }}>
                   {course.label}
                 </div>
               )}
-
               <div>
-                {/* Badge + title */}
                 <div style={{ marginBottom: 12 }}>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: course.badgeColor,
-                      opacity: 0.9,
-                    }}
-                  >
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: course.badgeColor, opacity: 0.9 }}>
                     {course.badge}
                   </span>
                 </div>
-                <h3
-                  style={{
-                    color: C.white,
-                    fontSize: 20,
-                    fontWeight: 700,
-                    margin: "0 0 10px",
-                  }}
-                >
-                  {course.title}
-                </h3>
-                <p
-                  style={{
-                    color: C.muted,
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    margin: "0 0 18px",
-                  }}
-                >
-                  {course.desc}
-                </p>
-
-                {/* Duration */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginBottom: 14,
-                  }}
-                >
-                  <span style={{ color: course.badgeColor, fontSize: 14 }}>
-                    ⏱
-                  </span>
-                  <span
-                    style={{
-                      color: C.muted,
-                      fontSize: 13,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {course.duration}
-                  </span>
+                <h3 style={{ color: C.white, fontSize: 20, fontWeight: 700, margin: "0 0 10px" }}>{course.title}</h3>
+                <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 18px" }}>{course.desc}</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                  <span style={{ color: course.badgeColor, fontSize: 14 }}>⏱</span>
+                  <span style={{ color: C.muted, fontSize: 13, fontWeight: 600 }}>{course.duration}</span>
                 </div>
-
-                {/* Includes */}
                 <div style={{ marginBottom: 16 }}>
-                  <div
-                    style={{
-                      color: C.white,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                      marginBottom: 8,
-                      opacity: 0.6,
-                    }}
-                  >
-                    Includes
-                  </div>
+                  <div style={{ color: C.white, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8, opacity: 0.6 }}>Includes</div>
                   {course.includes.map((item, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                        marginBottom: 6,
-                      }}
-                    >
-                      <span style={{ color: course.badgeColor, fontSize: 13 }}>
-                        ✓
-                      </span>
-                      <span style={{ color: C.muted, fontSize: 13 }}>
-                        {item}
-                      </span>
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                      <span style={{ color: course.badgeColor, fontSize: 13 }}>✓</span>
+                      <span style={{ color: C.muted, fontSize: 13 }}>{item}</span>
                     </div>
                   ))}
                 </div>
-
-                {/* Commitment note */}
                 {course.commitment && (
-                  <div
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      borderRadius: 8,
-                      padding: "8px 12px",
-                      marginBottom: 16,
-                      fontSize: 12,
-                      color: C.muted,
-                      fontStyle: "italic",
-                    }}
-                  >
+                  <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "8px 12px", marginBottom: 16, fontSize: 12, color: C.muted, fontStyle: "italic" }}>
                     📅 {course.commitment}
                   </div>
                 )}
               </div>
-
-              {/* Price + CTA */}
               <div style={{ marginTop: 8 }}>
-                <div
-                  style={{
-                    color: C.white,
-                    fontSize: 22,
-                    fontWeight: 800,
-                    marginBottom: 14,
-                  }}
-                >
-                  {course.price}
-                </div>
+                <div style={{ color: C.white, fontSize: 22, fontWeight: 800, marginBottom: 14 }}>{course.price}</div>
                 <Btn
                   onClick={() => setEnrollCourse(course)}
-                  style={
-                    course.label === "Most Comprehensive"
-                      ? {}
-                      : {
-                          background: "rgba(16,185,129,0.15)",
-                          border: "1px solid rgba(16,185,129,0.4)",
-                          color: "#10B981",
-                        }
-                  }
+                  style={course.label === "Most Comprehensive" ? {} : { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.4)", color: "#10B981" }}
                 >
                   {course.cta} <Icons.Arrow />
                 </Btn>
@@ -622,56 +442,20 @@ const EducationPage = ({ content: ct, navigate }) => {
         </div>
       </Sec>
 
-      {/* ── Testimonials (only if populated) ── */}
+      {/* ── Testimonials ── */}
       {(ct.testimonials || []).length > 0 && (
         <Sec style={{ paddingTop: 20 }}>
           <STitle badge="TESTIMONIALS" title="What Students Say" />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: 24,
-            }}
-          >
-          {(ct.testimonials || []).map((t, i) => (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+            {(ct.testimonials || []).map((t, i) => (
               <Card key={i}>
-                <div
-                  style={{ display: "flex", gap: 2, marginBottom: 14 }}
-                >
-                  {[1, 2, 3, 4, 5].map((j) => (
-                    <Icons.Star key={j} />
-                  ))}
+                <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>
+                  {[1, 2, 3, 4, 5].map((j) => <Icons.Star key={j} />)}
                 </div>
-                <p
-                  style={{
-                    color: C.muted,
-                    fontSize: 14,
-                    lineHeight: 1.8,
-                    margin: "0 0 16px",
-                    fontStyle: "italic",
-                  }}
-                >
-                  "{t.text}"
-                </p>
+                <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.8, margin: "0 0 16px", fontStyle: "italic" }}>"{t.text}"</p>
                 <div>
-                  <div
-                    style={{
-                      color: C.white,
-                      fontSize: 15,
-                      fontWeight: 700,
-                    }}
-                  >
-                    {t.name}
-                  </div>
-                  <div
-                    style={{
-                      color: C.muted,
-                      fontSize: 13,
-                      marginTop: 2,
-                    }}
-                  >
-                    {t.role}
-                  </div>
+                  <div style={{ color: C.white, fontSize: 15, fontWeight: 700 }}>{t.name}</div>
+                  <div style={{ color: C.muted, fontSize: 13, marginTop: 2 }}>{t.role}</div>
                 </div>
               </Card>
             ))}
@@ -681,48 +465,20 @@ const EducationPage = ({ content: ct, navigate }) => {
 
       {/* ── CTA ── */}
       <Sec style={{ paddingTop: 20 }}>
-        <Card
-          hover={false}
-          style={{
-            textAlign: "center",
-            padding: "60px 40px",
-            background:
-              "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))",
-            border: "1px solid rgba(16,185,129,0.2)",
-          }}
-        >
-          <h2
-            style={{
-              color: C.white,
-              fontSize: 32,
-              fontWeight: 800,
-              margin: "0 0 16px",
-            }}
-          >
-            Ready to Start Learning?
-          </h2>
-          <p
-            style={{
-              color: C.muted,
-              fontSize: 17,
-              maxWidth: 500,
-              margin: "0 auto 32px",
-            }}
-          >
-            Whether you're just starting out or ready to level up, there's a
-            path for you.
+        <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))", border: "1px solid rgba(16,185,129,0.2)" }}>
+          <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Start Learning?</h2>
+          <p style={{ color: C.muted, fontSize: 17, maxWidth: 500, margin: "0 auto 32px" }}>
+            Whether you're just starting out or ready to level up, there's a path for you.
           </p>
-          <Btn onClick={() => setEnrollCourse(course)}>
-            Get In Touch <Icons.Arrow />
-          </Btn>
+          <Btn onClick={() => navigate("Connect")}>Get In Touch <Icons.Arrow /></Btn>
         </Card>
       </Sec>
-   {enrollCourse && <EnrollmentForm course={enrollCourse} onClose={() => setEnrollCourse(null)} />}
+
+      {enrollCourse && <EnrollmentForm course={enrollCourse} onClose={() => setEnrollCourse(null)} />}
     </>
   );
 };
 
-// ─── END OF EDUCATION PAGE ────────────────────────────────────────────────────
 // ─── BLOG PAGE ───────────────────────────────────
 const BlogPage = ({ openPost }) => {
   const [search, setSearch] = useState("");
@@ -757,9 +513,7 @@ const BlogPage = ({ openPost }) => {
           {ALL_TAGS.map(t => <button key={t} onClick={() => { setActiveTag(activeTag === t ? null : t); setPage(1); }} style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, cursor: "pointer", border: `1px solid ${activeTag === t ? C.accent : C.border}`, background: activeTag === t ? C.accent : "transparent", color: activeTag === t ? "#fff" : C.muted, fontFamily: "inherit" }}>{t}</button>)}
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
-          {paged.map(p => (
-            <BlogCard key={p.id} p={p} showAllTags onClick={() => openPost(p)} />
-          ))}
+          {paged.map(p => <BlogCard key={p.id} p={p} showAllTags onClick={() => openPost(p)} />)}
         </div>
         {paged.length === 0 && <div style={{ textAlign: "center", padding: 60, color: C.muted }}><p style={{ fontSize: 18 }}>No articles match your search.</p></div>}
         {totalPages > 1 && <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 40 }}>{Array.from({ length: totalPages }, (_, i) => i + 1).map(n => <button key={n} onClick={() => setPage(n)} style={{ width: 40, height: 40, borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", border: n === page ? "none" : `1px solid ${C.border}`, fontFamily: "inherit", background: n === page ? C.accent : "transparent", color: n === page ? "#fff" : C.muted }}>{n}</button>)}</div>}
@@ -855,6 +609,172 @@ const ConnectPage = () => {
   );
 };
 
+// ─── ENROLLMENT FORM ─────────────────────────────
+const EnrollmentForm = ({ course, onClose }) => {
+  const isMentorship = course.id === "c3" || course.id === "c4";
+  const [form, setForm] = useState({ name: "", email: "", linkedin: "", experience: "", goal: "", start: "", question: "" });
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const valid = form.name && form.email && form.experience && form.goal;
+
+  const handleSubmit = async () => {
+    if (!valid) return;
+    setSending(true);
+    setError("");
+
+    const templateParams = {
+      course_name: course.title,
+      course_price: `${course.price}`,
+      type: isMentorship ? "Mentorship Application" : "Course Enrollment",
+      name: form.name,
+      email: form.email,
+      linkedin: form.linkedin || "Not provided",
+      experience: form.experience,
+      goal: form.goal,
+      start: form.start || "Not specified",
+      question: form.question || "None",
+      to_email: "subtletechie@outlook.com",
+    };
+
+    try {
+      await window.emailjs.send(
+        "service_fgwi0qv",
+        "template_dylm96k",
+        templateParams,
+        "swg7Xlz_WGzyoBXL"
+      );
+      setSubmitted(true);
+    } catch (err) {
+      setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const fieldStyle = {
+    width: "100%", padding: "10px 14px", borderRadius: 10,
+    border: "1px solid rgba(148,163,184,0.12)",
+    background: "rgba(255,255,255,0.04)", color: "#F1F5F9",
+    fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box",
+  };
+
+  const labelStyle = {
+    display: "block", color: "#94A3B8", fontSize: 11,
+    fontWeight: 700, marginBottom: 6,
+    textTransform: "uppercase", letterSpacing: 0.5,
+  };
+
+  return (
+    <div
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}
+    >
+      <div style={{ background: "#111B2E", border: "1px solid rgba(37,99,235,0.25)", borderRadius: 20, padding: 40, width: "100%", maxWidth: 560, position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.5)", maxHeight: "90vh", overflowY: "auto" }}>
+        <button onClick={onClose} style={{ position: "absolute", top: 20, right: 20, background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 8, width: 32, height: 32, cursor: "pointer", color: "#94A3B8", fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+
+        {submitted ? (
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
+            <h3 style={{ color: "#F1F5F9", fontSize: 24, fontWeight: 800, margin: "0 0 12px" }}>
+              {isMentorship ? "Application Received!" : "Enrollment Request Received!"}
+            </h3>
+            <p style={{ color: "#94A3B8", fontSize: 15, lineHeight: 1.7, maxWidth: 380, margin: "0 auto 24px" }}>
+              {isMentorship
+                ? "Thanks for applying! I'll review your application and reach out within 24–48 hours to set up a quick intro call."
+                : "Thanks! I'll confirm your spot and send next steps to your email within 24–48 hours."}
+            </p>
+            <div style={{ background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", borderRadius: 12, padding: 16, marginBottom: 28 }}>
+              <p style={{ color: "#94A3B8", fontSize: 13, margin: 0 }}>
+                📧 Confirmation coming to <strong style={{ color: "#F1F5F9" }}>{form.email}</strong>
+              </p>
+            </div>
+            <Btn onClick={onClose}>Back to Courses</Btn>
+          </div>
+        ) : (
+          <>
+            <div style={{ marginBottom: 28 }}>
+              <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: 0.5, textTransform: "uppercase", background: "rgba(37,99,235,0.15)", color: "#3B82F6", marginBottom: 12 }}>
+                {isMentorship ? "Mentorship Application" : "Course Enrollment"}
+              </span>
+              <h2 style={{ color: "#F1F5F9", fontSize: 22, fontWeight: 800, margin: "0 0 6px" }}>{course.title}</h2>
+              <p style={{ color: "#94A3B8", fontSize: 14, margin: 0 }}>{course.price}</p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Full Name <span style={{ color: "#F87171" }}>*</span></label>
+                <input value={form.name} onChange={set("name")} placeholder="Jane Smith" style={fieldStyle} />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>Email <span style={{ color: "#F87171" }}>*</span></label>
+                <input type="email" value={form.email} onChange={set("email")} placeholder="you@email.com" style={fieldStyle} />
+              </div>
+            </div>
+
+            {isMentorship && (
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>LinkedIn Profile URL</label>
+                <input value={form.linkedin} onChange={set("linkedin")} placeholder="linkedin.com/in/yourname" style={fieldStyle} />
+              </div>
+            )}
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>Current Experience Level <span style={{ color: "#F87171" }}>*</span></label>
+              <select value={form.experience} onChange={set("experience")} style={{ ...fieldStyle, background: "#111B2E", color: form.experience ? "#F1F5F9" : "#94A3B8" }}>
+                <option value="" disabled>Select your level...</option>
+                <option value="No cybersecurity experience yet">No cybersecurity experience yet</option>
+                <option value="Beginner (0–1 years)">Beginner (0–1 years)</option>
+                <option value="Intermediate (1–3 years)">Intermediate (1–3 years)</option>
+                <option value="Advanced (3+ years)">Advanced (3+ years)</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>What's your main goal? <span style={{ color: "#F87171" }}>*</span></label>
+              <textarea rows={3} value={form.goal} onChange={set("goal")}
+                placeholder={isMentorship ? "e.g. Break into cloud security, get promoted..." : "e.g. Understand Azure security for my current role..."}
+                style={{ ...fieldStyle, resize: "vertical" }} />
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={labelStyle}>When are you looking to start?</label>
+              <select value={form.start} onChange={set("start")} style={{ ...fieldStyle, background: "#111B2E", color: form.start ? "#F1F5F9" : "#94A3B8" }}>
+                <option value="" disabled>Select a timeframe...</option>
+                <option value="As soon as possible">As soon as possible</option>
+                <option value="Within 2 weeks">Within 2 weeks</option>
+                <option value="Within a month">Within a month</option>
+                <option value="Flexible">I'm flexible</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: 28 }}>
+              <label style={labelStyle}>Any questions before you enroll?</label>
+              <textarea rows={2} value={form.question} onChange={set("question")} placeholder="Anything you'd like to know first..." style={{ ...fieldStyle, resize: "vertical" }} />
+            </div>
+
+            {error && (
+              <div style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.3)", borderRadius: 10, padding: "10px 14px", marginBottom: 16, color: "#F87171", fontSize: 13 }}>
+                {error}
+              </div>
+            )}
+
+            <Btn onClick={handleSubmit} style={{ width: "100%", justifyContent: "center", opacity: valid && !sending ? 1 : 0.5, cursor: valid && !sending ? "pointer" : "not-allowed" }}>
+              {sending ? "Sending..." : isMentorship ? "Submit Application" : "Request Enrollment"}
+              {!sending && <Icons.Arrow />}
+            </Btn>
+            <p style={{ color: "#475569", fontSize: 12, textAlign: "center", marginTop: 12, marginBottom: 0 }}>
+              No payment required yet — I'll confirm your spot first.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // ─── MAIN APP ────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState("Home");
@@ -881,17 +801,12 @@ export default function App() {
             <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${C.accent}, #1D4ED8)`, display: "flex", alignItems: "center", justifyContent: "center" }}><Icons.Shield /></div>
             <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: "-0.02em" }}>{siteSettings.siteName.replace("Tech", "")}<span style={{ color: C.accent }}>Tech</span></span>
           </div>
-
-          {/* Desktop */}
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ padding: "8px 16px", borderRadius: 8, fontSize: 14, fontWeight: 500, cursor: "pointer", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted, border: "none", fontFamily: "inherit", transition: "all 0.2s" }}>{p}</button>)}
             <Btn style={{ marginLeft: 8, padding: "10px 22px", fontSize: 14 }} onClick={() => navigate("Connect")}>Get Started</Btn>
           </div>
-
-          {/* Mobile */}
           <button onClick={() => setMob(!mob)} className="mobile-toggle" style={{ display: "none", background: "none", border: "none", color: C.white, cursor: "pointer", padding: 8 }}>{mob ? <Icons.X /> : <Icons.Menu />}</button>
         </div>
-
         {mob && (
           <div style={{ position: "absolute", top: 72, left: 0, right: 0, background: C.bgNav, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "16px 24px", animation: "fadeIn 0.2s" }}>
             {PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", borderRadius: 8, fontSize: 15, fontWeight: 500, cursor: "pointer", border: "none", fontFamily: "inherit", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted }}>{p}</button>)}
@@ -955,222 +870,3 @@ export default function App() {
     </div>
   );
 }
-// ─── ENROLLMENT FORM WITH EMAILJS ────────────────
-// Paste this into App.jsx alongside your other components
-// Replace YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, YOUR_PUBLIC_KEY
-// with your real values from emailjs.com
-
-const EnrollmentForm = ({ course, onClose }) => {
-  const isMentorship = course.id === "c3" || course.id === "c4";
-  const [form, setForm] = useState({
-    name: "", email: "", linkedin: "",
-    experience: "", goal: "", start: "", question: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
-
-  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
-  const valid = form.name && form.email && form.experience && form.goal;
-
-  const handleSubmit = async () => {
-    if (!valid) return;
-    setSending(true);
-    setError("");
-
-    const templateParams = {
-      course_name: course.title,
-      course_price: `${course.price}`,
-      type: isMentorship ? "Mentorship Application" : "Course Enrollment",
-      name: form.name,
-      email: form.email,
-      linkedin: form.linkedin || "Not provided",
-      experience: form.experience,
-      goal: form.goal,
-      start: form.start || "Not specified",
-      question: form.question || "None",
-      to_email: "subtletechie@outlook.com",
-    };
-
-    try {
-      await window.emailjs.send(
-        "service_fgwi0qv",    // 👈 replace with your EmailJS Service ID
-       "dylm96k",   // 👈 replace with your EmailJS Template ID
-        templateParams,
-        "swg7Xlz_WGzyoBXL"    // 👈 replace with your EmailJS Public Key
-      );
-      setSubmitted(true);
-    } catch (err) {
-      setError("Something went wrong. Please email subtletechie@outlook.com directly.");
-    } finally {
-      setSending(false);
-    }
-  };
-
-  const fieldStyle = {
-    width: "100%", padding: "10px 14px", borderRadius: 10,
-    border: `1px solid rgba(148,163,184,0.12)`,
-    background: "rgba(255,255,255,0.04)", color: "#F1F5F9",
-    fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box",
-  };
-
-  const labelStyle = {
-    display: "block", color: "#94A3B8", fontSize: 11,
-    fontWeight: 700, marginBottom: 6,
-    textTransform: "uppercase", letterSpacing: 0.5,
-  };
-
-  return (
-    <div
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      style={{
-        position: "fixed", inset: 0, zIndex: 200,
-        background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 24,
-      }}
-    >
-      <div style={{
-        background: "#111B2E", border: `1px solid rgba(37,99,235,0.25)`,
-        borderRadius: 20, padding: 40, width: "100%", maxWidth: 560,
-        position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
-        maxHeight: "90vh", overflowY: "auto",
-      }}>
-        {/* Close button */}
-        <button onClick={onClose} style={{
-          position: "absolute", top: 20, right: 20,
-          background: "rgba(255,255,255,0.06)", border: "none",
-          borderRadius: 8, width: 32, height: 32, cursor: "pointer",
-          color: "#94A3B8", fontSize: 18, display: "flex",
-          alignItems: "center", justifyContent: "center",
-        }}>✕</button>
-
-        {submitted ? (
-          // ── Success state ──
-          <div style={{ textAlign: "center", padding: "20px 0" }}>
-            <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
-            <h3 style={{ color: "#F1F5F9", fontSize: 24, fontWeight: 800, margin: "0 0 12px" }}>
-              {isMentorship ? "Application Received!" : "Enrollment Request Received!"}
-            </h3>
-            <p style={{ color: "#94A3B8", fontSize: 15, lineHeight: 1.7, maxWidth: 380, margin: "0 auto 24px" }}>
-              {isMentorship
-                ? "Thanks for applying! I'll review your application and reach out within 24–48 hours to set up a quick intro call."
-                : "Thanks! I'll confirm your spot and send next steps to your email within 24–48 hours."}
-            </p>
-            <div style={{ background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", borderRadius: 12, padding: 16, marginBottom: 28 }}>
-              <p style={{ color: "#94A3B8", fontSize: 13, margin: 0 }}>
-                📧 Confirmation coming to <strong style={{ color: "#F1F5F9" }}>{form.email}</strong>
-              </p>
-            </div>
-            <Btn onClick={onClose}>Back to Courses</Btn>
-          </div>
-        ) : (
-          <>
-            {/* ── Header ── */}
-            <div style={{ marginBottom: 28 }}>
-              <span style={{
-                display: "inline-block", padding: "4px 12px", borderRadius: 20,
-                fontSize: 11, fontWeight: 700, letterSpacing: 0.5,
-                textTransform: "uppercase", background: "rgba(37,99,235,0.15)",
-                color: "#3B82F6", marginBottom: 12,
-              }}>
-                {isMentorship ? "Mentorship Application" : "Course Enrollment"}
-              </span>
-              <h2 style={{ color: "#F1F5F9", fontSize: 22, fontWeight: 800, margin: "0 0 6px" }}>
-                {course.title}
-              </h2>
-              <p style={{ color: "#94A3B8", fontSize: 14, margin: 0 }}>
-                ${course.price.toLocaleString()} · {course.sessions}
-              </p>
-            </div>
-
-            {/* ── Name + Email row ── */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
-              <div style={{ marginBottom: 16 }}>
-                <label style={labelStyle}>Full Name <span style={{ color: "#F87171" }}>*</span></label>
-                <input value={form.name} onChange={set("name")} placeholder="Jane Smith" style={fieldStyle} />
-              </div>
-              <div style={{ marginBottom: 16 }}>
-                <label style={labelStyle}>Email <span style={{ color: "#F87171" }}>*</span></label>
-                <input type="email" value={form.email} onChange={set("email")} placeholder="you@email.com" style={fieldStyle} />
-              </div>
-            </div>
-
-            {/* ── LinkedIn (mentorship only) ── */}
-            {isMentorship && (
-              <div style={{ marginBottom: 16 }}>
-                <label style={labelStyle}>LinkedIn Profile URL</label>
-                <input value={form.linkedin} onChange={set("linkedin")} placeholder="linkedin.com/in/yourname" style={fieldStyle} />
-              </div>
-            )}
-
-            {/* ── Experience ── */}
-            <div style={{ marginBottom: 16 }}>
-              <label style={labelStyle}>Current Experience Level <span style={{ color: "#F87171" }}>*</span></label>
-              <select value={form.experience} onChange={set("experience")}
-                style={{ ...fieldStyle, background: "#111B2E", color: form.experience ? "#F1F5F9" : "#94A3B8" }}>
-                <option value="" disabled>Select your level...</option>
-                <option value="No cybersecurity experience yet">No cybersecurity experience yet</option>
-                <option value="Beginner (0–1 years)">Beginner (0–1 years)</option>
-                <option value="Intermediate (1–3 years)">Intermediate (1–3 years)</option>
-                <option value="Advanced (3+ years)">Advanced (3+ years)</option>
-              </select>
-            </div>
-
-            {/* ── Goal ── */}
-            <div style={{ marginBottom: 16 }}>
-              <label style={labelStyle}>What's your main goal? <span style={{ color: "#F87171" }}>*</span></label>
-              <textarea rows={3} value={form.goal} onChange={set("goal")}
-                placeholder={isMentorship ? "e.g. Break into cloud security, get promoted..." : "e.g. Understand Azure security for my current role..."}
-                style={{ ...fieldStyle, resize: "vertical" }} />
-            </div>
-
-            {/* ── Start timeframe ── */}
-            <div style={{ marginBottom: 16 }}>
-              <label style={labelStyle}>When are you looking to start?</label>
-              <select value={form.start} onChange={set("start")}
-                style={{ ...fieldStyle, background: "#111B2E", color: form.start ? "#F1F5F9" : "#94A3B8" }}>
-                <option value="" disabled>Select a timeframe...</option>
-                <option value="As soon as possible">As soon as possible</option>
-                <option value="Within 2 weeks">Within 2 weeks</option>
-                <option value="Within a month">Within a month</option>
-                <option value="Flexible">I'm flexible</option>
-              </select>
-            </div>
-
-            {/* ── Questions ── */}
-            <div style={{ marginBottom: 28 }}>
-              <label style={labelStyle}>Any questions before you enroll?</label>
-              <textarea rows={2} value={form.question} onChange={set("question")}
-                placeholder="Anything you'd like to know first..."
-                style={{ ...fieldStyle, resize: "vertical" }} />
-            </div>
-
-            {/* ── Error message ── */}
-            {error && (
-              <div style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.3)", borderRadius: 10, padding: "10px 14px", marginBottom: 16, color: "#F87171", fontSize: 13 }}>
-                {error}
-              </div>
-            )}
-
-            {/* ── Submit ── */}
-            <Btn
-              onClick={handleSubmit}
-              style={{
-                width: "100%", justifyContent: "center",
-                opacity: valid && !sending ? 1 : 0.5,
-                cursor: valid && !sending ? "pointer" : "not-allowed",
-              }}
-            >
-              {sending ? "Sending..." : isMentorship ? "Submit Application" : "Request Enrollment"}
-              {!sending && <Icons.Arrow />}
-            </Btn>
-            <p style={{ color: "#475569", fontSize: 12, textAlign: "center", marginTop: 12, marginBottom: 0 }}>
-              No payment required yet — I'll confirm your spot first.
-            </p>
-          </>
-        )}
-      </div>
-    </div>
-  );
-};

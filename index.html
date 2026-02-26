@@ -18,10 +18,15 @@
       ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.3); }
       input::placeholder, textarea::placeholder { color: rgba(148,163,184,0.5); }
       @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  </head>
-  <body>
+   </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  window.addEventListener('load', function() {
+    emailjs.init("swg7Xlz_WGzyoBXL");
+  });
+</script>
+</head>
+<body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

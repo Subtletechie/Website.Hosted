@@ -641,7 +641,7 @@ const EnrollmentForm = ({ course, onClose }) => {
 
     try {
       await window.emailjs.send(
-        "service_fgwi0qv",
+        "service_jd6zlfb",
         "template_dylm96k",
         templateParams,
         "swg7Xlz_WGzyoBXL7"

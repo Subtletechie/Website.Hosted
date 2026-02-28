@@ -640,19 +640,27 @@ const EnrollmentForm = ({ course, onClose }) => {
     };
 
     try {
-      await window.emailjs.send(
-        "service_jd6zlfb",
-        "template_7dmislk",
-        templateParams,
-        "swg7Xlz_WGzyoBXL7"
-      );
-      setSubmitted(true);
-    } catch (err) {
-      setError("Something went wrong. Please email subtletechie@outlook.com directly.");
-    } finally {
-      setSending(false);
-    }
-  };
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      access_key: "124aeab2-ef7f-40e5-9a86-6955c5a3577a",
+      subject: `New ${templateParams.type} - ${templateParams.course_name}`,
+      from_name: templateParams.name,
+      ...templateParams
+    })
+  });
+  const data = await response.json();
+  if (data.success) {
+    setSubmitted(true);
+  } else {
+    setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+  }
+} catch (err) {
+  setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+} finally {
+  setSending(false);
+}
 
   const fieldStyle = {
     width: "100%", padding: "10px 14px", borderRadius: 10,

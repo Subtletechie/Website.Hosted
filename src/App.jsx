@@ -365,7 +365,6 @@ const EducationPage = ({ content: ct, navigate }) => {
 
   return (
     <>
-      {/* ── Hero ── */}
       <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)" }} />
         <div style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}>
@@ -380,7 +379,6 @@ const EducationPage = ({ content: ct, navigate }) => {
         </div>
       </div>
 
-      {/* ── Course Cards ── */}
       <Sec>
         <STitle badge="PROGRAMS" title="Choose Your Path" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 24 }}>
@@ -442,7 +440,6 @@ const EducationPage = ({ content: ct, navigate }) => {
         </div>
       </Sec>
 
-      {/* ── Testimonials ── */}
       {(ct.testimonials || []).length > 0 && (
         <Sec style={{ paddingTop: 20 }}>
           <STitle badge="TESTIMONIALS" title="What Students Say" />
@@ -463,7 +460,6 @@ const EducationPage = ({ content: ct, navigate }) => {
         </Sec>
       )}
 
-      {/* ── CTA ── */}
       <Sec style={{ paddingTop: 20 }}>
         <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))", border: "1px solid rgba(16,185,129,0.2)" }}>
           <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Start Learning?</h2>
@@ -625,42 +621,38 @@ const EnrollmentForm = ({ course, onClose }) => {
     setSending(true);
     setError("");
 
-    const templateParams = {
-      course_name: course.title,
-      course_price: `${course.price}`,
-      type: isMentorship ? "Mentorship Application" : "Course Enrollment",
-      name: form.name,
-      email: form.email,
-      linkedin: form.linkedin || "Not provided",
-      experience: form.experience,
-      goal: form.goal,
-      start: form.start || "Not specified",
-      question: form.question || "None",
-      to_email: "subtletechie@outlook.com",
-    };
-
     try {
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      access_key: "124aeab2-ef7f-40e5-9a86-6955c5a3577a",
-      subject: `New ${templateParams.type} - ${templateParams.course_name}`,
-      from_name: templateParams.name,
-      ...templateParams
-    })
-  });
-  const data = await response.json();
-  if (data.success) {
-    setSubmitted(true);
-  } else {
-    setError("Something went wrong. Please email subtletechie@outlook.com directly.");
-  }
-} catch (err) {
-  setError("Something went wrong. Please email subtletechie@outlook.com directly.");
-} finally {
-  setSending(false);
-}
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "124aeab2-ef7f-40e5-9a86-6955c5a3577a",
+          subject: `New ${isMentorship ? "Mentorship Application" : "Course Enrollment"} - ${course.title}`,
+          from_name: form.name,
+          name: form.name,
+          email: form.email,
+          course_name: course.title,
+          course_price: course.price,
+          type: isMentorship ? "Mentorship Application" : "Course Enrollment",
+          linkedin: form.linkedin || "Not provided",
+          experience: form.experience,
+          goal: form.goal,
+          start: form.start || "Not specified",
+          question: form.question || "None",
+        })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please email subtletechie@outlook.com directly.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   const fieldStyle = {
     width: "100%", padding: "10px 14px", borderRadius: 10,
@@ -802,7 +794,6 @@ export default function App() {
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.white }}>
-      {/* NAV */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 24px", background: scrolled ? C.bgNav : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent", transition: "all 0.3s" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
           <div onClick={() => navigate("Home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
@@ -828,7 +819,6 @@ export default function App() {
         @media (min-width: 769px) { .mobile-toggle { display: none !important; } }
       `}</style>
 
-      {/* PAGES */}
       <div key={activePost ? activePost.id : page} style={{ animation: "fadeIn 0.4s ease" }}>
         {activePost ? <BlogPostView post={activePost} onBack={closePost} /> :
           <>
@@ -842,7 +832,6 @@ export default function App() {
         }
       </div>
 
-      {/* FOOTER */}
       <footer style={{ borderTop: `1px solid ${C.border}`, background: C.bgCard, marginTop: 40 }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px 40px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 40, marginBottom: 40 }}>

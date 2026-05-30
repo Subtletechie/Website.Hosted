@@ -420,6 +420,32 @@ const EducationPage = ({ content: ct, navigate }) => {
       commitment: "3-month minimum commitment",
       cta: "Apply Now",
     },
+    {
+      id: "c5",
+      badge: "AI SECURITY",
+      badgeColor: "#F59E0B",
+      label: "New Course",
+      labelColor: "#F59E0B",
+      title: "AI Security Engineering",
+      desc: "A comprehensive 12-week program covering the full spectrum of AI security engineering — from securing ML pipelines and LLM applications to building AI governance frameworks used in enterprise environments.",
+      duration: "12 weeks · Deep Dive",
+      includes: [
+        "AI/ML threat modeling & attack surface analysis",
+        "Securing LLMs against prompt injection & data leakage",
+        "ML pipeline security: data, training & deployment",
+        "AI governance frameworks & risk management",
+        "Hands-on labs with real AI security tooling",
+        "Resume review for AI security roles",
+        "Interview prep & mock Q&A",
+        "Exclusive course resources & study materials",
+      ],
+      outcomes: [],
+      price: "$2,700",
+      originalPrice: "$3,000",
+      promoNote: "Limited-time promo — save $300",
+      commitment: null,
+      cta: "Enroll Now",
+    },
   ];
 
   return (
@@ -450,11 +476,14 @@ const EducationPage = ({ content: ct, navigate }) => {
                 ...(course.label === "Most Comprehensive" ? {
                   border: "1px solid rgba(37,99,235,0.5)",
                   background: "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))",
+                } : course.id === "c5" ? {
+                  border: "1px solid rgba(245,158,11,0.5)",
+                  background: "linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.01))",
                 } : {}),
               }}
             >
               {course.label && (
-                <div style={{ position: "absolute", top: -1, right: 20, background: "#2563EB", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: "0 0 8px 8px", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                <div style={{ position: "absolute", top: -1, right: 20, background: course.id === "c5" ? "#F59E0B" : "#2563EB", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: "0 0 8px 8px", letterSpacing: "0.05em", textTransform: "uppercase" }}>
                   {course.label}
                 </div>
               )}
@@ -486,10 +515,18 @@ const EducationPage = ({ content: ct, navigate }) => {
                 )}
               </div>
               <div style={{ marginTop: 8 }}>
-                <div style={{ color: C.white, fontSize: 22, fontWeight: 800, marginBottom: 14 }}>{course.price}</div>
+                <div style={{ marginBottom: 14 }}>
+                  {course.originalPrice && (
+                    <span style={{ color: C.muted, fontSize: 15, textDecoration: "line-through", marginRight: 8 }}>{course.originalPrice}</span>
+                  )}
+                  <span style={{ color: C.white, fontSize: 22, fontWeight: 800 }}>{course.price}</span>
+                  {course.promoNote && (
+                    <div style={{ color: "#F59E0B", fontSize: 12, fontWeight: 600, marginTop: 4 }}>🔥 {course.promoNote}</div>
+                  )}
+                </div>
                 <Btn
                   onClick={() => setEnrollCourse(course)}
-                  style={course.label === "Most Comprehensive" ? {} : { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.4)", color: "#10B981" }}
+                  style={course.label === "Most Comprehensive" ? {} : course.id === "c5" ? { background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.4)", color: "#F59E0B" } : { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.4)", color: "#10B981" }}
                 >
                   {course.cta} <Icons.Arrow />
                 </Btn>

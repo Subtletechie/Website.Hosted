@@ -872,8 +872,13 @@ const EnrollmentForm = ({ course, onClose }) => {
 };
 
 // ─── MAIN APP ────────────────────────────────────
+const hashToPage = () => {
+  const h = window.location.hash.replace("#", "").toLowerCase();
+  return PAGES.find(p => p.toLowerCase() === h) || "Home";
+};
+
 export default function App() {
-  const [page, setPage] = useState("Home");
+  const [page, setPage] = useState(hashToPage);
   const [mob, setMob] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activePost, setActivePost] = useState(null);
@@ -884,7 +889,16 @@ export default function App() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  const navigate = (p) => { setPage(p); setMob(false); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  useEffect(() => {
+    const onHashChange = () => { setPage(hashToPage()); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const navigate = (p) => {
+    window.location.hash = p === "Home" ? "" : p.toLowerCase();
+    setPage(p); setMob(false); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const openPost = (post) => { setActivePost(post); setPage("Blog"); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const closePost = () => { setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
 

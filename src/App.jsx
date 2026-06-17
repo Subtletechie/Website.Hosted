@@ -12,7 +12,7 @@ const C = {
   border: "rgba(148,163,184,0.12)", green: "#10B981", purple: "#8B5CF6",
 };
 
-const PAGES = ["Home", "Consulting", "Education", "Blog", "About", "Connect"];
+const PAGES = ["Home", "Consulting", "Education", "Blog", "About", "Connect", "Links"];
 const ALL_TAGS = ["Cloud Security", "Azure", "AWS", "GCP", "AI Security", "RBAC", "Career"];
 
 // ─── ICONS ───────────────────────────────────────

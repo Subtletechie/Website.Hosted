@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   hero, stats, about, testimonials, caseStudies,
-  blogPosts, socials, siteSettings
+  blogPosts, socials, siteSettings, allLinks
 } from "./content";
 
 // ─── COLORS ──────────────────────────────────────
@@ -43,6 +43,7 @@ const SocialIcon = ({ type }) => {
     youtube: <><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="currentColor"/><polygon points="9.545,15.568 15.818,12 9.545,8.432" fill="#0B1120"/></>,
     instagram: <><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" fill="currentColor"/></>,
     tiktok: <><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="currentColor"/></>,
+    gumroad: <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3.6c2.43 0 4.4 1.97 4.4 4.4 0 1.7-.97 3.17-2.38 3.9l.7 6.4-2.16-1.36-.56 1.5-1.6-1.43-1.6 1.43-.56-1.5-2.16 1.36.7-6.4A4.394 4.394 0 0 1 7.6 10c0-2.43 1.97-4.4 4.4-4.4z" fill="currentColor"/>,
   };
   return <svg width="24" height="24" viewBox="0 0 24 24">{paths[type]}</svg>;
 };
@@ -871,9 +872,37 @@ const EnrollmentForm = ({ course, onClose }) => {
   );
 };
 
+// ─── ALL LINKS PAGE ──────────────────────────────
+const LinksPage = () => (
+  <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 24px 60px" }}>
+    <div style={{ maxWidth: 480, width: "100%" }}>
+      <div style={{ textAlign: "center", marginBottom: 40 }}>
+        <div style={{ width: 64, height: 64, borderRadius: 16, background: `linear-gradient(135deg, ${C.accent}, #1D4ED8)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: "#fff" }}><Icons.Shield /></div>
+        <h1 style={{ fontSize: 26, fontWeight: 800, color: C.white, margin: "0 0 6px" }}>Subtle<span style={{ color: C.accent }}>Tech</span></h1>
+        <p style={{ color: C.muted, fontSize: 15 }}>{siteSettings.tagline}</p>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        {allLinks.map((l, i) => (
+          <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+            <Card style={{ display: "flex", alignItems: "center", gap: 16, padding: 20 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: `${l.color}18`, display: "flex", alignItems: "center", justifyContent: "center", color: l.color, flexShrink: 0 }}><SocialIcon type={l.type} /></div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: C.white, fontSize: 16, fontWeight: 700 }}>{l.name}</div>
+                <div style={{ color: C.muted, fontSize: 13, marginTop: 2 }}>{l.desc}</div>
+              </div>
+              <div style={{ color: C.muted }}><Icons.Ext /></div>
+            </Card>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 // ─── MAIN APP ────────────────────────────────────
 const hashToPage = () => {
   const h = window.location.hash.replace("#", "").toLowerCase();
+  if (h === "links") return "Links";
   return PAGES.find(p => p.toLowerCase() === h) || "Home";
 };
 
@@ -938,6 +967,7 @@ export default function App() {
             {page === "Blog" && <BlogPage openPost={openPost} />}
             {page === "About" && <AboutPage />}
             {page === "Connect" && <ConnectPage />}
+            {page === "Links" && <LinksPage />}
           </>
         }
       </div>

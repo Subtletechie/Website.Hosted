@@ -292,6 +292,45 @@ export const socials = [
   },
 ];
 
+// ─── ALL LINKS PAGE (for IG bio link) ────────────
+export const allLinks = [
+  {
+    type: "instagram",
+    name: "Instagram",
+    desc: "Behind-the-scenes, tips, and quick visual guides.",
+    url: "https://www.instagram.com/thesubtletechie?igsh=MWIzajBuemc0MnJueg%3D%3D&utm_source=qr",
+    color: "#E4405F",
+  },
+  {
+    type: "tiktok",
+    name: "TikTok",
+    desc: "Bite-sized cloud security tips and career advice.",
+    url: "https://www.tiktok.com/@thesubtletechie?_r=1&_t=ZP-97IDegneFzC",
+    color: "#00F2EA",
+  },
+  {
+    type: "twitter",
+    name: "Twitter / X",
+    desc: "Quick takes on cloud security news and threads.",
+    url: "https://x.com/subtletechie?s=11",
+    color: "#1DA1F2",
+  },
+  {
+    type: "youtube",
+    name: "YouTube",
+    desc: "In-depth tutorials and cloud security walkthroughs.",
+    url: "https://youtube.com/@subtle-techie?si=eW9P7EK-dWy9rMzf",
+    color: "#FF0000",
+  },
+  {
+    type: "gumroad",
+    name: "Gumroad",
+    desc: "Digital products, guides, and resources.",
+    url: "https://subtletechie.gumroad.com/?_gl=1*x8ovfm*_ga*MTE3NTY4NDMxNS4xNzgxNzIwODIw*_ga_6LJN6D94N6*czE3ODE3MjA4MjAkbzEkZzEkdDE3ODE3MjA4MzgkajQyJGwwJGgw",
+    color: "#FF90E8",
+  },
+];
+
 // ─── SITE SETTINGS ───────────────────────────────
 export const siteSettings = {
   email: "subtletechie@outlook.com",

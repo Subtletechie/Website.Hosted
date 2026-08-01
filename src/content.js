@@ -8,12 +8,25 @@
 //  Contact: subtletechie@outlook.com
 // ============================================================
 
+// ─── BOOKING LINK (swap this one line when Zoom Scheduler is ready) ───
+export const BOOKING_URL = "mailto:subtletechie@outlook.com?subject=Cloud%20Security%20Assessment%20Inquiry";
+
 // ─── HOMEPAGE HERO ───────────────────────────────
 export const hero = {
-  title: "Cloud Security Engineer",
-  titleAccent: "Consultant & Educator",
+  title: "Cloud Security Assessments",
+  titleAccent: "for Startups & Growing Companies",
   subtitle:
-    "Helping organizations secure their cloud and AI environments through expert consulting, hands-on training, and battle-tested strategies.",
+    "Fixed-scope AWS and Azure security assessments that find what's misconfigured — before an auditor or enterprise customer does. Clear findings, prioritized fixes, no open-ended bills.",
+};
+
+// ─── CONSULTING OFFER (Cloud Security Assessment) ────
+export const assessment = {
+  headline: "The Cloud Security Assessment",
+  subhead: "A fixed-scope review of your AWS or Azure environment across 8 security domains.",
+  domains: ["Identity & Access", "Logging & Detection", "Network Security", "Data Protection", "Compute & Workload", "Incident Readiness", "Governance", "AI/ML Workloads"],
+  deliverables: ["Severity-rated findings workbook", "Executive summary report", "Findings mapped to one framework (SOC 2, NIST CSF 2.0, CIS, ISO 27001, or HIPAA)", "Prioritized remediation guidance", "60-minute walkthrough call"],
+  cta: "Book a Discovery Call",
+  ctaUrl: BOOKING_URL,
 };
 
 // ─── STATS (shown on homepage) ───────────────────
@@ -37,7 +50,7 @@ That curiosity led me deep into cloud security, where I discovered my two passio
 Today, I help organizations secure their cloud and AI environments through consulting, and I help individuals break into cloud security through education and mentorship. Whether I'm working with a Fortune 500's security team or mentoring someone making their first career pivot, I bring the same philosophy: security should be practical, understandable, and empowering.`,
 
   expertise: [
-    "Multi-Cloud Security (AWS, Azure, GCP)",
+    "Cloud Security (AWS & Azure)",
     "RBAC & IAM Architecture",
     "AI/ML Security",
     "Security Architecture",
@@ -335,7 +348,7 @@ export const allLinks = [
 export const siteSettings = {
   email: "subtletechie@outlook.com",
   siteName: "SubtleTech",
-  tagline: "Cloud Security · AI Security · Education",
+  tagline: "Cloud Security Assessments · AWS & Azure",
   copyright: "© 2026 SubtleTech Consulting. All rights reserved.",
 };// ─── COURSES ─────────────────────────────────────
 // Paste this at the bottom of content.js, above siteSettings

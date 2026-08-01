@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  hero, stats, about, testimonials, caseStudies,
+  hero, stats, about, testimonials, caseStudies, assessment,
   blogPosts, socials, siteSettings, allLinks
 } from "./content";
 
@@ -12,7 +12,7 @@ const C = {
   border: "rgba(148,163,184,0.12)", green: "#10B981", purple: "#8B5CF6",
 };
 
-const PAGES = ["Home", "Consulting", "Education", "Blog", "About", "Connect", "Links"];
+const PAGES = ["Home", "Consulting", "Training", "Blog", "About", "Connect", "Links"];
 const ALL_TAGS = ["Cloud Security", "Azure", "AWS", "GCP", "AI Security", "RBAC", "Career"];
 
 // ─── ICONS ───────────────────────────────────────
@@ -152,6 +152,46 @@ const BlogPostView = ({ post, onBack }) => (
   </>
 );
 
+// ─── ASSESSMENT (CONSULTING OFFER) SECTION ───────
+const AssessmentSection = () => (
+  <Sec>
+    <Card hover={false} style={{ padding: "56px 40px", background: "linear-gradient(135deg, rgba(37,99,235,0.1), rgba(37,99,235,0.02))", border: "1px solid rgba(37,99,235,0.25)" }}>
+      <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto 48px" }}>
+        <Badge>FLAGSHIP OFFER</Badge>
+        <h2 style={{ fontSize: "clamp(26px,4vw,38px)", fontWeight: 800, color: C.white, margin: "20px 0 0", lineHeight: 1.2 }}>{assessment.headline}</h2>
+        <p style={{ color: C.muted, fontSize: 17, marginTop: 16, lineHeight: 1.7 }}>{assessment.subhead}</p>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: 40, marginBottom: 48 }}>
+        <div>
+          <div style={{ color: C.white, fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 16, opacity: 0.7 }}>8 Security Domains Covered</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+            {assessment.domains.map((d, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "10px 12px" }}>
+                <span style={{ color: C.accentH, fontSize: 13 }}>▸</span>
+                <span style={{ color: C.muted, fontSize: 13, fontWeight: 600 }}>{d}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div style={{ color: C.white, fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 16, opacity: 0.7 }}>What You Get</div>
+          {assessment.deliverables.map((d, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 12 }}>
+              <div style={{ marginTop: 2 }}><Icons.Check /></div>
+              <span style={{ color: C.muted, fontSize: 14, lineHeight: 1.6 }}>{d}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <a href={assessment.ctaUrl} style={{ textDecoration: "none" }}>
+          <Btn style={{ padding: "16px 40px", fontSize: 16 }}>{assessment.cta} <Icons.Arrow /></Btn>
+        </a>
+      </div>
+    </Card>
+  </Sec>
+);
+
 // ─── HOME PAGE ───────────────────────────────────
 const HomePage = ({ navigate, openPost }) => (
   <>
@@ -166,18 +206,21 @@ const HomePage = ({ navigate, openPost }) => (
         </h1>
         <p style={{ color: C.muted, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.7, margin: "24px auto 0", maxWidth: 580 }}>{hero.subtitle}</p>
         <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40, flexWrap: "wrap" }}>
-          <Btn onClick={() => navigate("Consulting")}>Consulting Services <Icons.Arrow /></Btn>
-          <Btn variant="outline" onClick={() => navigate("Education")}>Learn With Me</Btn>
+          <a href={assessment.ctaUrl} style={{ textDecoration: "none" }}>
+            <Btn>{assessment.cta} <Icons.Arrow /></Btn>
+          </a>
+          <Btn variant="outline" onClick={() => navigate("Consulting")}>See What's Included</Btn>
         </div>
       </div>
     </div>
+    <AssessmentSection />
     <Sec>
       <STitle badge="WHAT I DO" title="Security That Scales With You" subtitle="From startup to enterprise, I help teams build cloud security that actually works — not just checkboxes on an audit." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
         {[
-          { icon: <Icons.Cloud />, title: "Cloud Security", desc: "Multi-cloud security architecture, IAM design, and compliance for AWS, Azure, and GCP. Real strategies, not checkbox audits.", cl: "#3B82F6" },
+          { icon: <Icons.Cloud />, title: "Cloud Security", desc: "Cloud security architecture, IAM design, and compliance for AWS and Azure. Real strategies, not checkbox audits.", cl: "#3B82F6" },
           { icon: <Icons.Brain />, title: "AI Security", desc: "Securing ML pipelines, LLM applications, and AI governance frameworks. Protecting your most innovative assets.", cl: "#8B5CF6" },
-          { icon: <Icons.Book />, title: "Education & Mentorship", desc: "1-on-1 mentorship, workshops, and curriculum designed to take you from beginner to job-ready in cloud security.", cl: "#10B981" },
+          { icon: <Icons.Book />, title: "Training & Mentorship", desc: "1-on-1 mentorship, workshops, and curriculum designed to take you from beginner to job-ready in cloud security.", cl: "#10B981" },
         ].map((s, i) => (
           <Card key={i} style={{ textAlign: "center", padding: 40 }}>
             <div style={{ width: 56, height: 56, borderRadius: 14, background: `linear-gradient(135deg, ${s.cl}20, ${s.cl}08)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", color: s.cl }}>{s.icon}</div>
@@ -220,11 +263,12 @@ const ConsultingPage = ({ navigate }) => (
         <p style={{ color: C.muted, fontSize: 18, lineHeight: 1.7, marginTop: 20, maxWidth: 550, marginLeft: "auto", marginRight: "auto" }}>Securing your cloud infrastructure and AI systems with pragmatic, risk-focused strategies.</p>
       </div>
     </div>
-    <Sec>
+    <AssessmentSection />
+    <Sec style={{ paddingTop: 20 }}>
       <STitle badge="CLOUD SECURITY" title="Cloud Security Services" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
         {[
-          { icon: <Icons.Cloud />, title: "Multi-Cloud Assessments", pts: ["Comprehensive posture evaluation across AWS, Azure, and GCP", "Misconfiguration detection and remediation roadmap", "Compliance mapping (SOC 2, ISO 27001, NIST, CIS)", "Actionable findings prioritized by business risk"] },
+          { icon: <Icons.Cloud />, title: "Cloud Security Assessments", pts: ["Comprehensive posture evaluation across AWS and Azure", "Misconfiguration detection and remediation roadmap", "Compliance mapping (SOC 2, ISO 27001, NIST, CIS)", "Actionable findings prioritized by business risk"] },
           { icon: <Icons.Lock />, title: "RBAC & IAM Design", pts: ["Least-privilege access architecture", "Cross-cloud identity federation", "Service account governance", "Privileged access management strategy"] },
           { icon: <Icons.Shield />, title: "Architecture Reviews", pts: ["Network segmentation and micro-segmentation", "Encryption at rest and in transit strategy", "Logging, monitoring, and alerting design", "Incident response runbook development"] },
         ].map((s, i) => (
@@ -963,7 +1007,7 @@ export default function App() {
           <>
             {page === "Home" && <HomePage navigate={navigate} openPost={openPost} />}
             {page === "Consulting" && <ConsultingPage navigate={navigate} />}
-            {page === "Education" && <EducationPage content={{ testimonials }} navigate={navigate} />}
+            {page === "Training" && <EducationPage content={{ testimonials }} navigate={navigate} />}
             {page === "Blog" && <BlogPage openPost={openPost} />}
             {page === "About" && <AboutPage />}
             {page === "Connect" && <ConnectPage />}

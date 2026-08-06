@@ -13,6 +13,7 @@ const C = {
 };
 
 const PAGES = ["Home", "Consulting", "Education", "Blog", "About", "Connect", "Links"];
+const NAV_PAGES = ["Home", "Consulting", "Education"];
 const ALL_TAGS = ["Cloud Security", "Azure", "AWS", "GCP", "AI Security", "RBAC", "Career"];
 
 // ─── ICONS ───────────────────────────────────────
@@ -933,21 +934,21 @@ export default function App() {
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.white }}>
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 24px", background: scrolled ? C.bgNav : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent", transition: "all 0.3s" }}>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "0 24px", background: scrolled ? C.bgNav : "rgba(11,17,32,0.75)", backdropFilter: "blur(20px)", borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent", transition: "all 0.3s" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
           <div onClick={() => navigate("Home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${C.accent}, #1D4ED8)`, display: "flex", alignItems: "center", justifyContent: "center" }}><Icons.Shield /></div>
             <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: "-0.02em" }}>{siteSettings.siteName.replace("Tech", "")}<span style={{ color: C.accent }}>Tech</span></span>
           </div>
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ padding: "8px 16px", borderRadius: 8, fontSize: 14, fontWeight: 500, cursor: "pointer", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted, border: "none", fontFamily: "inherit", transition: "all 0.2s" }}>{p}</button>)}
+            {NAV_PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ padding: "8px 16px", borderRadius: 8, fontSize: 14, fontWeight: 500, cursor: "pointer", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted, border: "none", fontFamily: "inherit", transition: "all 0.2s" }}>{p}</button>)}
             <Btn style={{ marginLeft: 8, padding: "10px 22px", fontSize: 14 }} onClick={() => navigate("Connect")}>Get Started</Btn>
           </div>
           <button onClick={() => setMob(!mob)} className="mobile-toggle" style={{ display: "none", background: "none", border: "none", color: C.white, cursor: "pointer", padding: 8 }}>{mob ? <Icons.X /> : <Icons.Menu />}</button>
         </div>
         {mob && (
           <div style={{ position: "absolute", top: 72, left: 0, right: 0, background: C.bgNav, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "16px 24px", animation: "fadeIn 0.2s" }}>
-            {PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", borderRadius: 8, fontSize: 15, fontWeight: 500, cursor: "pointer", border: "none", fontFamily: "inherit", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted }}>{p}</button>)}
+            {NAV_PAGES.map(p => <button key={p} onClick={() => navigate(p)} style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", borderRadius: 8, fontSize: 15, fontWeight: 500, cursor: "pointer", border: "none", fontFamily: "inherit", background: page === p ? C.glow : "transparent", color: page === p ? C.white : C.muted }}>{p}</button>)}
             <div style={{ padding: "12px 0 0" }}><Btn style={{ width: "100%", justifyContent: "center" }} onClick={() => navigate("Connect")}>Get Started</Btn></div>
           </div>
         )}

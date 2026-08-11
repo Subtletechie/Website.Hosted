@@ -214,8 +214,7 @@ const ConsultingPage = ({ navigate }) => (
     <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative" }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(37,99,235,0.1) 0%, transparent 70%)" }} />
       <div style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}>
-        <Badge>CONSULTING</Badge>
-        <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: "20px 0 0", lineHeight: 1.1 }}>Cloud & AI Security<br /><span style={{ color: C.accent }}>Consulting</span></h1>
+        <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: 0, lineHeight: 1.1 }}>Cloud & AI Security<br /><span style={{ color: C.accent }}>Consulting</span></h1>
         <p style={{ color: C.muted, fontSize: 18, lineHeight: 1.7, marginTop: 20, maxWidth: 550, marginLeft: "auto", marginRight: "auto" }}>Securing your cloud infrastructure and AI systems with pragmatic, risk-focused strategies.</p>
       </div>
     </div>
@@ -394,8 +393,7 @@ const EducationPage = ({ content: ct, navigate }) => {
       <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(16,185,129,0.08) 0%, transparent 70%)" }} />
         <div style={{ position: "relative", maxWidth: 700, padding: "0 24px" }}>
-          <Badge>EDUCATION</Badge>
-          <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: "20px 0 0", lineHeight: 1.1 }}>
+          <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 800, color: C.white, margin: 0, lineHeight: 1.1 }}>
             Level Up Your Cloud<br />
             <span style={{ color: "#10B981" }}>&amp; AI Security Skills</span>
           </h1>
@@ -590,8 +588,7 @@ const BlogPage = ({ openPost }) => {
     <>
       <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", paddingTop: 80 }}>
         <div style={{ maxWidth: 600, padding: "0 24px" }}>
-          <Badge>BLOG</Badge>
-          <h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: "20px 0 0" }}>Insights & Guides</h1>
+          <h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: 0 }}>Insights & Guides</h1>
           <p style={{ color: C.muted, fontSize: 17, marginTop: 16 }}>Practical cloud and AI security knowledge from the field.</p>
         </div>
       </div>
@@ -618,7 +615,7 @@ const BlogPage = ({ openPost }) => {
 const AboutPage = () => (
   <>
     <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", paddingTop: 80 }}>
-      <div style={{ maxWidth: 600, padding: "0 24px" }}><Badge>ABOUT</Badge><h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: "20px 0 0" }}>The Person Behind SubtleTech</h1></div>
+      <div style={{ maxWidth: 600, padding: "0 24px" }}><h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: 0 }}>The Person Behind SubtleTech</h1></div>
     </div>
     <Sec style={{ paddingTop: 20 }}>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 48, alignItems: "start" }}>
@@ -657,8 +654,7 @@ const ConnectPage = () => {
     <>
       <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", paddingTop: 80 }}>
         <div style={{ maxWidth: 600, padding: "0 24px" }}>
-          <Badge>CONNECT</Badge>
-          <h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: "20px 0 0" }}>Let's Work Together</h1>
+          <h1 style={{ fontSize: "clamp(32px,5vw,48px)", fontWeight: 800, color: C.white, margin: 0 }}>Let's Work Together</h1>
           <p style={{ color: C.muted, fontSize: 17, marginTop: 16 }}>Looking for consulting, mentorship, or just want to connect — I'd love to hear from you.</p>
         </div>
       </div>

@@ -160,8 +160,7 @@ const HomePage = ({ navigate, openPost }) => (
       <div style={{ position: "absolute", top: "15%", left: "10%", width: 300, height: 300, borderRadius: "50%", background: "rgba(37,99,235,0.04)", filter: "blur(80px)" }} />
       <div style={{ position: "absolute", bottom: "20%", right: "10%", width: 250, height: 250, borderRadius: "50%", background: "rgba(37,99,235,0.06)", filter: "blur(60px)" }} />
       <div style={{ position: "relative", zIndex: 1, maxWidth: 800, padding: "0 24px" }}>
-        <Badge>{siteSettings.tagline}</Badge>
-        <h1 style={{ fontSize: "clamp(36px,6vw,68px)", fontWeight: 800, color: C.white, margin: "24px 0 0", lineHeight: 1.08, letterSpacing: "-0.02em" }}>
+        <h1 style={{ fontSize: "clamp(36px,6vw,68px)", fontWeight: 800, color: C.white, margin: 0, lineHeight: 1.08, letterSpacing: "-0.02em" }}>
           {hero.title}<br /><span style={{ color: C.accent }}>{hero.titleAccent}</span>
         </h1>
         <p style={{ color: C.muted, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.7, margin: "24px auto 0", maxWidth: 580 }}>{hero.subtitle}</p>

@@ -160,8 +160,7 @@ const HomePage = ({ navigate, openPost }) => (
       <div style={{ position: "absolute", top: "15%", left: "10%", width: 300, height: 300, borderRadius: "50%", background: "rgba(37,99,235,0.04)", filter: "blur(80px)" }} />
       <div style={{ position: "absolute", bottom: "20%", right: "10%", width: 250, height: 250, borderRadius: "50%", background: "rgba(37,99,235,0.06)", filter: "blur(60px)" }} />
       <div style={{ position: "relative", zIndex: 1, maxWidth: 800, padding: "0 24px" }}>
-        <Badge>{siteSettings.tagline}</Badge>
-        <h1 style={{ fontSize: "clamp(36px,6vw,68px)", fontWeight: 800, color: C.white, margin: "24px 0 0", lineHeight: 1.08, letterSpacing: "-0.02em" }}>
+        <h1 style={{ fontSize: "clamp(36px,6vw,68px)", fontWeight: 800, color: C.white, margin: 0, lineHeight: 1.08, letterSpacing: "-0.02em" }}>
           {hero.title}<br /><span style={{ color: C.accent }}>{hero.titleAccent}</span>
         </h1>
         <p style={{ color: C.muted, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.7, margin: "24px auto 0", maxWidth: 580 }}>{hero.subtitle}</p>
@@ -275,65 +274,6 @@ const ConsultingPage = ({ navigate }) => (
         ))}
       </div>
     </Sec>
-    <Sec style={{ paddingTop: 20 }}>
-      <STitle badge="CAREER COACHING" title="1-on-1 Career Coaching Calls" subtitle="Whether you're breaking into cloud security or leveling up your career, let's map out your path together on a live Google Meet call." />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24, marginBottom: 40 }}>
-        {[
-          {
-            label: "INTRO CALL",
-            labelColor: "#10B981",
-            title: "30-Minute Intro Call",
-            price: "$65",
-            desc: "Not sure where to start? Let's get aligned. We'll cover your background, goals, and map out the best path forward in cloud security.",
-            includes: ["Career direction & roadmap", "Quick resume feedback", "Q&A on cloud security careers", "Next steps & action plan"],
-            url: "https://calendly.com/subtletechie/intro-career-call-30-minutes-set-price-65",
-            cta: "Book Intro Call",
-          },
-          {
-            label: "FULL SESSION",
-            labelColor: "#2563EB",
-            title: "60-Minute Coaching Call",
-            price: "$120",
-            desc: "A deep dive coaching session tailored to your career goals. Resume review, interview prep, certification roadmap, job search strategy — whatever you need most.",
-            includes: ["In-depth resume & LinkedIn review", "Interview prep & mock questions", "Certification & skill roadmap", "Job search strategy", "Personalized action plan"],
-            url: "https://calendly.com/subtletechie/career-coaching-call-60-minutes-set-price-120",
-            cta: "Book Coaching Call",
-          },
-        ].map((s, i) => (
-          <Card key={i} style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 32,
-            ...(i === 1 ? { border: "1px solid rgba(37,99,235,0.5)", background: "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))" } : {})
-          }}>
-            <div>
-              <div style={{ marginBottom: 12 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: s.labelColor }}>{s.label}</span>
-              </div>
-              <h3 style={{ color: C.white, fontSize: 22, fontWeight: 800, margin: "0 0 8px" }}>{s.title}</h3>
-              <div style={{ fontSize: 28, fontWeight: 800, color: s.labelColor, marginBottom: 14 }}>{s.price}</div>
-              <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 20px" }}>{s.desc}</p>
-              <div style={{ marginBottom: 24 }}>
-                {s.includes.map((item, j) => (
-                  <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                    <Icons.Check />
-                    <span style={{ color: C.muted, fontSize: 14 }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-              <Btn style={{ width: "100%", justifyContent: "center",
-                ...(i === 0 ? { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.4)", color: "#10B981" } : {})
-              }}>
-                {s.cta} <Icons.Arrow />
-              </Btn>
-            </a>
-          </Card>
-        ))}
-      </div>
-      <div style={{ textAlign: "center", padding: "24px 0", color: C.muted, fontSize: 14 }}>
-        📅 Calls are held via <strong style={{ color: C.white }}>Google Meet</strong> · You'll receive a link after booking
-      </div>
-    </Sec>
-
     <Sec style={{ paddingTop: 20 }}>
       <Card hover={false} style={{ textAlign: "center", padding: "60px 40px", background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.03))", border: "1px solid rgba(37,99,235,0.2)" }}>
         <h2 style={{ color: C.white, fontSize: 32, fontWeight: 800, margin: "0 0 16px" }}>Ready to Secure Your Cloud?</h2>
@@ -534,6 +474,65 @@ const EducationPage = ({ content: ct, navigate }) => {
               </div>
             </Card>
           ))}
+        </div>
+      </Sec>
+
+      <Sec style={{ paddingTop: 20 }}>
+        <STitle badge="CAREER COACHING" title="1-on-1 Career Coaching Calls" subtitle="Whether you're breaking into cloud security or leveling up your career, let's map out your path together on a live Google Meet call." />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24, marginBottom: 40 }}>
+          {[
+            {
+              label: "INTRO CALL",
+              labelColor: "#10B981",
+              title: "30-Minute Intro Call",
+              price: "$65",
+              desc: "Not sure where to start? Let's get aligned. We'll cover your background, goals, and map out the best path forward in cloud security.",
+              includes: ["Career direction & roadmap", "Quick resume feedback", "Q&A on cloud security careers", "Next steps & action plan"],
+              url: "https://calendly.com/subtletechie/intro-career-call-30-minutes-set-price-65",
+              cta: "Book Intro Call",
+            },
+            {
+              label: "FULL SESSION",
+              labelColor: "#2563EB",
+              title: "60-Minute Coaching Call",
+              price: "$120",
+              desc: "A deep dive coaching session tailored to your career goals. Resume review, interview prep, certification roadmap, job search strategy — whatever you need most.",
+              includes: ["In-depth resume & LinkedIn review", "Interview prep & mock questions", "Certification & skill roadmap", "Job search strategy", "Personalized action plan"],
+              url: "https://calendly.com/subtletechie/career-coaching-call-60-minutes-set-price-120",
+              cta: "Book Coaching Call",
+            },
+          ].map((s, i) => (
+            <Card key={i} style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 32,
+              ...(i === 1 ? { border: "1px solid rgba(37,99,235,0.5)", background: "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02))" } : {})
+            }}>
+              <div>
+                <div style={{ marginBottom: 12 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: s.labelColor }}>{s.label}</span>
+                </div>
+                <h3 style={{ color: C.white, fontSize: 22, fontWeight: 800, margin: "0 0 8px" }}>{s.title}</h3>
+                <div style={{ fontSize: 28, fontWeight: 800, color: s.labelColor, marginBottom: 14 }}>{s.price}</div>
+                <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.7, margin: "0 0 20px" }}>{s.desc}</p>
+                <div style={{ marginBottom: 24 }}>
+                  {s.includes.map((item, j) => (
+                    <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                      <Icons.Check />
+                      <span style={{ color: C.muted, fontSize: 14 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                <Btn style={{ width: "100%", justifyContent: "center",
+                  ...(i === 0 ? { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.4)", color: "#10B981" } : {})
+                }}>
+                  {s.cta} <Icons.Arrow />
+                </Btn>
+              </a>
+            </Card>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", padding: "24px 0", color: C.muted, fontSize: 14 }}>
+          📅 Calls are held via <strong style={{ color: C.white }}>Google Meet</strong> · You'll receive a link after booking
         </div>
       </Sec>
 

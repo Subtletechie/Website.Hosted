@@ -877,8 +877,7 @@ const LinksPage = () => (
     <div style={{ maxWidth: 480, width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: 40 }}>
         <div style={{ width: 64, height: 64, borderRadius: 16, background: `linear-gradient(135deg, ${C.accent}, #1D4ED8)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: "#fff" }}><Icons.Shield /></div>
-        <h1 style={{ fontSize: 26, fontWeight: 800, color: C.white, margin: "0 0 6px" }}>Subtle<span style={{ color: C.accent }}>Tech</span></h1>
-        <p style={{ color: C.muted, fontSize: 15 }}>{siteSettings.tagline}</p>
+        <h1 style={{ fontSize: 26, fontWeight: 800, color: C.white, margin: 0 }}>Subtle<span style={{ color: C.accent }}>Tech</span></h1>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {allLinks.map((l, i) => (

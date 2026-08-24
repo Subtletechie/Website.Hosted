@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   hero, stats, about, testimonials, caseStudies,
   blogPosts, socials, siteSettings, allLinks
@@ -112,6 +112,46 @@ const BlogCard = ({ p, showAllTags, onClick }) => (
   </Card>
 );
 
+// ─── LIGHTWEIGHT MARKDOWN FOR BLOG CONTENT (headings, bold, links) ──
+// Blog post "content" strings support: ## headings, **bold**, and
+// [text](url) links. Links always open in a new tab.
+const renderInline = (text, keyPrefix) => {
+  const parts = [];
+  const regex = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*/g;
+  let last = 0, m, i = 0;
+  while ((m = regex.exec(text))) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    if (m[1] !== undefined) {
+      parts.push(<a key={`${keyPrefix}-${i++}`} href={m[2]} target="_blank" rel="noopener noreferrer" style={{ color: C.accent }}>{m[1]}</a>);
+    } else {
+      parts.push(<strong key={`${keyPrefix}-${i++}`} style={{ color: C.white }}>{m[3]}</strong>);
+    }
+    last = regex.lastIndex;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+};
+
+const renderPostContent = (content) =>
+  content.split("\n\n").map((block, i) => {
+    const heading = block.match(/^(#{2,4})\s+(.*)$/);
+    if (heading) {
+      const level = heading[1].length;
+      const Tag = level === 2 ? "h2" : level === 3 ? "h3" : "h4";
+      const size = level === 2 ? 28 : level === 3 ? 22 : 18;
+      return (
+        <Tag key={i} style={{ color: C.white, fontSize: size, fontWeight: 700, margin: "40px 0 16px", lineHeight: 1.3 }}>
+          {renderInline(heading[2], i)}
+        </Tag>
+      );
+    }
+    return (
+      <p key={i} style={{ marginBottom: 24, color: "#CBD5E1" }}>
+        {renderInline(block, i)}
+      </p>
+    );
+  });
+
 // ─── BLOG POST VIEW ──────────────────────────────
 const BlogPostView = ({ post, onBack }) => (
   <>
@@ -134,9 +174,7 @@ const BlogPostView = ({ post, onBack }) => (
       </div>
       <div style={{ color: C.muted, fontSize: 17, lineHeight: 2 }}>
         {post.content
-          ? post.content.split("\n\n").map((para, i) => (
-              <p key={i} style={{ marginBottom: 24, color: "#CBD5E1" }}>{para}</p>
-            ))
+          ? renderPostContent(post.content)
           : <div style={{ textAlign: "center", padding: "60px 0" }}>
               <p style={{ fontSize: 20, color: C.white, fontWeight: 600, marginBottom: 12 }}>Full article coming soon.</p>
               <p style={{ color: C.muted }}>Check back later for the complete post.</p>
@@ -897,14 +935,24 @@ const LinksPage = () => (
 const hashToPage = () => {
   const h = window.location.hash.replace("#", "").toLowerCase();
   if (h === "links") return "Links";
+  if (h.startsWith("blog/")) return "Blog";
   return PAGES.find(p => p.toLowerCase() === h) || "Home";
+};
+
+// Deep-links a blog post via #blog/<slug> (falls back to id for posts without a slug)
+const getPostFromHash = () => {
+  const m = window.location.hash.replace("#", "").match(/^blog\/(.+)$/i);
+  if (!m) return null;
+  const slug = decodeURIComponent(m[1]).toLowerCase();
+  return blogPosts.find(p => (p.slug || p.id).toLowerCase() === slug) || null;
 };
 
 export default function App() {
   const [page, setPage] = useState(hashToPage);
   const [mob, setMob] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activePost, setActivePost] = useState(null);
+  const [activePost, setActivePost] = useState(getPostFromHash);
+  const defaultMetaRef = useRef(null);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 20);
@@ -913,17 +961,40 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const onHashChange = () => { setPage(hashToPage()); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+    const onHashChange = () => { setPage(hashToPage()); setActivePost(getPostFromHash()); window.scrollTo({ top: 0, behavior: "smooth" }); };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
+
+  // Swap document title / meta description while a post is open, restore on close
+  useEffect(() => {
+    const metaTag = document.querySelector('meta[name="description"]');
+    if (defaultMetaRef.current === null) {
+      defaultMetaRef.current = { title: document.title, description: metaTag ? metaTag.getAttribute("content") : "" };
+    }
+    if (activePost) {
+      document.title = `${activePost.title} | ${siteSettings.siteName}`;
+      if (metaTag && activePost.description) metaTag.setAttribute("content", activePost.description);
+    } else {
+      document.title = defaultMetaRef.current.title;
+      if (metaTag) metaTag.setAttribute("content", defaultMetaRef.current.description);
+    }
+  }, [activePost]);
 
   const navigate = (p) => {
     window.location.hash = p === "Home" ? "" : p.toLowerCase();
     setPage(p); setMob(false); setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const openPost = (post) => { setActivePost(post); setPage("Blog"); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const closePost = () => { setActivePost(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const openPost = (post) => {
+    setActivePost(post); setPage("Blog");
+    window.location.hash = `blog/${post.slug || post.id}`;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const closePost = () => {
+    setActivePost(null);
+    window.location.hash = "blog";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.white }}>

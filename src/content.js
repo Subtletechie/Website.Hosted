@@ -100,6 +100,187 @@ export const caseStudies = [
 // the post will show "Full article coming soon."
 export const blogPosts = [
   {
+    id: "b10",
+    slug: "free-cloud-security-labs",
+    title: "The Best Free Cloud Security Labs and the Ones That Are Not Actually Labs",
+    excerpt:
+      "Everybody says get hands-on experience in cloud security. But several platforms marketed as labs are really just videos and quizzes. Here is an honest breakdown of which ones actually put you in a live cloud environment.",
+    description:
+      "A lot of \"free cloud security labs\" are not labs at all. Here is an honest breakdown of which platforms actually give hands-on practice.",
+    image: "",
+    date: "Aug 23, 2026",
+    read: "7 min",
+    tags: ["Cloud Security", "Career"],
+    published: true,
+    content: `Everybody tells you to get hands on experience in cybersecurity.
+
+What most people do not tell you is that many platforms advertising "hands on cloud security" do not actually let you touch a cloud environment.
+
+Imagine paying for a gym membership, walking inside, and realizing the entire gym is just videos of other people working out and posters explaining how to lift weights.
+
+The information might be useful, but you have not lifted anything. You leave with more knowledge, but no real experience.
+
+That is exactly how some cybersecurity platforms feel. You read, watch videos, answer a few questions, and somehow it gets called a lab.
+
+So here is my honest breakdown of the best platforms for practising cloud security, including the ones that are useful but should not be called lab platforms.
+
+## First, what actually counts as a lab?
+
+A real lab should give you an environment where you can investigate something, configure something, break something, or fix something.
+
+You should be able to make decisions and immediately see whether you were right or wrong.
+
+Reading an article is not a lab.
+
+Watching someone complete a walkthrough is not a lab.
+
+Answering five questions after a video is definitely not a lab.
+
+Keep that definition in mind as we go through this list.
+
+## Pwned Labs: Start here
+
+If someone asked me where to complete their first real cloud security lab, I would probably send them to [Pwned Labs](https://pwnedlabs.io/).
+
+You get access to live cloud environments covering AWS, Azure, Google Cloud, Microsoft 365, and other areas such as Kubernetes and AI security.
+
+You are given a scenario and credentials, then you have to investigate the environment and find what is wrong.
+
+The biggest advantage for beginners is that you do not need to connect your personal cloud account. Pwned Labs provides the environment, so you do not have to worry about accidentally leaving a virtual machine running and waking up to an unexpected cloud bill.
+
+That fear stops a lot of beginners from practising. This platform removes it.
+
+The free tier is also real. You can browse the [full lab catalogue](https://labs.pwnedlabs.io/) before signing up, and around 30 of the labs are free rather than a short trial that locks everything after one exercise.
+
+If you eventually want the premium labs and larger cyber ranges, the [paid plan](https://pwnedlabs.io/pricing) currently costs $20 per month or $200 per year.
+
+**Best for:** Your first real cloud security lab, especially if you want Azure practice. Good Azure security labs are still harder to find than AWS labs.
+
+## Cybr: Go deeper with AWS
+
+[Cybr](https://cybr.com/) is more focused than Pwned Labs because its main strength is AWS.
+
+That is not a bad thing.
+
+Instead of trying to cover every cloud provider, Cybr gives you AWS labs across areas such as blue team security, red team security, infrastructure as code, IAM, and security operations.
+
+The blue team side is worth calling out. Most platforms lean heavily offensive. Cybr splits its catalogue close to evenly between attacking and defending, and defending is the part almost nobody practises.
+
+The labs use real AWS resources, and the platform handles the cloud account, cost, and cleanup. You can launch a [free lab](https://cybr.com/hands-on-lab-category/free/) without adding a credit card, and there are around 29 of those inside a [full catalogue](https://cybr.com/hands-on-labs/) of over 100.
+
+It also includes training for the AWS Certified Security Specialty, so it makes sense for anyone combining certification study with actual practice. [Pricing](https://cybr.com/pricing/) matches Pwned Labs at $20 per month or $200 per year.
+
+**Best for:** Anyone who has already chosen AWS and wants depth instead of jumping between different cloud providers.
+
+## Wiz Academy: Good resource, but not a lab platform
+
+This is where I need to make an important correction.
+
+Wiz Academy appears on many lists of free cloud security labs, but it is not really a lab platform.
+
+It is a strong cloud security learning resource. The articles, explainers, glossaries, and courses can help you understand concepts such as CNAPP, CSPM, CIEM, workload security, IAM, attack paths, and cloud misconfigurations.
+
+The content is well written and useful, especially when you are still trying to understand cloud security terminology.
+
+But you are mostly reading and watching.
+
+You are not being placed inside a live cloud environment where you have to investigate or fix something.
+
+That distinction matters because you can spend weeks studying cloud security and still freeze the first time someone gives you access to an AWS or Azure console.
+
+Use [Wiz Academy](https://www.wiz.io/academy) and their [free courses](https://www.wiz.io/courses), but use them for what they are.
+
+**Best for:** Building your cloud security vocabulary and understanding how different security tools and concepts fit together.
+
+## TryHackMe: A good starting point before cloud security
+
+[TryHackMe](https://tryhackme.com/) is a general cybersecurity training platform, not a dedicated cloud security platform.
+
+It does have cloud security rooms and modules, but many of the dedicated cloud rooms require a Premium or Max subscription.
+
+Where TryHackMe really helps is with the skills you may need before jumping into cloud security labs.
+
+If you have never used Linux, worked inside a terminal, investigated a vulnerable machine, or followed a technical walkthrough, TryHackMe gives you a beginner friendly introduction to that experience.
+
+You learn how to stop being afraid of the terminal.
+
+That might sound small, but it is a major blocker for many beginners. Cloud security eventually requires you to work with command line tools, logs, scripts, IAM policies, and unfamiliar environments.
+
+TryHackMe helps you become comfortable with learning by doing.
+
+Just do not assume that completing random TryHackMe rooms automatically makes you a cloud security professional. You still need cloud specific practice.
+
+**Best for:** Beginners who need stronger Linux, networking, terminal, and general security fundamentals before moving into cloud labs.
+
+## LetsDefend: Blue team practice in a different environment
+
+[LetsDefend](https://letsdefend.io/) is not a dedicated cloud security platform either.
+
+It simulates a Security Operations Center.
+
+Alerts come in, and you have to investigate them, determine whether they are real threats or false positives, document your findings, and decide what action should be taken.
+
+That makes it useful for anyone interested in security analyst, SOC analyst, incident response, or cloud security analyst roles.
+
+Most beginners spend all their time learning how attacks work. Very few practise what happens after an alert appears.
+
+How do you investigate it?
+
+What logs do you check?
+
+How do you determine the scope?
+
+When should you escalate it?
+
+How do you explain what happened?
+
+Those are the skills LetsDefend helps you practise inside its simulated SOC environment.
+
+**Best for:** Anyone whose target job title includes analyst, SOC, detection, or incident response.
+
+## So where should you actually start?
+
+If you want one simple answer, start with Pwned Labs.
+
+Do one free lab this week.
+
+Not ten labs.
+
+Not another six month study plan that you will probably abandon.
+
+Just one lab.
+
+Finish it and pay attention to how differently you understand IAM afterward compared to simply reading about IAM.
+
+Then use that experience to decide what comes next.
+
+If you enjoyed working in AWS and want to go deeper, move to Cybr.
+
+If you struggled because Linux or the terminal felt unfamiliar, spend two weeks building your fundamentals on TryHackMe, then return to Pwned Labs.
+
+If the investigation interested you more than the attack itself, try LetsDefend. That could be a sign that an analyst or incident response role fits you better than offensive security.
+
+Use Wiz Academy alongside all of them because the cloud security vocabulary gap is real, and it will show up during interviews.
+
+## The part nobody says out loud
+
+Free tiers change.
+
+Lab counts change.
+
+Pricing changes.
+
+Platforms sometimes move previously free content behind a subscription.
+
+That means every list of free cybersecurity labs eventually becomes outdated.
+
+The platform details and pricing in this article were checked in August 2026, but always confirm what is currently available before signing up.
+
+And if anything here changes, let me know. I will update the post.
+
+That is the advantage of publishing this on a website instead of putting it on a slide and forgetting about it.`,
+  },
+  {
     id: "b9",
     title: "ICS Security: The Goldmine Niche in Cybersecurity",
     excerpt:

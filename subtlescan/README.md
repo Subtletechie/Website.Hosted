@@ -76,6 +76,35 @@ alone does not jump a band; two do. Context only raises severity. Sensitivity ma
 Grade: `100 × exp(−Σ open scores / 120)` → A ≥90, B ≥80, C ≥70, D ≥60, else F. Any open Critical
 caps the grade at C. Accepted-risk and false-positive findings don't count.
 
+## Checks
+
+| ID | Severity | What it flags |
+|---|---|---|
+| ENTRA-ID-001 | Critical | Security defaults off and no enforced Conditional Access policy |
+| ENTRA-ID-002 | High | CA exists but nothing blocks legacy authentication for all users/apps |
+| ENTRA-ID-003 | High | Enabled member accounts with no MFA method registered (one finding, list in evidence) |
+| ENTRA-ID-004 | High | More than 4 permanent Global Administrators (PIM time-bound activations excluded) |
+| ENTRA-ID-005 | Medium | No cloud-only (`*.onmicrosoft.com`) Global Admin excluded from all enforced CA policies |
+| ENTRA-ID-006 | Medium | Users can consent to any app (`microsoft-user-default-legacy`) |
+| ENTRA-ID-007 | Low | Anyone, including guests, can invite guests |
+| ENTRA-ID-008 | Critical | Admin account with no MFA method registered (one finding per admin) |
+| ENTRA-APP-001 | Medium | App registration client secret valid for more than 365 days |
+| ENTRA-APP-002 | High | Non-Microsoft app granted high-privilege Graph application permissions |
+| AZ-IAM-001 | High | Service principal with Owner / User Access Administrator at subscription scope or above |
+| AZ-STG-001 | High | Storage account allows anonymous blob access |
+| AZ-STG-002 | Medium | Storage account allows shared key (account key) access |
+| AZ-STG-003 | Medium | Blob soft delete off or under 7 days |
+
+Licence-aware: without Entra ID P1, Conditional Access and the MFA registration report are unavailable.
+That is recorded as an "Unsupported service" coverage gap (not a permission problem), CA is treated
+as "none exist", and MFA checks are skipped rather than guessed. Without P2 (PIM), every active role
+assignment counts as permanent. When a setting can't be read, checks stay silent instead of assuming
+the worst; the coverage page says what wasn't assessed.
+
+Graph is read through a ~60-line GET-only client (`collectors/entra/graph.py`) on azure-core rather
+than `msgraph-sdk`: the SDK is async-only, pulls in the Kiota stack, and its generated models make
+recorded-JSON fixtures awkward. `tests/test_readonly.py` checks that client can only send GET.
+
 ## Adding a check
 
 1. Function in `checks/<provider>/<domain>.py`, decorated with `@check(id=..., provider=..., severity=..., domain=...)`.
@@ -94,6 +123,8 @@ uv run mypy            # --strict on models/ and scoring/
 
 ## Status
 
-Build steps 1–2 are done: models, check registry, Azure storage collector with 3 checks, Markdown
-report, and the dashboard (Overview + Findings) with static export and demo data. Next up: Entra
-collectors and identity checks (step 3).
+Build steps 1–3 are done: models, registry, Azure storage + RBAC collectors, Entra collectors
+(tenant settings, Conditional Access, users + MFA registration, directory roles, app registrations,
+service principals), 14 checks, Markdown report, and the dashboard (Overview + Findings) with static
+export and demo data. Next up: remaining Azure collectors (network, compute, Key Vault, SQL, web),
+then backup/recovery, secrets, and logging (step 4).

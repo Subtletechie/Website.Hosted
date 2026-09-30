@@ -6,9 +6,11 @@ from typing import Any
 
 import pytest
 from azure.core.exceptions import HttpResponseError
+from azure.mgmt.authorization.v2022_04_01.models import RoleAssignment, RoleDefinition
 from azure.mgmt.storage.models import BlobServiceProperties, StorageAccount
 
 from subtlescan.collectors.azure.context import AzureContext, classify_azure_error
+from subtlescan.collectors.entra.graph import GRAPH, GraphError
 from subtlescan.models import Asset, Provider
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -66,15 +68,64 @@ class FakeSubscriptionClient:
         self.subscriptions = _Subs()
 
 
-def fake_context(fail_list: bool = False) -> AzureContext:
-    def factory(cls: type[Any], sub: str | None) -> Any:
-        if cls.__name__ == "SubscriptionClient":
-            return FakeSubscriptionClient()
-        if cls.__name__ == "StorageManagementClient":
-            return FakeStorageClient(fail_list)
-        raise AssertionError(f"unexpected client {cls}")
+class FakeAuthorizationClient:
+    def __init__(self) -> None:
+        data = json.loads((FIXTURES / "azure/role_assignments.json").read_text())
 
-    return AzureContext(provider=Provider.AZURE, classify=classify_azure_error, tenant_id="t", client_factory=factory)
+        class _Defs:
+            def list(self, scope: str) -> list[RoleDefinition]:
+                return [RoleDefinition.deserialize(d) for d in data["definitions"]]
+
+        class _Assignments:
+            def list_for_scope(self, scope: str, filter: str | None = None) -> list[RoleAssignment]:
+                return [RoleAssignment.deserialize(a) for a in data["assignments"]]
+
+        self.role_definitions, self.role_assignments = _Defs(), _Assignments()
+
+
+class FakeGraph:
+    """Replays recorded Graph responses keyed by path (query string only for nextLink pages)."""
+
+    def __init__(self, responses: dict[str, Any], errors: dict[str, GraphError] | None = None) -> None:
+        self.responses, self.errors, self.calls = responses, errors or {}, []
+
+    def get(self, path: str, params: dict[str, str] | None = None) -> dict[str, Any]:
+        path = path.removeprefix(GRAPH + "/")
+        self.calls.append(path)
+        if path in self.errors:
+            raise self.errors[path]
+        if path not in self.responses:
+            raise GraphError(404, "Request_ResourceNotFound", path)
+        return dict(self.responses[path])
+
+    def list(self, path: str, params: dict[str, str] | None = None) -> Any:
+        page = self.get(path, params)
+        while True:
+            yield from page.get("value", [])
+            if not page.get("@odata.nextLink"):
+                return
+            page = self.get(page["@odata.nextLink"])
+
+
+def weak_tenant_graph(errors: dict[str, GraphError] | None = None) -> FakeGraph:
+    return FakeGraph(json.loads((FIXTURES / "entra/graph_weak_tenant.json").read_text()), errors)
+
+
+def fake_context(fail_list: bool = False, graph: FakeGraph | None = None) -> AzureContext:
+    graph = graph or weak_tenant_graph()
+
+    def factory(cls: type[Any], sub: str | None) -> Any:
+        clients = {
+            "SubscriptionClient": FakeSubscriptionClient,
+            "StorageManagementClient": lambda: FakeStorageClient(fail_list),
+            "AuthorizationManagementClient": FakeAuthorizationClient,
+            "GraphClient": lambda: graph,
+        }
+        if cls.__name__ not in clients:
+            raise AssertionError(f"unexpected client {cls}")
+        return clients[cls.__name__]()
+
+    return AzureContext(provider=Provider.AZURE, classify=classify_azure_error, tenant_id=None, client_factory=factory)
 
 
 @pytest.fixture

@@ -20,6 +20,7 @@ from subtlescan.models import Asset, Domain, Provider, Severity
 class Hit:
     resource: Asset
     evidence: dict[str, Any] = field(default_factory=dict)
+    name: str | None = None  # client-facing resource name when the asset's own name is not readable
 
 
 CheckFn = Callable[[Inventory], list[Hit]]
@@ -50,6 +51,7 @@ def check(*, id: str, provider: Provider, severity: Severity, domain: Domain) ->
 def load_all() -> dict[str, CheckSpec]:
     """Import every check module so its decorators run."""
     import subtlescan.checks.azure  # noqa: F401
+    import subtlescan.checks.entra  # noqa: F401
 
     return REGISTRY
 

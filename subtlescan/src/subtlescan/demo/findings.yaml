@@ -16,7 +16,7 @@ overrides:
   AZ-NET-004: {status: accepted_risk, analyst_note: "Kiosk VM is being decommissioned on 31 Oct; client accepts risk until then."}
   AZ-SEC-003: {status: false_positive, analyst_note: "Value is a public Maps API key restricted by referrer; not a secret."}
 findings:
-  - check_id: ENTRA-ID-001
+  - check_id: ENTRA-ID-002
     title: Legacy sign-in methods are not blocked
     severity: high
     domain: identity
@@ -90,7 +90,7 @@ findings:
     business_impact: Outsiders can be added to Teams and SharePoint without IT knowing, which makes it easy to lose track of who can see practice data.
     remediation: "Entra admin center → External Identities → External collaboration settings → Guest invite settings → 'Only users assigned to specific admin roles'."
     frameworks: {soc2: [CC6.2]}
-  - check_id: AZ-IAM-002
+  - check_id: AZ-IAM-001
     title: Service principal has Owner on the production subscription
     severity: high
     domain: identity
@@ -388,7 +388,7 @@ findings:
     business_impact: FTP sends passwords unencrypted.
     remediation: "Remove the rule."
     frameworks: {soc2: [CC6.6]}
-  - check_id: ENTRA-ID-002
+  - check_id: ENTRA-ID-001
     title: Security defaults off and no Conditional Access policies
     severity: critical
     domain: identity

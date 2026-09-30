@@ -5,7 +5,41 @@ controls:
   CC6.7: Restricts transmission, movement, and removal of information
   CC7.2: Monitors system components for anomalies
   A1.2: Environmental protections, backup, and recovery infrastructure
+  CC6.2: Registers and authorizes new users; removes access when no longer required
+  CC6.3: Authorizes, modifies, or removes access based on roles and least privilege
 mappings:
-  AZ-STG-001: [CC6.1, CC6.6, CC6.7]
-  AZ-STG-002: [CC6.1]
-  AZ-STG-003: [A1.2]
+  AZ-STG-001:
+  - CC6.1
+  - CC6.6
+  - CC6.7
+  AZ-STG-002:
+  - CC6.1
+  AZ-STG-003:
+  - A1.2
+  ENTRA-ID-001:
+  - CC6.1
+  - CC6.6
+  ENTRA-ID-002:
+  - CC6.1
+  - CC6.6
+  ENTRA-ID-003:
+  - CC6.1
+  ENTRA-ID-004:
+  - CC6.1
+  - CC6.3
+  ENTRA-ID-005:
+  - A1.2
+  ENTRA-ID-006:
+  - CC6.1
+  - CC6.3
+  ENTRA-ID-007:
+  - CC6.2
+  ENTRA-ID-008:
+  - CC6.1
+  ENTRA-APP-001:
+  - CC6.1
+  ENTRA-APP-002:
+  - CC6.3
+  AZ-IAM-001:
+  - CC6.1
+  - CC6.3

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from subtlescan.collectors.azure import storage
+from subtlescan.collectors import entra
+from subtlescan.collectors.azure import authorization, storage
 from subtlescan.collectors.azure.context import AzureContext
 from subtlescan.models import Asset
 
@@ -10,6 +11,8 @@ Collector = Callable[[AzureContext], list[Asset]]
 
 COLLECTORS: dict[str, Collector] = {
     "storage": storage.collect,
+    "authorization": authorization.collect,
+    "entra": entra.collect,
 }
 
 

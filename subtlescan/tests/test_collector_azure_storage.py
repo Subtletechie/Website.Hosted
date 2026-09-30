@@ -9,7 +9,7 @@ from subtlescan.models import GapReason
 def test_storage_collector_normalizes_recorded_fixtures() -> None:
     ctx = fake_context()
     assert ctx.discover_subscriptions() == [SUB]  # disabled subscription skipped
-    assets = {a.name: a for a in collect_all(ctx)}
+    assets = {a.name: a for a in collect_all(ctx) if a.type == "azure.storage_account"}
     assert set(assets) == {"acmecustomerdata", "acmelocked", "acmeoldfiles"}
 
     public = assets["acmecustomerdata"]
@@ -30,10 +30,10 @@ def test_storage_collector_normalizes_recorded_fixtures() -> None:
 def test_missing_permission_becomes_coverage_gap_not_crash() -> None:
     ctx = fake_context()
     ctx.discover_subscriptions()
-    assets = {a.name: a for a in collect_all(ctx)}
+    assets = {a.name: a for a in collect_all(ctx) if a.type == "azure.storage_account"}
     # 403 on one account's blob service: account still inventoried, protection keys absent, gap logged.
     assert "blob_soft_delete_enabled" not in assets["acmeoldfiles"].properties
-    assert [(g.service, g.reason) for g in ctx.gaps] == [
+    assert [(g.service, g.reason) for g in ctx.gaps if g.service.startswith("storage")] == [
         ("storage.blob_service:acmeoldfiles", GapReason.MISSING_PERMISSION)
     ]
 
@@ -41,9 +41,10 @@ def test_missing_permission_becomes_coverage_gap_not_crash() -> None:
 def test_list_failure_is_a_gap() -> None:
     ctx = fake_context(fail_list=True)
     ctx.discover_subscriptions()
-    assert collect_all(ctx) == []
-    assert ctx.gaps[0].service == "storage.accounts"
-    assert ctx.gaps[0].reason is GapReason.MISSING_PERMISSION
+    assert not [a for a in collect_all(ctx) if a.type == "azure.storage_account"]
+    gap = next(g for g in ctx.gaps if g.service.startswith("storage"))
+    assert gap.service == "storage.accounts"
+    assert gap.reason is GapReason.MISSING_PERMISSION
 
 
 def test_requested_subscription_not_visible_is_a_gap() -> None:

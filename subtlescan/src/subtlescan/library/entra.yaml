@@ -1,0 +1,169 @@
+ENTRA-ID-001:
+  title: No sign-in protection is enforced (security defaults off, no Conditional Access)
+  effort: S
+  business_impact: >
+    Nobody in the company is required to use a second factor when signing in, and old email
+    protocols that bypass MFA are open. A single guessed or phished password is enough to get into
+    email, files, and potentially Azure. This is the most common way small businesses are breached.
+  remediation: |
+    If you do not have Entra ID P1 (most Microsoft 365 Business Standard tenants):
+      Entra admin center → Identity → Overview → Properties → Manage security defaults → Enabled.
+    If you have Entra ID P1 (Microsoft 365 Business Premium, E3, E5):
+      Entra admin center → Protection → Conditional Access → Create new policy from templates, and turn on at least: "Require multifactor authentication for all users", "Block legacy authentication", "Require multifactor authentication for admins". Exclude your break-glass accounts. Run in report-only for a few days, then switch to On.
+  terraform_fix: |
+    resource "azuread_conditional_access_policy" "require_mfa" {
+      display_name = "Require MFA for all users"
+      state        = "enabled"
+      conditions {
+        client_app_types = ["all"]
+        applications { included_applications = ["All"] }
+        users {
+          included_users = ["All"]
+          excluded_users = [var.break_glass_object_id]
+        }
+      }
+      grant_controls {
+        operator          = "OR"
+        built_in_controls = ["mfa"]
+      }
+    }
+
+ENTRA-ID-002:
+  title: Legacy sign-in methods are not blocked
+  effort: S
+  business_impact: >
+    Old email protocols (IMAP, POP, SMTP AUTH, ActiveSync basic auth) skip MFA completely.
+    Attackers use them to try leaked passwords against staff mailboxes, and a match gets them in
+    with no second factor, even though MFA is otherwise turned on.
+  remediation: |
+    Entra admin center → Protection → Conditional Access → New policy from template → "Block legacy authentication". Users: All users (exclude break-glass). Target resources: All cloud apps. Conditions → Client apps: Exchange ActiveSync clients + Other clients. Grant: Block.
+    Run in report-only for 7 days and check the sign-in logs for anything still using it (printers/scanners sending email usually need moving to SMTP relay or OAuth), then turn On.
+  terraform_fix: |
+    resource "azuread_conditional_access_policy" "block_legacy" {
+      display_name = "Block legacy authentication"
+      state        = "enabled"
+      conditions {
+        client_app_types = ["exchangeActiveSync", "other"]
+        applications { included_applications = ["All"] }
+        users {
+          included_users = ["All"]
+          excluded_users = [var.break_glass_object_id]
+        }
+      }
+      grant_controls {
+        operator          = "OR"
+        built_in_controls = ["block"]
+      }
+    }
+
+ENTRA-ID-003:
+  title: Staff accounts have no MFA method registered
+  effort: M
+  business_impact: >
+    These accounts are protected by a password alone. One phished or reused password gives an
+    attacker the person's email and files, and a trusted mailbox to send invoice fraud from.
+  remediation: |
+    1. Entra admin center → Protection → Authentication methods → Registration campaign → State: Enabled, include All users. Users are prompted to set up Microsoft Authenticator at next sign-in.
+    2. Send the listed users a short note explaining the prompt is expected.
+    3. Once registration is above 95%, enforce MFA with security defaults or Conditional Access.
+    4. Disable accounts that belong to people who have left (they will show up here too).
+
+ENTRA-ID-004:
+  title: Too many accounts hold permanent Global Administrator
+  effort: M
+  business_impact: >
+    A Global Administrator can do anything in Microsoft 365 and Azure, including deleting all
+    data and locking everyone else out. Every extra always-on admin is another account an
+    attacker only needs to compromise once.
+  remediation: |
+    1. Keep two named admins plus two break-glass accounts at most.
+    2. Move everyone else to the narrowest role for their job (User Administrator, Exchange Administrator, Billing Administrator, Helpdesk Administrator).
+    3. If you have Entra ID P2 (or Microsoft 365 E5), make the remaining admins "eligible" in Privileged Identity Management so admin rights are switched on only when needed.
+    Entra admin center → Roles & admins → Global Administrator → Assignments.
+
+ENTRA-ID-005:
+  title: No break-glass emergency access account
+  effort: S
+  business_impact: >
+    If an MFA outage, a Conditional Access mistake, or an attacker locks every admin out, there is
+    no way back in without a Microsoft support case that can take days, with the business unable
+    to reset passwords or recover mailboxes in the meantime.
+  remediation: |
+    1. Create two cloud-only accounts on the onmicrosoft.com domain (e.g. bg-01@<tenant>.onmicrosoft.com) with long random passwords and a FIDO2 security key each.
+    2. Assign Global Administrator permanently.
+    3. Exclude both from every Conditional Access policy (use a dedicated group).
+    4. Store credentials in a physical safe; alert on any sign-in by these accounts.
+    5. Test sign-in every quarter.
+
+ENTRA-ID-006:
+  title: Any user can grant third-party apps access to company data
+  effort: S
+  business_impact: >
+    A convincing phishing link can ask a staff member to "allow" a fake app, which then reads
+    their mailbox and files. No password is stolen, MFA does not help, and the access survives a
+    password reset.
+  remediation: |
+    Entra admin center → Identity → Applications → Enterprise applications → Consent and permissions → User consent settings → "Allow user consent for apps from verified publishers, for selected permissions" (or "Do not allow user consent"). Then turn on the Admin consent workflow so staff can request apps they need.
+    Review existing grants: Enterprise applications → filter "Application type: All" → Permissions.
+
+ENTRA-ID-007:
+  title: Anyone, including guests, can invite outside users
+  effort: S
+  business_impact: >
+    Outsiders can be added to Teams and SharePoint without IT knowing, making it easy to lose track
+    of who can see company data after a project or contract ends.
+  remediation: |
+    Entra admin center → External Identities → External collaboration settings → Guest invite settings → "Member users and users assigned to specific admin roles can invite" (or "Only users assigned to specific admin roles"). Consider guest access reviews for existing guests.
+
+ENTRA-ID-008:
+  title: Administrator account has no MFA method registered
+  effort: S
+  business_impact: >
+    This account has admin rights and can be signed into with a password alone. If that password
+    is guessed, phished, or reused from another breach, an attacker controls the tenant.
+  remediation: |
+    Register MFA for this admin today (Microsoft Authenticator or a FIDO2 key), then enforce MFA for all admin roles with security defaults or a Conditional Access policy ("Require multifactor authentication for admins" template). If the account is unused, remove its admin role or disable it.
+
+ENTRA-APP-001:
+  title: App registration has a client secret valid for over a year
+  effort: M
+  business_impact: >
+    Client secrets are passwords for applications. A secret that lasts years tends to end up in
+    scripts, config files, and old laptops, and if it leaks, whoever has it keeps the app's access
+    until it expires, without MFA and usually without anyone noticing.
+  remediation: |
+    1. Replace the secret with a certificate, or better, a managed identity or workload identity federation (GitHub Actions, Azure DevOps) so there is no secret at all.
+    2. If a secret is unavoidable, create one valid for 6 months or less, store it in Key Vault, update the app, then delete the old secret.
+    Entra admin center → App registrations → <app> → Certificates & secrets.
+
+ENTRA-APP-002:
+  title: Application holds high-privilege Microsoft Graph permissions
+  effort: M
+  business_impact: >
+    This app can act across the whole tenant without any user signed in, for example reading
+    every mailbox, every file, or changing admin roles. If its credentials leak or its vendor is
+    compromised, the attacker inherits that access.
+  remediation: |
+    1. Confirm with the app owner or vendor which permissions it actually needs.
+    2. Replace broad permissions with scoped ones: Sites.Selected instead of Sites.*.All, application access policies / RBAC for Exchange to limit mailbox access to named mailboxes.
+    3. Remove unused permissions: Enterprise applications → <app> → Permissions → Review.
+    4. If the app is no longer used, disable its service principal.
+
+AZ-IAM-001:
+  title: Service principal has admin rights over the whole subscription
+  effort: M
+  business_impact: >
+    An automation account (pipeline, script, or third-party tool) can create, delete, and grant
+    access to anything in this subscription, including backups. If its credentials leak, an
+    attacker can take over or wipe the environment.
+  remediation: |
+    1. Replace Owner / User Access Administrator with Contributor (or a custom role) scoped to the resource groups the automation actually manages.
+    2. For deployment pipelines, switch to workload identity federation (OIDC) so there is no secret to steal.
+    Portal: Subscription → Access control (IAM) → Role assignments → filter by the service principal → remove and re-add at the narrower scope.
+    CLI: az role assignment delete --assignee <appId> --role Owner --scope /subscriptions/<id>
+  terraform_fix: |
+    resource "azurerm_role_assignment" "deploy" {
+      scope                = azurerm_resource_group.app.id
+      role_definition_name = "Contributor"
+      principal_id         = azuread_service_principal.deploy.object_id
+    }

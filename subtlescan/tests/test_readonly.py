@@ -18,6 +18,10 @@ WRITE_VERB = re.compile(
 )
 
 
+# The Graph client's single HTTP chokepoint. test_graph_client_only_sends_get proves it can only send GET.
+ALLOWED = {"entra/graph.py": {"send_request"}}
+
+
 def write_calls(source: str) -> list[str]:
     """Write-verb method calls, write-verb names passed as strings (getattr / boto3 style), and any
     reference to an Azure `begin_*` long-running operation (always a mutation). Plain attribute reads
@@ -51,7 +55,19 @@ def test_collectors_reference_no_write_verbs() -> None:
     files = sorted(COLLECTORS.rglob("*.py"))
     assert files, "no collector sources found"
     for path in files:
-        hits = write_calls(path.read_text())
+        rel = str(path.relative_to(COLLECTORS))
+        hits = [h for h in write_calls(path.read_text()) if h.split(" ")[0] not in ALLOWED.get(rel, set())]
         if hits:
-            offenders[str(path.relative_to(COLLECTORS))] = hits
+            offenders[rel] = hits
     assert offenders == {}, f"write-verb calls in collectors: {offenders}"
+
+
+def test_graph_client_only_sends_get() -> None:
+    tree = ast.parse((COLLECTORS / "entra/graph.py").read_text())
+    requests = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n.func, "id", None) == "HttpRequest"]
+    assert requests, "expected the Graph client to build HttpRequest objects"
+    for call in requests:
+        method = call.args[0]
+        assert isinstance(method, ast.Constant) and method.value == "GET", ast.unparse(call)
+    public = [n.name for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and not n.name.startswith("_")]
+    assert set(public) == {"get", "list"}, public

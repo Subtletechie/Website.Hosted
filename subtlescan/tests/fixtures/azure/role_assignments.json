@@ -1,0 +1,17 @@
+{
+  "definitions": [
+    {"id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635", "name": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635", "properties": {"roleName": "Owner", "type": "BuiltInRole"}},
+    {"id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c", "name": "b24988ac-6180-42a0-ab88-20f7382dd24c", "properties": {"roleName": "Contributor", "type": "BuiltInRole"}}
+  ],
+  "assignments": [
+    {"id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleAssignments/ra1", "name": "ra1",
+     "properties": {"roleDefinitionId": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                    "principalId": "sp-deploy", "principalType": "ServicePrincipal", "scope": "/subscriptions/00000000-0000-0000-0000-000000000001"}},
+    {"id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleAssignments/ra2", "name": "ra2",
+     "properties": {"roleDefinitionId": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                    "principalId": "sp-report", "principalType": "ServicePrincipal", "scope": "/subscriptions/00000000-0000-0000-0000-000000000001"}},
+    {"id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleAssignments/ra3", "name": "ra3",
+     "properties": {"roleDefinitionId": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                    "principalId": "u1", "principalType": "User", "scope": "/subscriptions/00000000-0000-0000-0000-000000000001"}}
+  ]
+}

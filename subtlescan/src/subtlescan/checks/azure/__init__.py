@@ -1,1 +1,1 @@
-from subtlescan.checks.azure import storage  # noqa: F401
+from subtlescan.checks.azure import iam, storage  # noqa: F401

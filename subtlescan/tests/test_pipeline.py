@@ -59,3 +59,30 @@ def test_no_secret_values_or_external_state(tmp_path: Path) -> None:
         "report.md",
         "log.jsonl",
     }
+
+
+def test_end_to_end_identity(tmp_path: Path) -> None:
+    run_dir = run_pipeline(tmp_path)
+    findings = runfolder.read_findings(run_dir)
+    got = {f.check_id: f for f in findings}
+    expected = {
+        "ENTRA-ID-002",
+        "ENTRA-ID-003",
+        "ENTRA-ID-004",
+        "ENTRA-ID-005",
+        "ENTRA-ID-006",
+        "ENTRA-ID-007",
+        "ENTRA-ID-008",
+        "ENTRA-APP-001",
+        "ENTRA-APP-002",
+        "AZ-IAM-001",
+    }
+    assert expected <= set(got)
+    assert "ENTRA-ID-001" not in got  # an MFA-for-admins policy is enforced
+    assert got["ENTRA-ID-008"].resource_name == "it.admin@acme.com"
+    assert got["ENTRA-ID-003"].evidence["usersWithoutMfa"] == 2  # front.desk + it.admin; not the guest or leaver
+    assert got["AZ-IAM-001"].resource_name == "github-deploy-prod"
+    assert got["ENTRA-APP-002"].resource_name == "HR Sync"
+    assert got["ENTRA-APP-001"].resource_name == "HR Sync"
+    # Blast radius: an app that can read every mailbox is scored as admin-level.
+    assert got["ENTRA-APP-002"].score_factors["blast_radius"] == 1.5

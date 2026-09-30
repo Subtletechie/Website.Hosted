@@ -7,9 +7,7 @@ AZ-STG-001:
     account without logging in. If it holds customer records, invoices, or backups, that is a
     reportable data leak.
   remediation: |
-    Portal: Storage account → Settings → Configuration → set "Allow Blob anonymous access" to
-    Disabled → Save. Before switching, check whether a public website or app relies on anonymous
-    links, and move it to SAS links or Azure Front Door.
+    Portal: Storage account → Settings → Configuration → set "Allow Blob anonymous access" to Disabled → Save. Before switching, check whether a public website or app relies on anonymous links, and move it to SAS links or Azure Front Door.
     CLI: az storage account update -g <resource-group> -n <account> --allow-blob-public-access false
   terraform_fix: |
     resource "azurerm_storage_account" "this" {
@@ -25,11 +23,9 @@ AZ-STG-002:
     are often pasted into scripts and config files, and a single leaked key gives full read and
     delete access with no record of who used it.
   remediation: |
-    1. Find what still uses keys: Storage account → Monitoring → Metrics → Transactions, split by
-       "Authentication", filter to "AccountKey" over the last 7 days.
+    1. Find what still uses keys: Storage account → Monitoring → Metrics → Transactions, split by "Authentication", filter to "AccountKey" over the last 7 days.
     2. Move those apps to Microsoft Entra ID (managed identity + "Storage Blob Data" roles).
-    3. Portal: Storage account → Settings → Configuration → "Allow storage account key access" →
-       Disabled.
+    3. Portal: Storage account → Settings → Configuration → "Allow storage account key access" → Disabled.
     CLI: az storage account update -g <resource-group> -n <account> --allow-shared-key-access false
   terraform_fix: |
     resource "azurerm_storage_account" "this" {
@@ -46,11 +42,10 @@ AZ-STG-003:
     they are gone for good. Soft delete keeps a recoverable copy for a set number of days at
     very low cost.
   remediation: |
-    Portal: Storage account → Data management → Data protection → enable "soft delete for blobs"
-    (14+ days recommended), "soft delete for containers", and "versioning for blobs" → Save.
-    CLI: az storage account blob-service-properties update -g <resource-group> --account-name <account>
-         --enable-delete-retention true --delete-retention-days 14
-         --enable-container-delete-retention true --container-delete-retention-days 14
+    Portal: Storage account → Data management → Data protection → enable "soft delete for blobs" (14+ days recommended), "soft delete for containers", and "versioning for blobs" → Save.
+    CLI: az storage account blob-service-properties update -g <resource-group> --account-name <account> \
+         --enable-delete-retention true --delete-retention-days 14 \
+         --enable-container-delete-retention true --container-delete-retention-days 14 \
          --enable-versioning true
   terraform_fix: |
     resource "azurerm_storage_account" "this" {

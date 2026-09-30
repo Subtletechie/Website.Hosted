@@ -4,7 +4,39 @@ controls:
   A.5.17: Authentication information
   A.8.3: Information access restriction
   A.8.13: Information backup
+  A.5.16: Identity management
+  A.5.18: Access rights
+  A.8.2: Privileged access rights
+  A.8.5: Secure authentication
 mappings:
-  AZ-STG-001: [A.5.15, A.8.3]
-  AZ-STG-002: [A.5.17]
-  AZ-STG-003: [A.8.13]
+  AZ-STG-001:
+  - A.5.15
+  - A.8.3
+  AZ-STG-002:
+  - A.5.17
+  AZ-STG-003:
+  - A.8.13
+  ENTRA-ID-001:
+  - A.8.5
+  ENTRA-ID-002:
+  - A.8.5
+  ENTRA-ID-003:
+  - A.8.5
+  ENTRA-ID-004:
+  - A.8.2
+  ENTRA-ID-005:
+  - A.8.2
+  ENTRA-ID-006:
+  - A.5.15
+  ENTRA-ID-007:
+  - A.5.16
+  ENTRA-ID-008:
+  - A.8.2
+  - A.8.5
+  ENTRA-APP-001:
+  - A.5.17
+  ENTRA-APP-002:
+  - A.8.2
+  AZ-IAM-001:
+  - A.8.2
+  - A.5.18

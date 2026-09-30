@@ -17,6 +17,7 @@ We found **{{ v.grade.open_count }} open issue(s)**:
 {{ n }} {{ sev.label }}{{ ", " if not loop.last else "." }}
 {%- endfor %}
 
+
 {% if v.delta %}
 Since the previous assessment: {{ v.delta.new }} new, {{ v.delta.resolved }} resolved
 (grade was {{ v.delta.previous_grade.letter }}, {{ v.delta.previous_grade.score }}/100).

@@ -4,7 +4,35 @@ controls:
   PR.AA-05: Access permissions, entitlements, and authorizations are defined and enforced
   PR.DS-01: The confidentiality, integrity, and availability of data-at-rest are protected
   PR.DS-11: Backups of data are created, protected, maintained, and tested
+  PR.AA-03: Users, services, and hardware are authenticated
 mappings:
-  AZ-STG-001: [PR.AA-05, PR.DS-01]
-  AZ-STG-002: [PR.AA-01, PR.AA-05]
-  AZ-STG-003: [PR.DS-11]
+  AZ-STG-001:
+  - PR.AA-05
+  - PR.DS-01
+  AZ-STG-002:
+  - PR.AA-01
+  - PR.AA-05
+  AZ-STG-003:
+  - PR.DS-11
+  ENTRA-ID-001:
+  - PR.AA-03
+  ENTRA-ID-002:
+  - PR.AA-03
+  ENTRA-ID-003:
+  - PR.AA-03
+  ENTRA-ID-004:
+  - PR.AA-05
+  ENTRA-ID-005:
+  - PR.AA-05
+  ENTRA-ID-006:
+  - PR.AA-05
+  ENTRA-ID-007:
+  - PR.AA-05
+  ENTRA-ID-008:
+  - PR.AA-03
+  ENTRA-APP-001:
+  - PR.AA-01
+  ENTRA-APP-002:
+  - PR.AA-05
+  AZ-IAM-001:
+  - PR.AA-05

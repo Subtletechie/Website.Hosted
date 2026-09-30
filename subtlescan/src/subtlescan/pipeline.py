@@ -31,7 +31,8 @@ def collect_azure(run_dir: Path, client: str, ctx: AzureContext, subscriptions: 
     )
     subs = ctx.discover_subscriptions(subscriptions)
     log.info("scanning %d subscription(s)", len(subs), extra={"event": "scope", "subscriptions": subs})
-    inv = Inventory(collect_all(ctx) if subs else [])
+    # Tenant-level (Entra) collectors still run when no subscription is visible.
+    inv = Inventory(collect_all(ctx), as_of=run.started_at)
     inv.save(run_dir)
     runfolder.write_coverage(run_dir, ctx.gaps)
     run.scopes = subs
@@ -43,11 +44,12 @@ def collect_azure(run_dir: Path, client: str, ctx: AzureContext, subscriptions: 
 
 def analyze(run_dir: Path) -> Run:
     run = runfolder.read_run(run_dir)
-    inv = Inventory.load(run_dir)
+    inv = Inventory.load(run_dir, as_of=run.started_at)
     # Re-running analyze must not duplicate check-stage gaps from a previous analyze.
     collect_gaps = [g for g in runfolder.read_coverage(run_dir) if not g.service.startswith("check:")]
     ctx = CollectContext(provider=run.provider, gaps=collect_gaps)
-    findings = score_all(run_checks(inv, run.provider, ctx), inv.assets)
+    providers = {run.provider} | {a.provider for a in inv}
+    findings = score_all(run_checks(inv, providers, ctx), inv.assets)
     runfolder.write_findings(run_dir, findings)
     runfolder.write_coverage(run_dir, ctx.gaps)
     run.finding_count = len(findings)

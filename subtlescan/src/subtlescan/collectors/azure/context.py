@@ -18,13 +18,15 @@ def classify_azure_error(exc: BaseException) -> tuple[GapReason, str]:
     if isinstance(exc, ClientAuthenticationError):
         return GapReason.AUTH_FAILED, str(exc).splitlines()[0]
     if isinstance(exc, HttpResponseError):
-        code = getattr(exc.error, "code", None) if exc.error else None
+        code = getattr(exc, "graph_code", None) or (getattr(exc.error, "code", None) if exc.error else None)
         first = (exc.message or str(exc)).splitlines()[0]
-        if exc.status_code in (401, 403) or code in ("AuthorizationFailed", "Forbidden"):
-            return GapReason.MISSING_PERMISSION, f"HTTP {exc.status_code} {code or ''}: {first}".strip()
+        label = f"HTTP {exc.status_code}" + (f" {code}" if code else "")
+        detail = first if code and first.startswith(code) else f"{label}: {first}"
+        if exc.status_code in (401, 403) or code in ("AuthorizationFailed", "Forbidden", "Authorization_RequestDenied"):
+            return GapReason.MISSING_PERMISSION, detail
         if code in ("FeatureNotSupportedForAccount", "NotSupported", "OperationNotSupported"):
-            return GapReason.UNSUPPORTED, f"{code}: {first}"
-        return GapReason.ERROR, f"HTTP {exc.status_code} {code or ''}: {first}".strip()
+            return GapReason.UNSUPPORTED, detail
+        return GapReason.ERROR, detail
     return GapReason.ERROR, f"{type(exc).__name__}: {exc}"
 
 

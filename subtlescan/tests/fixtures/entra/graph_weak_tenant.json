@@ -1,0 +1,80 @@
+{
+  "organization": {"value": [{"id": "11111111-1111-1111-1111-111111111111"}]},
+  "organization/11111111-1111-1111-1111-111111111111": {
+    "id": "11111111-1111-1111-1111-111111111111", "displayName": "Acme Corp",
+    "verifiedDomains": [{"name": "acme.com"}, {"name": "acmecorp.onmicrosoft.com"}]
+  },
+  "policies/identitySecurityDefaultsEnforcementPolicy": {"isEnabled": false},
+  "identity/conditionalAccess/policies": {"value": [
+    {"id": "ca1", "displayName": "Require MFA for admins", "state": "enabled",
+     "conditions": {"clientAppTypes": ["all"], "users": {"includeRoles": ["62e90394-69f5-4237-9190-012177145e10"], "includeUsers": [], "excludeUsers": [], "excludeGroups": []},
+                    "applications": {"includeApplications": ["All"]}},
+     "grantControls": {"operator": "OR", "builtInControls": ["mfa"]}},
+    {"id": "ca2", "displayName": "Block legacy auth (testing)", "state": "enabledForReportingButNotEnforced",
+     "conditions": {"clientAppTypes": ["exchangeActiveSync", "other"], "users": {"includeUsers": ["All"]},
+                    "applications": {"includeApplications": ["All"]}},
+     "grantControls": {"operator": "OR", "builtInControls": ["block"]}}
+  ]},
+  "policies/authorizationPolicy": {
+    "allowInvitesFrom": "everyone",
+    "defaultUserRolePermissions": {"permissionGrantPoliciesAssigned": ["ManagePermissionGrantsForSelf.microsoft-user-default-legacy"]}
+  },
+  "users": {
+    "value": [
+      {"id": "u1", "userPrincipalName": "ceo@acme.com", "displayName": "CEO", "userType": "Member", "accountEnabled": true, "onPremisesSyncEnabled": null},
+      {"id": "u2", "userPrincipalName": "it.admin@acme.com", "displayName": "IT Admin", "userType": "Member", "accountEnabled": true, "onPremisesSyncEnabled": null},
+      {"id": "u3", "userPrincipalName": "front.desk@acme.com", "displayName": "Front Desk", "userType": "Member", "accountEnabled": true, "onPremisesSyncEnabled": null}
+    ],
+    "@odata.nextLink": "https://graph.microsoft.com/v1.0/users?$skiptoken=page2"
+  },
+  "users?$skiptoken=page2": {"value": [
+      {"id": "u4", "userPrincipalName": "old.staff@acme.com", "displayName": "Left Company", "userType": "Member", "accountEnabled": false, "onPremisesSyncEnabled": null},
+      {"id": "u5", "userPrincipalName": "partner_x.com#EXT#@acmecorp.onmicrosoft.com", "displayName": "Guest", "userType": "Guest", "accountEnabled": true},
+      {"id": "u6", "userPrincipalName": "admin@acmecorp.onmicrosoft.com", "displayName": "Tenant admin", "userType": "Member", "accountEnabled": true, "onPremisesSyncEnabled": null}
+  ]},
+  "reports/authenticationMethods/userRegistrationDetails": {"value": [
+    {"id": "u1", "isMfaRegistered": true, "isAdmin": true, "methodsRegistered": ["microsoftAuthenticatorPush"]},
+    {"id": "u2", "isMfaRegistered": false, "isAdmin": true, "methodsRegistered": []},
+    {"id": "u3", "isMfaRegistered": false, "isAdmin": false, "methodsRegistered": []},
+    {"id": "u4", "isMfaRegistered": false, "isAdmin": false, "methodsRegistered": []},
+    {"id": "u5", "isMfaRegistered": false, "isAdmin": false, "methodsRegistered": []},
+    {"id": "u6", "isMfaRegistered": true, "isAdmin": true, "methodsRegistered": ["fido2"]}
+  ]},
+  "roleManagement/directory/roleDefinitions": {"value": [
+    {"id": "62e90394-69f5-4237-9190-012177145e10", "displayName": "Global Administrator", "templateId": "62e90394-69f5-4237-9190-012177145e10", "isPrivileged": true},
+    {"id": "729827e3-9c14-49f7-bb1b-9608f156bbb8", "displayName": "Helpdesk Administrator", "templateId": "729827e3-9c14-49f7-bb1b-9608f156bbb8", "isPrivileged": true}
+  ]},
+  "roleManagement/directory/roleAssignmentScheduleInstances": {"value": [
+    {"principalId": "u7", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "endDateTime": "2026-09-30T20:00:00Z"}
+  ]},
+  "roleManagement/directory/roleAssignments": {"value": [
+    {"principalId": "u1", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u1", "userPrincipalName": "ceo@acme.com"}},
+    {"principalId": "u2", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u2", "userPrincipalName": "it.admin@acme.com"}},
+    {"principalId": "u6", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u6", "userPrincipalName": "admin@acmecorp.onmicrosoft.com"}},
+    {"principalId": "u8", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u8", "userPrincipalName": "consultant@acme.com"}},
+    {"principalId": "u9", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u9", "userPrincipalName": "office.manager@acme.com"}},
+    {"principalId": "u7", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u7", "userPrincipalName": "pim.user@acme.com"}},
+    {"principalId": "sp-sync", "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.servicePrincipal", "id": "sp-sync", "displayName": "HR Sync"}},
+    {"principalId": "u3", "roleDefinitionId": "729827e3-9c14-49f7-bb1b-9608f156bbb8", "directoryScopeId": "/", "principal": {"@odata.type": "#microsoft.graph.user", "id": "u3", "userPrincipalName": "front.desk@acme.com"}}
+  ]},
+  "applications": {"value": [
+    {"id": "app1", "appId": "aaaa-1", "displayName": "HR Sync", "keyCredentials": [],
+     "passwordCredentials": [{"keyId": "k1", "displayName": "prod", "hint": "Xq7", "startDateTime": "2025-01-01T00:00:00Z", "endDateTime": "2027-01-01T00:00:00Z"},
+                             {"keyId": "k2", "displayName": "old", "hint": "abc", "startDateTime": "2020-01-01T00:00:00Z", "endDateTime": "2022-01-01T00:00:00Z"}]},
+    {"id": "app2", "appId": "aaaa-2", "displayName": "Reporting", "keyCredentials": [],
+     "passwordCredentials": [{"keyId": "k3", "displayName": "short", "hint": "Zz9", "startDateTime": "2026-08-01T00:00:00Z", "endDateTime": "2027-02-01T00:00:00Z"}]}
+  ]},
+  "servicePrincipals(appId='00000003-0000-0000-c000-000000000000')": {"id": "graph-sp", "appRoles": [
+    {"id": "r-mail", "value": "Mail.Read"}, {"id": "r-files", "value": "Files.ReadWrite.All"}, {"id": "r-users", "value": "User.Read.All"}
+  ]},
+  "servicePrincipals/graph-sp/appRoleAssignedTo": {"value": [
+    {"principalId": "sp-sync", "appRoleId": "r-mail"}, {"principalId": "sp-sync", "appRoleId": "r-files"},
+    {"principalId": "sp-report", "appRoleId": "r-users"}, {"principalId": "sp-ms", "appRoleId": "r-files"}
+  ]},
+  "servicePrincipals": {"value": [
+    {"id": "sp-sync", "appId": "aaaa-1", "displayName": "HR Sync", "servicePrincipalType": "Application", "appOwnerOrganizationId": "11111111-1111-1111-1111-111111111111", "accountEnabled": true},
+    {"id": "sp-report", "appId": "aaaa-2", "displayName": "Reporting", "servicePrincipalType": "Application", "appOwnerOrganizationId": "11111111-1111-1111-1111-111111111111", "accountEnabled": true},
+    {"id": "sp-ms", "appId": "ms-1", "displayName": "Office 365 Exchange Online", "servicePrincipalType": "Application", "appOwnerOrganizationId": "f8cdef31-a31e-4b4a-93e4-5f571e91255a", "accountEnabled": true},
+    {"id": "sp-deploy", "appId": "aaaa-3", "displayName": "github-deploy-prod", "servicePrincipalType": "Application", "appOwnerOrganizationId": "11111111-1111-1111-1111-111111111111", "accountEnabled": true}
+  ]}
+}

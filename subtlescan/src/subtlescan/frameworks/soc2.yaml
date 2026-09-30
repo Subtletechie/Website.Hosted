@@ -1,0 +1,11 @@
+name: SOC 2 (2017 TSC)
+controls:
+  CC6.1: Logical access security software, infrastructure, and architectures
+  CC6.6: Security measures against threats outside system boundaries
+  CC6.7: Restricts transmission, movement, and removal of information
+  CC7.2: Monitors system components for anomalies
+  A1.2: Environmental protections, backup, and recovery infrastructure
+mappings:
+  AZ-STG-001: [CC6.1, CC6.6, CC6.7]
+  AZ-STG-002: [CC6.1]
+  AZ-STG-003: [A1.2]

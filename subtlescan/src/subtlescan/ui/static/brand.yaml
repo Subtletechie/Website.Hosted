@@ -1,0 +1,6 @@
+# Branding for the dashboard and export. `logo` is a file in this folder (SVG or PNG).
+name: Subtletech
+tagline: Cloud Security Assessment
+accent: "#4f46e5"
+logo: logo.svg
+contact: subtletechie@outlook.com

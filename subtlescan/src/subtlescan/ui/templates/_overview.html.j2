@@ -1,0 +1,90 @@
+{% set g = v.grade %}
+<section id="page-overview" class="page" aria-labelledby="overview-h">
+  <h1 id="overview-h" class="sr-only">Overview</h1>
+  <div class="hero">
+    <div class="card grade-card grade-{{ g.letter | lower }}">
+      <svg class="gauge" viewBox="0 0 200 116" role="img" aria-label="Security score {{ g.score }} out of 100">
+        <path class="gauge-track" d="M20 100 A80 80 0 0 1 180 100" pathLength="100"/>
+        <path class="gauge-value" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="{{ g.score }} 100"/>
+        <text x="100" y="86" class="gauge-letter">{{ g.letter }}</text>
+        <text x="100" y="108" class="gauge-score">{{ g.score }} / 100</text>
+      </svg>
+      <div class="grade-text">
+        <div class="eyebrow">Overall grade</div>
+        <p>{{ g.open_count }} open issue{{ "" if g.open_count == 1 else "s" }} across {{ v.run.asset_count }} resources.</p>
+        {% if v.delta %}
+        {% set d = v.delta %}
+        <p class="delta">
+          <span class="chip {{ 'chip-good' if g.score >= d.previous_grade.score else 'chip-bad' }}">
+            {{ "▲" if g.score > d.previous_grade.score else ("▼" if g.score < d.previous_grade.score else "■") }}
+            {{ (g.score - d.previous_grade.score) | abs }} pts
+          </span>
+          vs previous ({{ d.previous_grade.letter }}): {{ d.resolved }} resolved, {{ d.new }} new
+        </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="sev-tiles">
+      {% for sev, n in v.severity_counts.items() %}
+      <a class="card sev-tile sev-{{ sev.value }}" href="#findings" data-filter-severity="{{ sev.value }}">
+        <span class="sev-count">{{ n }}</span>
+        <span class="sev-label">{{ sev.label }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if v.coverage %}
+  <div class="notice" role="note">
+    <strong>Partial coverage.</strong> {{ v.coverage | length }} area{{ "" if v.coverage | length == 1 else "s" }}
+    could not be assessed, so results there are unknown rather than clean.
+    <details>
+      <summary>Show what was missed</summary>
+      <ul>
+        {% for gap in v.coverage %}
+        <li><strong>{{ gap.service }}</strong> <span class="muted">({{ gap.scope }})</span>: {{ gap.reason.label }}. {{ gap.detail }}</li>
+        {% endfor %}
+      </ul>
+    </details>
+  </div>
+  {% endif %}
+
+  <div class="grid-2">
+    <div class="card">
+      <h2>Top risks</h2>
+      {% if v.top_risks %}
+      <ol class="risks">
+        {% for f in v.top_risks %}
+        <li>
+          <a href="#findings/{{ f.id }}" class="risk">
+            <span class="pill sev-{{ f.effective_severity.value }}">{{ f.effective_severity.label }}</span>
+            <span class="risk-title">{{ f.title }}</span>
+            <span class="risk-impact">{{ f.business_impact }}</span>
+            <span class="risk-resource mono">{{ f.resource_name }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+      {% else %}
+      <p class="empty">No open issues in the assessed scope.</p>
+      {% endif %}
+    </div>
+    <div class="card">
+      <h2>Where the issues are</h2>
+      {% set max_n = [v.domain_counts.values() | max, 1] | max %}
+      <ul class="bars">
+        {% for d in v.domains %}
+        {% set n = v.domain_counts[d] %}
+        <li>
+          <a href="#findings" data-filter-domain="{{ d.value }}">
+            <span class="bar-label">{{ d.label }}</span>
+            <span class="bar-track"><span class="bar-fill" style="width: {{ (100 * n / max_n) | round(1) }}%"></span></span>
+            <span class="bar-n">{{ n }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="muted small">Click a row or tile to jump to the matching findings.</p>
+    </div>
+  </div>
+</section>

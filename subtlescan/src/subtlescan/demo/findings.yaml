@@ -1,0 +1,401 @@
+# Fake but realistic findings for "Northwind Dental Group" (fictional). Used by `subtlescan demo`.
+# resource: "<resource-group>/<provider type>/<name>" for Azure, "entra/<kind>/<name>" for Entra.
+# `prev: false` = new since the previous demo run. `fixed: true` = only in the previous run.
+client: Northwind Dental Group
+tenant: 6f1c2d3e-0000-4a5b-9c8d-7e6f5a4b3c2d
+subscriptions:
+  - 3b9e7a51-2c4d-4e8f-9a1b-5c6d7e8f9012
+  - 8d2f4a6c-1e3b-4c5d-8e7f-a9b0c1d2e3f4
+asset_count: 214
+coverage:
+  - {provider: entra, scope: tenant, service: entra.sign_in_logs, reason: missing_permission,
+     detail: "AuditLog.Read.All not granted; legacy-auth usage in the last 30 days could not be measured."}
+  - {provider: azure, scope: 8d2f4a6c-1e3b-4c5d-8e7f-a9b0c1d2e3f4, service: recoveryservices.vaults, reason: missing_permission,
+     detail: "HTTP 403 AuthorizationFailed: Reader not assigned on this subscription (Dev/Test)."}
+overrides:
+  AZ-NET-004: {status: accepted_risk, analyst_note: "Kiosk VM is being decommissioned on 31 Oct; client accepts risk until then."}
+  AZ-SEC-003: {status: false_positive, analyst_note: "Value is a public Maps API key restricted by referrer; not a secret."}
+findings:
+  - check_id: ENTRA-ID-001
+    title: Legacy sign-in methods are not blocked
+    severity: high
+    domain: identity
+    resource: entra/tenant/Northwind Dental Group
+    effort: S
+    factors: {exposure: 1.5}
+    evidence: {securityDefaults: disabled, caPoliciesBlockingLegacyAuth: 0}
+    business_impact: Old email protocols (IMAP, POP, SMTP AUTH) skip MFA completely. Attackers use them to guess passwords for staff mailboxes, and a match gets them in with no second factor.
+    remediation: "Entra admin center → Protection → Conditional Access → New policy from template → 'Block legacy authentication'. Run in report-only for 7 days, then turn on."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-03], cis_azure: ["1.2.3"], hipaa: [164.312(d)]}
+  - check_id: ENTRA-ID-003
+    title: 11 staff accounts have no MFA method registered
+    severity: high
+    domain: identity
+    resource: entra/users/11 users
+    effort: M
+    factors: {exposure: 1.5}
+    evidence: {usersWithoutMfa: 11, examples: "front.desk@, billing2@, dr.patel@"}
+    business_impact: These accounts are protected by a password alone. One phished or reused password gives an attacker email, files, and possibly patient records.
+    remediation: "Run a registration campaign: Entra admin center → Protection → Authentication methods → Registration campaign → Enabled, target All users. Follow up with the 11 named users."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-03], hipaa: [164.312(d)], iso27001: [A.8.5]}
+  - check_id: ENTRA-ID-004
+    title: 6 people hold permanent Global Administrator
+    severity: high
+    domain: identity
+    resource: entra/roles/Global Administrator
+    effort: M
+    factors: {blast_radius: 1.5}
+    evidence: {permanentGlobalAdmins: 6, recommendedMax: 4, pimEnabled: false}
+    business_impact: Every Global Admin can do anything in Microsoft 365 and Azure, including deleting all data and locking you out. Six always-on admins means six accounts an attacker only needs to compromise once.
+    remediation: "Reduce to 2 named admins + 1 break-glass account. Move day-to-day tasks to scoped roles (User Administrator, Exchange Administrator). If licensed for Entra ID P2, make remaining admins eligible via PIM."
+    frameworks: {soc2: [CC6.1, CC6.3], nist_csf: [PR.AA-05], iso27001: [A.8.2]}
+  - check_id: ENTRA-ID-005
+    title: No break-glass emergency access account
+    severity: medium
+    domain: identity
+    resource: entra/tenant/Northwind Dental Group
+    effort: S
+    evidence: {accountsExcludedFromAllCa: 0, cloudOnlyGlobalAdmins: 0}
+    business_impact: If MFA, the identity provider, or a Conditional Access mistake locks everyone out, there is no way back in without a Microsoft support case that can take days.
+    remediation: "Create two cloud-only accounts (e.g. bg-01@<tenant>.onmicrosoft.com) with Global Administrator, FIDO2 keys stored in a safe, excluded from CA policies, and an alert on any sign-in."
+    frameworks: {soc2: [A1.2], nist_csf: [PR.AA-05]}
+  - check_id: ENTRA-ID-006
+    title: Any user can grant apps access to company data
+    severity: medium
+    domain: identity
+    resource: entra/tenant/Northwind Dental Group
+    effort: S
+    evidence: {userConsentPolicy: "microsoft-user-default-legacy"}
+    business_impact: A convincing phishing link can ask a staff member to "allow" a fake app, which then reads their mailbox and files with no password needed and survives password resets.
+    remediation: "Entra admin center → Enterprise apps → Consent and permissions → 'Do not allow user consent' (or verified publishers, low-impact permissions only). Enable the admin consent workflow."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-05]}
+  - check_id: ENTRA-APP-001
+    title: App registration secret valid for 24 months
+    prev: false
+    severity: medium
+    domain: identity
+    resource: entra/applications/PracticeSync-Integration
+    effort: M
+    evidence: {secretHint: "Xq7~… (40 chars)", expires: "2027-08-02", graphAppPermissions: "Mail.Read, Files.ReadWrite.All"}
+    business_impact: This app's password gives read access to every mailbox and write access to every file, and stays valid for two years. If it leaks from a config file, nobody would notice.
+    remediation: "Rotate to a certificate or a secret of 6 months or less, store it in Key Vault, and reduce permissions to Sites.Selected / specific mailboxes via application access policies."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-01]}
+  - check_id: ENTRA-ID-007
+    title: Guests can be invited by anyone, including other guests
+    severity: low
+    domain: identity
+    resource: entra/tenant/Northwind Dental Group
+    effort: S
+    evidence: {allowInvitesFrom: everyone}
+    business_impact: Outsiders can be added to Teams and SharePoint without IT knowing, which makes it easy to lose track of who can see practice data.
+    remediation: "Entra admin center → External Identities → External collaboration settings → Guest invite settings → 'Only users assigned to specific admin roles'."
+    frameworks: {soc2: [CC6.2]}
+  - check_id: AZ-IAM-002
+    title: Service principal has Owner on the production subscription
+    severity: high
+    domain: identity
+    resource: entra/servicePrincipals/github-deploy-prod
+    effort: M
+    factors: {blast_radius: 1.5, data_sensitivity: 1.3}
+    evidence: {role: Owner, scope: "/subscriptions/3b9e7a51-…", credentialType: "client secret"}
+    business_impact: A leaked deployment pipeline secret would let an attacker take over the whole production subscription, including deleting backups and granting themselves access.
+    remediation: "Replace Owner with Contributor scoped to the app's resource group. Switch the pipeline to workload identity federation (OIDC) so there is no secret to leak."
+    frameworks: {soc2: [CC6.1, CC6.3], nist_csf: [PR.AA-05], iso27001: [A.8.2]}
+  - check_id: AZ-NET-001
+    title: Remote Desktop (3389) open to the whole internet
+    severity: high
+    domain: network
+    resource: rg-clinic-prod/Microsoft.Network/networkSecurityGroups/nsg-imaging-vm
+    effort: S
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {rule: allow-rdp, source: "*", port: 3389, attachedTo: vm-imaging-01}
+    business_impact: Ransomware crews scan the internet for open Remote Desktop around the clock. This is the most common way small practices get encrypted.
+    remediation: "Delete the allow-rdp rule. Use Azure Bastion or Just-in-Time VM access (Defender for Servers) for remote admin."
+    terraform_fix: |
+      # Remove the inbound 3389 rule and use Bastion instead
+      resource "azurerm_bastion_host" "this" {
+        name                = "bas-clinic-prod"
+        location            = azurerm_resource_group.clinic.location
+        resource_group_name = azurerm_resource_group.clinic.name
+        ip_configuration {
+          name                 = "config"
+          subnet_id            = azurerm_subnet.bastion.id
+          public_ip_address_id = azurerm_public_ip.bastion.id
+        }
+      }
+    frameworks: {soc2: [CC6.6], nist_csf: [PR.IR-01], cis_azure: ["6.1"], hipaa: [164.312(a)(1)]}
+  - check_id: AZ-NET-002
+    title: SQL port 1433 open to the internet
+    severity: high
+    domain: network
+    resource: rg-clinic-prod/Microsoft.Network/networkSecurityGroups/nsg-app
+    effort: S
+    factors: {exposure: 1.5}
+    evidence: {rule: sql-temp, source: "0.0.0.0/0", port: 1433}
+    business_impact: The database port can be reached from anywhere, inviting password-guessing attacks directly against the system that holds appointment and billing data.
+    remediation: "Delete the sql-temp rule. Allow 1433 only from the app subnet, or use a private endpoint."
+    frameworks: {soc2: [CC6.6], nist_csf: [PR.IR-01], cis_azure: ["6.3"]}
+  - check_id: AZ-NET-003
+    title: SSH (22) open to the internet
+    severity: medium
+    domain: network
+    resource: rg-shared/Microsoft.Network/networkSecurityGroups/nsg-jumpbox
+    effort: S
+    factors: {exposure: 1.5}
+    evidence: {rule: ssh-any, source: "Internet", port: 22}
+    business_impact: The Linux jump box accepts login attempts from anywhere. A weak or reused password would give a foothold inside the network.
+    remediation: "Restrict source to the office IP range or replace with Azure Bastion."
+    frameworks: {soc2: [CC6.6], cis_azure: ["6.2"]}
+  - check_id: AZ-NET-004
+    title: Virtual machine has a public IP address
+    severity: low
+    domain: network
+    resource: rg-clinic-prod/Microsoft.Compute/virtualMachines/vm-kiosk-02
+    effort: M
+    factors: {exposure: 1.5}
+    evidence: {publicIp: "20.x.x.x (redacted)", nsgOpenPorts: "443"}
+    business_impact: A directly reachable machine is one more thing that must be patched perfectly. Most VMs do not need to be on the internet.
+    remediation: "Remove the public IP and publish only what's needed through Application Gateway or Front Door."
+    frameworks: {soc2: [CC6.6]}
+  - check_id: AZ-STG-001
+    title: Storage account allows anonymous public access to files
+    severity: high
+    domain: data
+    resource: rg-clinic-prod/Microsoft.Storage/storageAccounts/nwdpatientexports
+    effort: S
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {allowBlobPublicAccess: true, publicContainers: "exports (container-level)"}
+    business_impact: Anyone on the internet who guesses or finds a link could download files from this storage account without logging in. It holds patient export files, so a leak would be a reportable breach.
+    remediation: "Portal: Storage account → Configuration → 'Allow Blob anonymous access' → Disabled. Share exports with time-limited SAS links instead."
+    terraform_fix: |
+      resource "azurerm_storage_account" "exports" {
+        # ...
+        allow_nested_items_to_be_public = false
+      }
+    frameworks: {soc2: [CC6.1, CC6.6, CC6.7], nist_csf: [PR.AA-05, PR.DS-01], cis_azure: ["3.7"], iso27001: [A.5.15, A.8.3], hipaa: [164.312(a)(1)]}
+  - check_id: AZ-STG-002
+    title: Storage account still accepts account keys (shared key access)
+    severity: medium
+    domain: identity
+    resource: rg-clinic-prod/Microsoft.Storage/storageAccounts/nwdpatientexports
+    effort: M
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {allowSharedKeyAccess: "not set (defaults to allowed)"}
+    business_impact: Account keys are master passwords to everything in the storage account. They never expire and a single leaked key gives full read and delete access.
+    remediation: "Move apps to Entra ID auth (managed identity), then set 'Allow storage account key access' to Disabled."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-01, PR.AA-05], iso27001: [A.5.17], hipaa: [164.312(d)]}
+  - check_id: AZ-STG-002
+    title: Storage account still accepts account keys (shared key access)
+    severity: medium
+    domain: identity
+    resource: rg-shared/Microsoft.Storage/storageAccounts/nwdscripts
+    effort: M
+    evidence: {allowSharedKeyAccess: true}
+    business_impact: Account keys are master passwords to everything in the storage account. They never expire and a single leaked key gives full read and delete access.
+    remediation: "Move apps to Entra ID auth (managed identity), then set 'Allow storage account key access' to Disabled."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-01, PR.AA-05]}
+  - check_id: AZ-KV-001
+    title: Key Vault purge protection is off
+    severity: medium
+    domain: data
+    resource: rg-clinic-prod/Microsoft.KeyVault/vaults/kv-nwd-prod
+    effort: S
+    factors: {data_sensitivity: 1.3}
+    evidence: {enablePurgeProtection: false, softDeleteRetentionDays: 7}
+    business_impact: An attacker or a mistaken admin could permanently delete the keys and passwords your apps depend on, taking systems down with no way to restore them.
+    remediation: "az keyvault update -n kv-nwd-prod --enable-purge-protection true (cannot be turned off again, which is the point)."
+    terraform_fix: |
+      resource "azurerm_key_vault" "prod" {
+        # ...
+        purge_protection_enabled   = true
+        soft_delete_retention_days = 90
+      }
+    frameworks: {soc2: [A1.2], cis_azure: ["8.5"]}
+  - check_id: AZ-KV-002
+    title: Key Vault accepts connections from any network
+    prev: false
+    severity: low
+    domain: network
+    resource: rg-clinic-prod/Microsoft.KeyVault/vaults/kv-nwd-prod
+    effort: M
+    evidence: {publicNetworkAccess: Enabled, defaultAction: Allow}
+    business_impact: Stolen credentials could be used to read secrets from anywhere in the world instead of only from your own systems.
+    remediation: "Set the firewall default action to Deny and allow the app subnet via a service endpoint or private endpoint."
+    frameworks: {soc2: [CC6.6], cis_azure: ["8.7"]}
+  - check_id: AZ-SQL-001
+    title: SQL server allows public network access
+    severity: medium
+    domain: network
+    resource: rg-clinic-prod/Microsoft.Sql/servers/sql-nwd-practice
+    effort: M
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {publicNetworkAccess: Enabled, firewallRules: "AllowAllWindowsAzureIps, office-range"}
+    business_impact: The practice-management database can be reached from outside your network, including from any Azure customer's resources because 'Allow Azure services' is on.
+    remediation: "Add a private endpoint for the app, remove 'Allow Azure services', then set Public network access to Disabled."
+    frameworks: {soc2: [CC6.6], cis_azure: ["4.1.2"], hipaa: [164.312(a)(1)]}
+  - check_id: AZ-SQL-002
+    title: SQL server still allows SQL logins (Entra-only auth off)
+    severity: medium
+    domain: identity
+    resource: rg-clinic-prod/Microsoft.Sql/servers/sql-nwd-practice
+    effort: L
+    evidence: {azureADOnlyAuthentication: false, sqlAdminLogin: nwdadmin}
+    business_impact: Database passwords live outside your MFA and offboarding process. A former contractor who knew the SQL admin password could still log in.
+    remediation: "Move the app to a managed identity, then enable Microsoft Entra-only authentication on the server."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-01]}
+  - check_id: AZ-BKP-001
+    title: Imaging server has no backup
+    severity: high
+    domain: recovery
+    resource: rg-clinic-prod/Microsoft.Compute/virtualMachines/vm-imaging-01
+    effort: S
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {protectedByVault: false, osDisk: "P30 (1 TiB)"}
+    business_impact: If this server is encrypted by ransomware or its disk fails, years of patient X-rays are gone. There is nothing to restore from.
+    remediation: "Recovery Services vault → Backup → Azure Virtual Machine → select vm-imaging-01 → Enhanced policy, daily, 30-day retention. Test a restore."
+    terraform_fix: |
+      resource "azurerm_backup_protected_vm" "imaging" {
+        resource_group_name = azurerm_recovery_services_vault.prod.resource_group_name
+        recovery_vault_name = azurerm_recovery_services_vault.prod.name
+        source_vm_id        = azurerm_linux_virtual_machine.imaging.id
+        backup_policy_id    = azurerm_backup_policy_vm.daily.id
+      }
+    frameworks: {soc2: [A1.2], nist_csf: [PR.DS-11], iso27001: [A.8.13], hipaa: [164.308(a)(7)(ii)(A)]}
+  - check_id: AZ-BKP-002
+    title: Backup vault immutability is off
+    severity: medium
+    domain: recovery
+    resource: rg-clinic-prod/Microsoft.RecoveryServices/vaults/rsv-nwd-prod
+    effort: S
+    evidence: {immutability: Disabled, softDelete: AlwaysON}
+    business_impact: An attacker with admin access could shorten retention or delete recovery points before triggering ransomware, leaving you nothing to recover.
+    remediation: "Vault → Properties → Immutable vault → Enable (then Lock after verifying policies)."
+    frameworks: {soc2: [A1.2], nist_csf: [PR.DS-11], hipaa: [164.308(a)(7)(ii)(A)]}
+  - check_id: AZ-BKP-003
+    title: Backups stored in the same region only
+    severity: low
+    domain: recovery
+    resource: rg-clinic-prod/Microsoft.RecoveryServices/vaults/rsv-nwd-prod
+    effort: M
+    evidence: {storageRedundancy: LocallyRedundant, crossRegionRestore: false}
+    business_impact: A regional Azure outage would take out both the servers and their backups at the same time.
+    remediation: "For new vaults choose Geo-redundant storage with Cross Region Restore. Existing vault: change redundancy before the first backup, or create a GRS vault."
+    frameworks: {soc2: [A1.2], nist_csf: [PR.DS-11]}
+  - check_id: AZ-STG-003
+    title: Deleted files in storage cannot be recovered (soft delete off or too short)
+    severity: medium
+    domain: recovery
+    resource: rg-clinic-prod/Microsoft.Storage/storageAccounts/nwdpatientexports
+    effort: S
+    factors: {data_sensitivity: 1.3}
+    evidence: {blobSoftDelete: disabled, versioning: disabled}
+    business_impact: If ransomware, a compromised account, or a staff mistake deletes files here, they are gone for good.
+    remediation: "Data protection → enable blob soft delete (14 days), container soft delete, and versioning."
+    frameworks: {soc2: [A1.2], nist_csf: [PR.DS-11], cis_azure: ["3.11"], iso27001: [A.8.13], hipaa: [164.308(a)(7)(ii)(A)]}
+  - check_id: AZ-SEC-001
+    title: Database password stored in plain text in web app settings
+    severity: high
+    domain: secrets
+    resource: rg-clinic-prod/Microsoft.Web/sites/app-nwd-portal
+    effort: S
+    factors: {exposure: 1.5, data_sensitivity: 1.3}
+    evidence: {setting: SQL_CONNECTION_STRING, match: "Password=", hint: "Serv… (142 chars)"}
+    business_impact: Anyone with read access to the web app, including contractors, can copy the database password. It also ends up in deployment logs and exports.
+    remediation: "Move the value to Key Vault and reference it: @Microsoft.KeyVault(SecretUri=...). Better: switch to managed identity and remove the password entirely. Rotate the current password."
+    frameworks: {soc2: [CC6.1], nist_csf: [PR.AA-01], iso27001: [A.5.17]}
+  - check_id: AZ-SEC-002
+    title: API key in Function App settings
+    prev: false
+    severity: medium
+    domain: secrets
+    resource: rg-shared/Microsoft.Web/sites/func-nwd-reminders
+    effort: S
+    evidence: {setting: TWILIO_AUTH_TOKEN, hint: "8f3a… (32 chars)"}
+    business_impact: The SMS provider token could be copied and used to send messages as the practice or run up charges.
+    remediation: "Store the token in Key Vault, reference it from app settings, and rotate it in the Twilio console."
+    frameworks: {soc2: [CC6.1]}
+  - check_id: AZ-SEC-003
+    title: Possible secret in web app settings
+    severity: low
+    domain: secrets
+    resource: rg-clinic-prod/Microsoft.Web/sites/app-nwd-portal
+    effort: S
+    evidence: {setting: MAPS_API_KEY, hint: "AIza… (39 chars)"}
+    business_impact: If this is a real credential it could be copied by anyone with read access to the app.
+    remediation: "Confirm whether the value is sensitive; if so move it to Key Vault."
+    frameworks: {soc2: [CC6.1]}
+  - check_id: AZ-LOG-001
+    title: Azure activity log is not exported anywhere
+    severity: medium
+    domain: logging
+    resource: sub/3b9e7a51-2c4d-4e8f-9a1b-5c6d7e8f9012
+    effort: S
+    evidence: {diagnosticSettings: 0, builtInRetentionDays: 90}
+    business_impact: After an incident you would have only 90 days of history, with no alerting. Most breaches are found later than that.
+    remediation: "Subscription → Activity log → Export activity logs → send to a Log Analytics workspace with 365-day retention."
+    frameworks: {soc2: [CC7.2], nist_csf: [DE.CM-01], cis_azure: ["5.1.1"], hipaa: [164.312(b)]}
+  - check_id: AZ-LOG-002
+    title: Microsoft Defender plans are off for servers, storage, and SQL
+    severity: medium
+    domain: logging
+    resource: sub/3b9e7a51-2c4d-4e8f-9a1b-5c6d7e8f9012
+    effort: S
+    evidence: {VirtualMachines: Free, StorageAccounts: Free, SqlServers: Free, KeyVaults: Standard}
+    business_impact: Nothing is watching for malware on servers, unusual downloads from storage, or SQL injection. You would learn about an attack from the attacker.
+    remediation: "Defender for Cloud → Environment settings → subscription → turn on Servers (Plan 1), Storage, and Azure SQL. Roughly $25-40/month at this size."
+    frameworks: {soc2: [CC7.2], nist_csf: [DE.CM-01]}
+  - check_id: AZ-LOG-003
+    title: Log Analytics retention is 30 days
+    severity: low
+    domain: logging
+    resource: rg-shared/Microsoft.OperationalInsights/workspaces/log-nwd
+    effort: S
+    evidence: {retentionInDays: 30, recommended: 90}
+    business_impact: Investigations regularly need logs from two or three months back. With 30 days, the trail will be gone.
+    remediation: "Workspace → Usage and estimated costs → Data retention → 90 days (or archive tier for 1 year)."
+    frameworks: {soc2: [CC7.2], hipaa: [164.312(b)]}
+  - check_id: AZ-STG-004
+    title: Storage account allows TLS 1.0
+    prev: false
+    severity: low
+    domain: data
+    resource: rg-shared/Microsoft.Storage/storageAccounts/nwdscripts
+    effort: S
+    evidence: {minimumTlsVersion: TLS1_0}
+    business_impact: Old encryption versions have known weaknesses and fail most compliance scans.
+    remediation: "Configuration → Minimum TLS version → Version 1.2."
+    frameworks: {soc2: [CC6.7], cis_azure: ["3.15"]}
+  - check_id: COMBO-001
+    title: "Attack path: internet-facing imaging server with open RDP and no backup"
+    severity: critical
+    domain: recovery
+    resource: rg-clinic-prod/Microsoft.Compute/virtualMachines/vm-imaging-01
+    effort: M
+    related: [AZ-NET-001, AZ-BKP-001]
+    evidence: {path: "Internet → RDP 3389 → vm-imaging-01 → patient imaging data (no backup)"}
+    business_impact: This is the classic small-practice ransomware scenario. An attacker who guesses one password can encrypt the imaging server, and there is no backup to restore from.
+    remediation: "Fix both component findings this week: close RDP (AZ-NET-001), then enable backup (AZ-BKP-001)."
+    frameworks: {soc2: [CC6.6, A1.2], hipaa: [164.308(a)(7)(ii)(A)]}
+  - check_id: AZ-NET-005
+    title: FTP (21) open to the internet
+    severity: medium
+    domain: network
+    resource: rg-legacy/Microsoft.Network/networkSecurityGroups/nsg-ftp
+    effort: S
+    fixed: true
+    factors: {exposure: 1.5}
+    evidence: {rule: ftp, source: "*", port: 21}
+    business_impact: FTP sends passwords unencrypted.
+    remediation: "Remove the rule."
+    frameworks: {soc2: [CC6.6]}
+  - check_id: ENTRA-ID-002
+    title: Security defaults off and no Conditional Access policies
+    severity: critical
+    domain: identity
+    resource: entra/tenant/Northwind Dental Group
+    effort: S
+    fixed: true
+    evidence: {securityDefaults: disabled, caPolicies: 0}
+    business_impact: No sign-in protections were enforced for anyone.
+    remediation: "Enable security defaults or baseline CA policies."
+    frameworks: {soc2: [CC6.1]}

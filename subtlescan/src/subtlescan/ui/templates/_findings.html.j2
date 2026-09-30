@@ -1,0 +1,111 @@
+<section id="page-findings" class="page" aria-labelledby="findings-h">
+  <div class="page-head">
+    <h1 id="findings-h">Findings</h1>
+    <p class="muted" data-count>{{ v.findings | length }} findings</p>
+  </div>
+  <form class="filters card" data-filters onsubmit="return false">
+    <label class="f-search"><span class="sr-only">Search</span>
+      <input type="search" name="q" placeholder="Search title, resource, ID…" autocomplete="off">
+    </label>
+    <label><span>Severity</span>
+      <select name="severity">
+        <option value="">All</option>
+        {% for s in v.severities %}<option value="{{ s.value }}">{{ s.label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label><span>Domain</span>
+      <select name="domain">
+        <option value="">All</option>
+        {% for d in v.domains %}<option value="{{ d.value }}">{{ d.label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label><span>Framework</span>
+      <select name="framework">
+        <option value="">Any</option>
+        {% for key, fw in v.frameworks.items() %}<option value="{{ key }}">{{ fw.name }}</option>{% endfor %}
+      </select>
+    </label>
+    <label><span>Status</span>
+      <select name="status">
+        <option value="open" selected>Open</option>
+        <option value="">All</option>
+        {% for s in v.statuses if s.value != "open" %}<option value="{{ s.value }}">{{ s.label }}</option>{% endfor %}
+      </select>
+    </label>
+    <button type="reset" class="btn-ghost">Reset</button>
+  </form>
+
+  <div class="card table-card">
+    <table class="findings">
+      <thead>
+        <tr><th>Severity</th><th>Finding</th><th class="col-domain">Domain</th><th class="col-effort">Effort</th><th class="col-status">Status</th></tr>
+      </thead>
+      {% for f in v.findings %}
+      <tbody class="finding" id="f-{{ f.id }}"
+             data-id="{{ f.id }}" data-severity="{{ f.effective_severity.value }}" data-domain="{{ f.domain.value }}"
+             data-status="{{ f.status.value }}" data-frameworks="{{ f.frameworks.keys() | join(' ') }}"
+             data-text="{{ (f.title ~ ' ' ~ f.resource_name ~ ' ' ~ f.id ~ ' ' ~ f.check_id) | lower }}">
+        <tr class="row" tabindex="0" aria-expanded="false" aria-controls="d-{{ f.id }}">
+          <td><span class="pill sev-{{ f.effective_severity.value }}">{{ f.effective_severity.label }}</span></td>
+          <td class="col-title">
+            <div class="title">{{ f.title }}</div>
+            <div class="sub mono">{{ f.resource_name }}</div>
+          </td>
+          <td class="col-domain">{{ f.domain.label }}</td>
+          <td class="col-effort"><span class="effort effort-{{ f.effort.value }}" title="Effort">{{ f.effort.value }}</span></td>
+          <td class="col-status"><span class="status status-{{ f.status.value }}">{{ f.status.label }}</span></td>
+        </tr>
+        <tr class="detail" id="d-{{ f.id }}" hidden>
+          <td colspan="5">
+            <div class="detail-grid">
+              <div class="detail-main">
+                <h3>Why it matters</h3>
+                <p>{{ f.business_impact }}</p>
+                {% if f.analyst_note %}
+                <div class="note"><strong>Analyst note.</strong> {{ f.analyst_note }}</div>
+                {% endif %}
+                <h3>How to fix</h3>
+                <pre class="code">{{ f.remediation }}</pre>
+                {% if f.terraform_fix %}
+                <h3>Terraform <button type="button" class="copy" data-copy="tf-{{ f.id }}">Copy</button></h3>
+                <pre class="code" id="tf-{{ f.id }}">{{ f.terraform_fix }}</pre>
+                {% endif %}
+              </div>
+              <aside class="detail-side">
+                <h3>Evidence</h3>
+                <dl class="kv">
+                  {% for k, val in f.evidence.items() %}<dt>{{ k }}</dt><dd class="mono">{{ val }}</dd>{% endfor %}
+                  <dt>Resource</dt><dd class="mono wrap">{{ f.resource_id }}</dd>
+                </dl>
+                <h3>Details</h3>
+                <dl class="kv">
+                  <dt>Finding ID</dt><dd class="mono">{{ f.id }}</dd>
+                  <dt>Effort</dt><dd>{{ {"S": "Small (under a day)", "M": "Medium (days)", "L": "Large (weeks)"}[f.effort.value] }}</dd>
+                  <dt>Severity</dt><dd>{{ f.effective_severity.label }}{% if f.contextual_severity and f.contextual_severity != f.severity %} <span class="muted">(base {{ f.severity.label }}, raised for context)</span>{% endif %}</dd>
+                  {% set why = [] %}
+                  {% if f.score_factors.get("exposure", 1) > 1 %}{% set _ = why.append("internet-exposed") %}{% endif %}
+                  {% if f.score_factors.get("blast_radius", 1) > 1 %}{% set _ = why.append("admin-level access") %}{% endif %}
+                  {% if f.score_factors.get("data_sensitivity", 1) > 1 %}{% set _ = why.append("sensitive data") %}{% endif %}
+                  {% if why %}<dt>Context</dt><dd>{{ why | join(", ") }}</dd>{% endif %}
+                  {% if f.source != "subtlescan" %}<dt>Source</dt><dd>{{ f.source }}</dd>{% endif %}
+                </dl>
+                {% if f.frameworks %}
+                <h3>Frameworks</h3>
+                <ul class="fw">
+                  {% for key, controls in f.frameworks.items() %}
+                  <li><span class="fw-name">{{ v.frameworks[key].name if key in v.frameworks else key }}</span>
+                    {% for c in controls %}<span class="chip" title="{{ v.frameworks[key].controls.get(c, '') if key in v.frameworks else '' }}">{{ c }}</span>{% endfor %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </aside>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    <p class="empty" data-empty hidden>No findings match these filters.</p>
+  </div>
+</section>

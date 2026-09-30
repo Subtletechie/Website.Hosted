@@ -1,0 +1,10 @@
+name: NIST CSF 2.0
+controls:
+  PR.AA-01: Identities and credentials for authorized users, services, and hardware are managed
+  PR.AA-05: Access permissions, entitlements, and authorizations are defined and enforced
+  PR.DS-01: The confidentiality, integrity, and availability of data-at-rest are protected
+  PR.DS-11: Backups of data are created, protected, maintained, and tested
+mappings:
+  AZ-STG-001: [PR.AA-05, PR.DS-01]
+  AZ-STG-002: [PR.AA-01, PR.AA-05]
+  AZ-STG-003: [PR.DS-11]

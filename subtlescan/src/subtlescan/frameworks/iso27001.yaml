@@ -1,0 +1,10 @@
+name: ISO/IEC 27001:2022 Annex A
+controls:
+  A.5.15: Access control
+  A.5.17: Authentication information
+  A.8.3: Information access restriction
+  A.8.13: Information backup
+mappings:
+  AZ-STG-001: [A.5.15, A.8.3]
+  AZ-STG-002: [A.5.17]
+  AZ-STG-003: [A.8.13]

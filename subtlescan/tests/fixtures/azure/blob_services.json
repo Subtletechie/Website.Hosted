@@ -1,0 +1,9 @@
+{
+  "acmecustomerdata": {"properties": {"deleteRetentionPolicy": {"enabled": false}, "isVersioningEnabled": false}},
+  "acmelocked": {"properties": {
+    "deleteRetentionPolicy": {"enabled": true, "days": 14},
+    "containerDeleteRetentionPolicy": {"enabled": true, "days": 14},
+    "isVersioningEnabled": true
+  }},
+  "acmeoldfiles": "403"
+}

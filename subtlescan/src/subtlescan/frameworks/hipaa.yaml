@@ -1,0 +1,9 @@
+name: HIPAA Security Rule
+controls:
+  164.308(a)(7)(ii)(A): Data backup plan
+  164.312(a)(1): Access control
+  164.312(d): Person or entity authentication
+mappings:
+  AZ-STG-001: [164.312(a)(1)]
+  AZ-STG-002: [164.312(d)]
+  AZ-STG-003: [164.308(a)(7)(ii)(A)]

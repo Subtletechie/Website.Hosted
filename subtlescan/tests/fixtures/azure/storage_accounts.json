@@ -1,0 +1,46 @@
+[
+  {
+    "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-prod/providers/Microsoft.Storage/storageAccounts/acmecustomerdata",
+    "name": "acmecustomerdata",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "eastus",
+    "kind": "StorageV2",
+    "sku": {"name": "Standard_LRS", "tier": "Standard"},
+    "tags": {"env": "prod"},
+    "properties": {
+      "allowBlobPublicAccess": true,
+      "minimumTlsVersion": "TLS1_2",
+      "supportsHttpsTrafficOnly": true,
+      "publicNetworkAccess": "Enabled",
+      "networkAcls": {"defaultAction": "Allow", "bypass": "AzureServices", "ipRules": [], "virtualNetworkRules": []}
+    }
+  },
+  {
+    "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-shared/providers/Microsoft.Storage/storageAccounts/acmelocked",
+    "name": "acmelocked",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "eastus",
+    "kind": "StorageV2",
+    "sku": {"name": "Standard_GRS", "tier": "Standard"},
+    "tags": {},
+    "properties": {
+      "allowBlobPublicAccess": false,
+      "allowSharedKeyAccess": false,
+      "minimumTlsVersion": "TLS1_2",
+      "supportsHttpsTrafficOnly": true,
+      "publicNetworkAccess": "Disabled",
+      "networkAcls": {"defaultAction": "Deny", "bypass": "AzureServices", "ipRules": [], "virtualNetworkRules": []}
+    }
+  },
+  {
+    "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-legacy/providers/Microsoft.Storage/storageAccounts/acmeoldfiles",
+    "name": "acmeoldfiles",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "westus",
+    "kind": "Storage",
+    "sku": {"name": "Standard_LRS", "tier": "Standard"},
+    "properties": {
+      "supportsHttpsTrafficOnly": false
+    }
+  }
+]
